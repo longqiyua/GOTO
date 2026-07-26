@@ -26,7 +26,9 @@
   <sub>
     Best experienced at 90% interface scale.
     <br>
-    © GOTO
+    © GOTO 
+    <br>
+    2026.07.27
     <br>
     License under AGPL-3.0
   </sub>

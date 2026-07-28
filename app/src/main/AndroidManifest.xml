@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- GOTO Where Phase 3: Android MVP Integration -->
+    <!-- 使用情况访问（需用户在系统设置中授权，非运行时权限） -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <!-- 通知发送（Android 13+ 运行时权限） -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- 接收通知反馈广播 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppIndex">
+
+        <!-- 欢迎页 -->
+        <activity
+            android:name=".UIUX.WelcomeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppIndex.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 主搜索页 -->
+        <activity
+            android:name=".UIUX.SearchActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.AppIndex.SearchOverlay" />
+
+        <!-- 激活页面 -->
+        <activity
+            android:name=".ui.ActivationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppIndex" />
+
+        <!-- 设置页面 -->
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppIndex" />
+
+        <!-- 应用启动排名页面 -->
+        <activity
+            android:name=".ui.RankingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppIndex" />
+
+        <!-- 手势录制页面 -->
+        <activity
+            android:name=".ui.GestureRecordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppIndex" />
+
+        <!-- 桌面悬浮条搜索 Service（免费功能） -->
+        <service
+            android:name=".overlay.OverlaySearchService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse" />
+
+        <!-- GOTO Where Service（Phase 3 Android MVP） -->
+        <service
+            android:name=".where.WhereService"
+            android:exported="false"
+            android:label="GOTO Where" />
+
+        <!-- GOTO Where 通知反馈接收器 -->
+        <receiver
+            android:name=".where.WhereFeedbackReceiver"
+            android:exported="false" />
+
+    </application>
+
+</manifest>

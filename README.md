@@ -27,6 +27,8 @@
     <br>
     © GOTO 
     <br>
+    2026.07.27
+    <br>
     License under AGPL-3.0
   </sub>
 </p>

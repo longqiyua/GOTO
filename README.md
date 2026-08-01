@@ -7,10 +7,10 @@
       <h1>GOTO</h1>
       <hr>
       <p>
-        <font size="5" color="#333333">For detailed information? visit the github page</font>
+        <font size="5" color="#333333">Discover More</font>
       </p>
       <p>
-        <font size="4" color="#666666">详细了解请前往github page</font>
+        <font size="4" color="#666666">详细请前往github page</font>
       </p>
       <hr>
       <p>
@@ -24,11 +24,8 @@
 
 <p align="center">
   <sub>
-    Best experienced at 90% interface scale.
     <br>
     © GOTO 
-    <br>
-    2026.07.27
     <br>
     License under AGPL-3.0
   </sub>

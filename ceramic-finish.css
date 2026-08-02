@@ -2132,3 +2132,139 @@ body.dark.light-sense #docBody .doc-tree-node.active {
 @media (prefers-reduced-motion: reduce) {
   #docBody .doc-tree-node.active::after { animation: none !important; transform: scaleX(1) !important; }
 }
+
+/* Quiet editorial document surface: keep the index rail intact while the
+   reading column stays calm, spacious, and easy to scan on wide browsers. */
+@media (min-width: 901px) {
+  html:not(.embedded) body #sandboxLeft,
+  html:not(.embedded) body #sandboxLeft.entered,
+  html:not(.embedded) body #sandboxLeft.welcome-mode {
+    width: 42vw !important;
+    flex: 0 0 42vw !important;
+  }
+  html:not(.embedded) body #sandboxRight,
+  html:not(.embedded) body #sandboxLeft.welcome-mode ~ #sandboxRight {
+    width: 58vw !important;
+    flex: 0 0 58vw !important;
+    min-width: 0 !important;
+  }
+  html:not(.embedded) body #sandboxLeft .phone {
+    margin-inline: auto !important;
+  }
+}
+
+#docBody .doc-content-wrap {
+  padding: 46px clamp(30px, 2vw, 48px) 84px !important;
+  background: var(--doc-paper, var(--surface)) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+#docBody .doc-content-wrap::before,
+#docBody .doc-content-wrap::after {
+  display: none !important;
+  content: none !important;
+}
+#docBody .doc-content {
+  width: 100% !important;
+  max-width: none !important;
+  font-size: clamp(15px, .84vw, 17px) !important;
+  line-height: 1.78 !important;
+  letter-spacing: .012em !important;
+}
+#docBody .doc-content h2 {
+  font-size: clamp(20px, 1.08vw, 25px) !important;
+  line-height: 1.28 !important;
+}
+#docBody .doc-content h3 {
+  font-size: clamp(17px, .94vw, 21px) !important;
+  line-height: 1.42 !important;
+}
+#docBody .doc-content p,
+#docBody .doc-content li,
+#docBody .doc-content td,
+#docBody .doc-content th {
+  font-size: clamp(15px, .84vw, 17px) !important;
+  line-height: 1.78 !important;
+}
+#docBody .doc-content h1::before,
+#docBody .doc-content h2::before,
+#docBody .doc-content h3::before {
+  content: none !important;
+  display: none !important;
+}
+#docBody .doc-content h1::after {
+  width: 64px !important;
+  height: 2px !important;
+  background: var(--doc-orange, var(--accent)) !important;
+}
+#docBody .doc-content h3 {
+  padding-left: 10px !important;
+  border-left: 2px solid var(--doc-orange, var(--accent)) !important;
+}
+#docBody .doc-content blockquote,
+#docBody .doc-story-intro,
+#docBody .doc-logic-callout,
+#docBody .doc-preview-actions {
+  border-radius: 6px !important;
+  background: color-mix(in srgb, var(--doc-paper, var(--surface)) 97%, var(--ink) 3%) !important;
+  box-shadow: none !important;
+}
+body.light-sense #docBody .doc-content-wrap,
+body.dark.light-sense #docBody .doc-content-wrap {
+  background: color-mix(in srgb, var(--doc-paper, var(--surface)) 98%, #fff 2%) !important;
+  background-image: none !important;
+}
+body.dark #docBody .doc-content-wrap {
+  background: var(--surface) !important;
+}
+
+/* Large-browser proportions: let the live phone use the extra stage width,
+   while the document column expands instead of leaving a dead right strip. */
+@media (min-width: 1400px) {
+  html:not(.embedded) body #sandboxLeft .phone {
+    width: 430px !important;
+    max-width: none !important;
+    height: 960px !important;
+    aspect-ratio: 430 / 960 !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1399px) {
+  html:not(.embedded) body #sandboxLeft .phone {
+    width: 390px !important;
+    max-width: none !important;
+    height: 870px !important;
+    aspect-ratio: 390 / 870 !important;
+  }
+}
+
+/* The status area belongs to the phone surface. In Light Sense it follows
+   the day/night phone background rather than becoming a detached taskbar. */
+body.light-sense.light-sense-light .status-bar {
+  background: color-mix(in srgb, var(--bg) 92%, #fff 8%) !important;
+  color: var(--ink) !important;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.05) !important;
+}
+body.light-sense.light-sense-dark .status-bar,
+body.dark.light-sense .status-bar {
+  background: color-mix(in srgb, var(--bg) 88%, #000 12%) !important;
+  color: var(--ink) !important;
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,.07) !important;
+}
+
+/* Keep the document side editorial: remove the old full-pane grid/glow and
+   let hierarchy come from typography, spacing, and the single accent rule. */
+html:not(.embedded) body #sandboxRight::before,
+html:not(.embedded) body #sandboxRight::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+html:not(.embedded) body:not(.light-sense) #sandboxRight {
+  background: var(--bg) !important;
+}
+#docBody .doc-preview-actions,
+#docBody .doc-story-intro,
+#docBody .doc-logic-callout {
+  box-shadow: none !important;
+}

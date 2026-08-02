@@ -11292,7 +11292,7 @@ body.dark .search-card,body.dark .slot-card,body.dark .section-card,body.dark .s
 </style>
 <!-- 最终维护层：新视觉与功能收口只写入独立文件，避免继续扩大单文件级联。 -->
 <link rel="stylesheet" href="preview-authority.css">
-<link rel="stylesheet" href="preview-final.css?rev=material-2">
+<link rel="stylesheet" href="preview-final.css?rev=layout-fit-1">
 <link rel="stylesheet" href="dynamic-cursor/dynamic-cursor.css">
 <!-- 离线 MD→HTML 渲染器：加载 GithubPage/ 目录下的 MD 文档 -->
 <script src="libs/md-renderer.js"></script>
@@ -28340,6 +28340,17 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
 
   async function _loadDoc(file){
     if(_docCache[file])return _docCache[file];
+    // 直接双击 file:// 页面时，备用 bundle 脚本可能还在加载；给它一个
+    // 极短的等待窗口，避免首篇 README 抢在回退脚本之前进入 NetworkError。
+    if(location.protocol==='file:'&&!window.GOTO_DOCUMENT_BUNDLE){
+      await new Promise(function(resolve){
+        var started=Date.now();
+        (function waitBundle(){
+          if(window.GOTO_DOCUMENT_BUNDLE||Date.now()-started>1200){resolve();return;}
+          setTimeout(waitBundle,40);
+        })();
+      });
+    }
     const bundled=window.GOTO_DOCUMENT_BUNDLE&&window.GOTO_DOCUMENT_BUNDLE[file];
     if(location.protocol==='file:'&&typeof bundled==='string'){
       _docCache[file]=bundled;
@@ -29278,7 +29289,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
 <link rel="stylesheet" href="note-to-show/note-to-show.css?rev=2">
 <script src="note-to-show/note-to-show.js?rev=2"></script>
 <script src="prethink/goto-prethink.js?rev=1"></script>
-<script src="Document/document-bundle.js?rev=32"></script>
+<script src="Document/document-bundle.js?rev=32" onerror="(function(){try{var s=document.createElement('script');s.src='Document/document-bundle.js';s.dataset.gotoBundleRetry='1';document.head.appendChild(s);}catch(_){}})()"></script>
 <!-- 需求 7：markdown-it 仅用于预览界面文档区渲染，软件内部不使用；async 不阻塞后续解析，调用方已做 typeof 检查 + onerror 兜底 -->
 <script async src="libs/markdown-it.min.js" onerror="window.__markdownItLoadFailed=true"></script>
 <!-- mermaid：仅用于文档区流程图/时序图渲染，async 不阻塞；加载后挂 __mermaidReady 标记 -->
@@ -30807,6 +30818,6 @@ try{
 })();
 </script>
 
-<link rel="stylesheet" href="ceramic-finish.css?rev=35">
+<link rel="stylesheet" href="ceramic-finish.css?rev=phone-layout-42-1">
 </body>
 </html>

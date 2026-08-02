@@ -3045,3 +3045,32 @@ body.dark.light-sense #docBody .doc-tree-node.active {
 @media (prefers-reduced-motion: reduce) {
   #docBody .doc-tree-node.active::after { animation: none !important; transform: scaleX(1) !important; }
 }
+
+/* Standalone viewport fit: keep the complete three-column workbench inside
+   the browser viewport. The previous 34vw + 66vw pair could exceed the
+   available width by a fractional pixel when a scrollbar was present. */
+@media (min-width: 901px) {
+  html:not(.embedded) body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  html:not(.embedded) body #sandboxLeft,
+  html:not(.embedded) body #sandboxLeft.entered,
+  html:not(.embedded) body #sandboxLeft.welcome-mode {
+    width: 34% !important;
+    flex: 0 0 34% !important;
+  }
+  html:not(.embedded) body #sandboxRight,
+  html:not(.embedded) body #sandboxLeft.welcome-mode ~ #sandboxRight {
+    width: auto !important;
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+  }
+  #docContainer,
+  #docBody,
+  #docBody .doc-content-wrap {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+}

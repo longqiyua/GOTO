@@ -46,6 +46,19 @@ appScore = highestPathScore - 0.1 × secondHighestPathScore
 
 这样可以避免原始、拼音、纠错和标签四条路径同时召回同一个应用后分数异常膨胀。原始查询的路径永远保持最高优先级。
 
+### 预联想的可解释输出
+
+每个候选都应携带 `query`、`confidence`、`source`、`editCost` 和 `explanation`，并在本次输入结束后短暂有效；下一次输入到来时旧候选立即失效。Prethink 最多产生 3–5 个候选，低于最低置信度的候选直接丢弃，且原始查询始终保留并优先进入 Engine。
+
+| source | 可解释含义 | 例子 |
+| --- | --- | --- |
+| `KEYBOARD_CORRECTION` | 键盘邻位误触 | `gppgle` → `google` |
+| `CHARACTER_SWAP` | 字符交换或重复压缩 | `ggooogoto` → `goto` |
+| `PINYIN_EXPANSION` | 拼音、缩写与英文候选 | `wx` → `微信` |
+| `INSTALLED_APPS` | 仅从已安装应用集合联想 | 候选必须能在 Base 快照中验证 |
+
+这些候选会与原始输入一起进入同一个 Engine 竞争，Prethink 不修改输入，也不直接启动应用。后续模型接入点只扩展候选来源和解释字段，不改变三大冻结组件的接口语义。
+
 ## 开关与运行时
 
 页面端开关位于 `SuperGOTO` 卡片内，紧跟“自适应刷新”之后，名称为 `GOTO Prethink 预处理`。开关关闭时只运行原始查询；打开后才扩展候选。
@@ -63,4 +76,3 @@ JS、Kotlin、Rust 共享上述 `QueryCandidate` DTO。JS 负责 GitHub Pages �
 3. 每个候选都有 `query / confidence / source / editCost / explanation`。
 4. 重复命中使用最高路径减去第二路径的有限奖励。
 5. Engine、Base、Where 的源文件无修改；Page 只编排调用与展示。
-

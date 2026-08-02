@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#C45A26">
+<title>GOTO Player</title>
+<style>
+/* ═══ 全局 ═══ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --accent:#C45A26;
+  --ink:#202126;
+  --ink-soft:#4E5058;
+  --muted:#8e8f96;
+  --card-bg:#fff;
+  --line:rgba(32,33,38,0.08);
+  --font-cn:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+  --font-mono:'SF Mono',monospace;
+}
+html,body{
+  font-family:var(--font-cn);
+  background:#f5f5f7;
+  color:var(--ink);
+  min-height:100vh;
+  overscroll-behavior:none;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --ink:#fff;
+    --ink-soft:rgba(255,255,255,0.7);
+    --muted:rgba(255,255,255,0.4);
+    --card-bg:#25262d;
+    --line:rgba(255,255,255,0.08);
+  }
+  html,body{background:#1a1b1f;}
+}
+
+/* ═══ 头部 ═══ */
+.app-head{
+  padding:env(safe-area-inset-top,12px) 20px 16px;
+  padding-top:max(12px,env(safe-area-inset-top));
+  border-bottom:1px solid var(--line);
+  background:var(--card-bg);
+  position:sticky;top:0;z-index:10;
+}
+.app-head-tag{
+  display:inline-block;font-size:9px;font-weight:800;letter-spacing:0.14em;
+  color:var(--accent);text-transform:uppercase;margin-bottom:4px;
+  padding:2px 7px;border-radius:4px;
+  background:color-mix(in srgb,var(--accent) 10%,transparent);
+}
+.app-head h1{
+  font-size:20px;font-weight:700;letter-spacing:-0.02em;
+}
+.app-head p{
+  font-size:11px;color:var(--muted);margin-top:2px;
+}
+
+/* ═══ 播放器主体 ═══ */
+.player-card{
+  margin:16px;
+  background:var(--card-bg);
+  border-radius:16px;
+  border:1px solid var(--line);
+  overflow:hidden;
+  box-shadow:0 2px 14px rgba(0,0,0,0.05);
+}
+@media(prefers-color-scheme:dark){
+  .player-card{box-shadow:0 2px 14px rgba(0,0,0,0.3);}
+}
+
+/* 播放器 stage */
+.player-stage{
+  display:flex;flex-direction:column;align-items:center;
+  padding:24px 20px 16px;gap:16px;
+}
+.player-cover-wrap{
+  position:relative;
+  width:180px;height:180px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#1a1a1a;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.15) inset,
+    0 6px 18px rgba(0,0,0,0.22);
+}
+.player-cover-img{width:100%;height:100%;object-fit:cover;display:block;}
+.player-cover-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#2a2a2a,#1a1a1a);
+  color:rgba(255,255,255,0.4);font-size:32px;
+}
+.player-led{
+  position:absolute;top:10px;right:10px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent);
+  opacity:0;transition:opacity 0.4s;
+}
+.player-led.on{opacity:1;animation:breathe 2.4s ease-in-out infinite;}
+@keyframes breathe{
+  0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 70%,transparent),0 0 6px 1px color-mix(in srgb,var(--accent) 50%,transparent);transform:scale(1);}
+  50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--accent) 0%,transparent),0 0 12px 2px color-mix(in srgb,var(--accent) 80%,transparent);transform:scale(1.15);}
+}
+.player-info{text-align:center;width:100%;}
+.player-label{
+  font-size:9px;font-weight:800;letter-spacing:0.16em;
+  color:var(--muted);text-transform:uppercase;
+  font-family:var(--font-mono);margin-bottom:4px;
+}
+.player-title{
+  font-size:18px;font-weight:700;color:var(--ink);
+  letter-spacing:-0.015em;line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.player-meta{
+  font-size:11px;color:var(--muted);margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* 进度条 */
+.progress-section{padding:0 20px 12px;}
+.time-row{
+  display:flex;justify-content:space-between;
+  font-size:10px;font-weight:700;letter-spacing:0.06em;
+  color:var(--muted);font-family:var(--font-mono);margin-bottom:6px;
+}
+.time-row span{font-variant-numeric:tabular-nums;}
+.progress-bar{
+  position:relative;height:5px;
+  background:rgba(0,0,0,0.09);border-radius:3px;cursor:pointer;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,0.12),inset 0 -1px 0 rgba(255,255,255,0.4);
+}
+@media(prefers-color-scheme:dark){
+  .progress-bar{background:rgba(255,255,255,0.08);box-shadow:inset 0 1px 2px rgba(0,0,0,0.4);}
+}
+.progress-fill{
+  position:absolute;left:0;top:0;height:100%;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--accent) 85%,#fff) 0%,
+    var(--accent) 50%,
+    color-mix(in srgb,var(--accent) 88%,#000) 100%);
+  border-radius:3px;width:0%;transition:width 0.1s linear;
+  box-shadow:0 1px 0 rgba(255,255,255,0.3) inset,0 0 6px color-mix(in srgb,var(--accent) 40%,transparent);
+}
+
+/* 控制按钮 */
+.controls{
+  display:flex;align-items:center;justify-content:center;
+  gap:32px;padding:8px 0 20px;
+}
+.ctrl-btn{
+  border:none;background:transparent;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink);transition:all 0.18s ease;border-radius:50%;
+}
+.ctrl-btn:active{transform:scale(0.88);}
+.ctrl-btn-secondary{
+  width:40px;height:40px;color:var(--ink-soft);
+  background:linear-gradient(180deg,#fff 0%,#f1f1f3 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,0.9) inset,0 1px 2px rgba(0,0,0,0.1),0 2px 5px rgba(0,0,0,0.04);
+}
+@media(prefers-color-scheme:dark){
+  .ctrl-btn-secondary{
+    color:rgba(255,255,255,0.65);
+    background:linear-gradient(180deg,#33343c 0%,#2a2b32 100%);
+    box-shadow:0 1px 0 rgba(255,255,255,0.05) inset,0 1px 2px rgba(0,0,0,0.3);
+  }
+}
+.ctrl-btn-secondary svg{width:16px;height:16px;}
+.ctrl-btn-play{
+  width:56px;height:56px;
+  background:radial-gradient(circle at 35% 28%,
+    color-mix(in srgb,var(--accent) 88%,#fff) 0%,
+    var(--accent) 45%,
+    color-mix(in srgb,var(--accent) 80%,#000) 100%);
+  color:#fff;
+  box-shadow:0 1px 0 rgba(255,255,255,0.3) inset,0 -1px 0 rgba(0,0,0,0.18) inset,0 3px 8px rgba(0,0,0,0.22),0 6px 16px color-mix(in srgb,var(--accent) 30%,transparent);
+}
+.ctrl-btn-play svg{width:20px;height:20px;}
+
+/* 状态 */
+.status-msg{
+  font-size:10px;color:var(--muted);
+  text-align:center;padding:0 20px 12px;letter-spacing:0.04em;
+  min-height:14px;
+}
+.status-msg.warn{color:var(--accent);}
+
+/* ═══ 文件选择 ═══ */
+.file-section{
+  margin:0 16px 16px;
+  padding:16px;
+  background:var(--card-bg);
+  border-radius:14px;
+  border:1px solid var(--line);
+}
+.file-section-head{
+  font-size:9px;font-weight:800;letter-spacing:0.14em;
+  color:var(--muted);text-transform:uppercase;
+  font-family:var(--font-mono);margin-bottom:10px;
+}
+.file-btn{
+  display:block;width:100%;padding:12px;
+  border:1px solid var(--accent);border-radius:10px;
+  background:color-mix(in srgb,var(--accent) 8%,transparent);
+  color:var(--accent);font-weight:600;font-size:13px;
+  cursor:pointer;text-align:center;
+  font-family:var(--font-cn);
+}
+.file-btn:active{transform:scale(0.98);}
+.file-input{display:none;}
+
+/* ═══ 视频播放器 ═══ */
+.video-section{
+  margin:0 16px 24px;
+  background:#000;
+  border-radius:14px;
+  overflow:hidden;
+  display:none;
+}
+.video-section.show{display:block;}
+.video-el{width:100%;display:block;max-height:50vh;background:#000;}
+.video-controls{
+  padding:12px 14px;background:#000;color:#fff;
+}
+.video-title-row{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:8px;
+}
+.video-title{
+  font-size:12px;font-weight:600;flex:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.video-close{
+  border:none;background:transparent;color:#fff;font-size:18px;
+  cursor:pointer;margin-left:8px;
+}
+.video-time-row{
+  display:flex;justify-content:space-between;
+  font-size:10px;font-family:var(--font-mono);color:rgba(255,255,255,0.7);
+  margin-bottom:6px;
+}
+.video-progress{
+  position:relative;height:4px;background:rgba(255,255,255,0.2);
+  border-radius:2px;cursor:pointer;margin-bottom:10px;
+}
+.video-progress-fill{
+  position:absolute;left:0;top:0;height:100%;
+  background:var(--accent);border-radius:2px;width:0%;
+}
+.video-ctrls-row{
+  display:flex;align-items:center;justify-content:center;gap:20px;
+}
+.video-ctrl-btn{
+  border:none;background:transparent;color:#fff;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  font-size:10px;
+}
+.video-ctrl-btn svg{width:22px;height:22px;}
+.video-play-btn{
+  width:48px;height:48px;border-radius:50%;border:none;
+  background:var(--accent);color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.video-play-btn svg{width:18px;height:18px;}
+.video-rate-row{
+  display:flex;justify-content:center;align-items:center;gap:8px;margin-top:10px;
+}
+.video-rate-row span{font-size:10px;color:rgba(255,255,255,0.6);}
+.video-rate-select{
+  background:rgba(255,255,255,0.1);color:#fff;
+  border:1px solid rgba(255,255,255,0.2);border-radius:4px;
+  padding:3px 6px;font-size:10px;
+}
+.video-fs-btn{
+  background:rgba(255,255,255,0.1);color:#fff;
+  border:1px solid rgba(255,255,255,0.2);border-radius:4px;
+  padding:3px 8px;font-size:10px;cursor:pointer;
+}
+
+/* ═══ 底部 ═══ */
+.app-foot{
+  text-align:center;padding:20px 16px calc(20px + env(safe-area-inset-bottom));
+  font-size:10px;color:var(--muted);letter-spacing:0.1em;
+  font-family:var(--font-mono);
+}
+
+/* 横屏适配 */
+@media(orientation:landscape){
+  .player-stage{flex-direction:row;gap:20px;text-align:left;}
+  .player-info{text-align:left;}
+  .player-cover-wrap{width:140px;height:140px;flex-shrink:0;}
+}
+</style>
+</head>
+<body>
+  <div class="app-head">
+    <span class="app-head-tag">GOTO Player</span>
+    <h1>微型播放器</h1>
+    <p>选择本地 mp3 / mp4 文件播放</p>
+  </div>
+
+  <!-- 音频播放器 -->
+  <div class="player-card" id="audioCard">
+    <div class="player-stage">
+      <div class="player-cover-wrap">
+        <img class="player-cover-img" id="coverImg" style="display:none;" alt="cover">
+        <div class="player-cover-placeholder" id="coverPlaceholder">♪</div>
+        <div class="player-led" id="led"></div>
+      </div>
+      <div class="player-info">
+        <div class="player-label">NOW PLAYING</div>
+        <div class="player-title" id="trackTitle">未选择曲目</div>
+        <div class="player-meta" id="trackMeta">点击下方按钮选择文件</div>
+      </div>
+    </div>
+    <div class="progress-section">
+      <div class="time-row">
+        <span id="timeCur">00:00</span>
+        <span id="timeDur">00:00</span>
+      </div>
+      <div class="progress-bar" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn ctrl-btn-secondary" id="prevBtn" aria-label="prev" disabled>
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><rect x="5" y="4" width="2" height="16"/></svg>
+      </button>
+      <button class="ctrl-btn ctrl-btn-play" id="playBtn" aria-label="play">
+        <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+      </button>
+      <button class="ctrl-btn ctrl-btn-secondary" id="nextBtn" aria-label="next" disabled>
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><rect x="17" y="4" width="2" height="16"/></svg>
+      </button>
+    </div>
+    <div class="status-msg" id="statusMsg"></div>
+  </div>
+
+  <!-- 文件选择 -->
+  <div class="file-section">
+    <div class="file-section-head">选择文件</div>
+    <input type="file" class="file-input" id="fileInput" accept="audio/*,video/*">
+    <button class="file-btn" onclick="document.getElementById('fileInput').click()">选择本地音乐 / 视频</button>
+  </div>
+
+  <!-- 视频播放器 -->
+  <div class="video-section" id="videoSection">
+    <video class="video-el" id="videoEl" playsinline></video>
+    <div class="video-controls">
+      <div class="video-title-row">
+        <span class="video-title" id="videoTitle"></span>
+        <button class="video-close" onclick="closeVideo()">×</button>
+      </div>
+      <div class="video-time-row">
+        <span id="videoCur">00:00</span>
+        <span id="videoDur">00:00</span>
+      </div>
+      <div class="video-progress" id="videoProgress">
+        <div class="video-progress-fill" id="videoFill"></div>
+      </div>
+      <div class="video-ctrls-row">
+        <button class="video-ctrl-btn" onclick="videoSeek(-10)">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="11 18 3 12 11 6 11 18"/><polygon points="21 18 13 12 21 6 21 18"/></svg>
+          <span>10s</span>
+        </button>
+        <button class="video-play-btn" id="videoPlayBtn" onclick="toggleVideo()">
+          <svg id="videoIcon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+        </button>
+        <button class="video-ctrl-btn" onclick="videoSeek(10)">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="13 6 21 12 13 18 13 6"/><polygon points="3 6 11 12 3 18 3 6"/></svg>
+          <span>10s</span>
+        </button>
+      </div>
+      <div class="video-rate-row">
+        <span>倍速</span>
+        <select class="video-rate-select" id="rateSelect" onchange="setRate(this.value)">
+          <option value="0.5">0.5x</option>
+          <option value="0.75">0.75x</option>
+          <option value="1" selected>1x</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+        <button class="video-fs-btn" onclick="toggleFullscreen()">全屏</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-foot">— GOTO Player · 移动端 —</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var audioState = { audio: null, playing: false, file: null };
+  var videoState = { playing: false };
+
+  function fmt(sec){
+    if(!isFinite(sec) || sec < 0) sec = 0;
+    var m = Math.floor(sec/60), s = Math.floor(sec%60);
+    return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+
+  function setStatus(msg, warn){
+    var el = document.getElementById('statusMsg');
+    if(el){ el.textContent = msg||''; el.classList.toggle('warn', !!warn); }
+  }
+
+  function setLED(on){
+    var led = document.getElementById('led');
+    if(led) led.classList.toggle('on', on);
+  }
+
+  // 文件选择
+  document.getElementById('fileInput').addEventListener('change', function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    if(file.type.startsWith('audio/')){
+      playAudio(file);
+    }else if(file.type.startsWith('video/')){
+      playVideo(file);
+    }else{
+      setStatus('⚠ 不支持的文件类型', true);
+    }
+    e.target.value = ''; // 允许重复选择同一文件
+  });
+
+  // ═══ 音频播放 ═══
+  function playAudio(file){
+    try{
+      // 如果视频在播，先关
+      closeVideo();
+      if(audioState.audio){
+        try{ audioState.audio.pause(); }catch(_){}
+        try{ audioState.audio.src=''; }catch(_){}
+      }
+      var url = URL.createObjectURL(file);
+      audioState.audio = new Audio(url);
+      audioState.file = file;
+      audioState.playing = false;
+      var title = file.name.replace(/\.[^.]+$/, '');
+      document.getElementById('trackTitle').textContent = title;
+      document.getElementById('trackMeta').textContent = file.name;
+      // 封面占位
+      document.getElementById('coverImg').style.display = 'none';
+      document.getElementById('coverPlaceholder').style.display = 'flex';
+      // 事件
+      audioState.audio.addEventListener('loadedmetadata', function(){
+        document.getElementById('timeDur').textContent = fmt(audioState.audio.duration);
+      });
+      audioState.audio.addEventListener('timeupdate', function(){
+        if(audioState.playing){
+          var dur = audioState.audio.duration || 0;
+          var pct = dur > 0 ? (audioState.audio.currentTime / dur * 100) : 0;
+          document.getElementById('timeCur').textContent = fmt(audioState.audio.currentTime);
+          document.getElementById('progressFill').style.width = pct + '%';
+        }
+      });
+      audioState.audio.addEventListener('ended', function(){
+        audioState.playing = false;
+        updatePlayIcon();
+        setLED(false);
+      });
+      audioState.audio.addEventListener('error', function(){
+        setStatus('⚠ 音频加载失败', true);
+      });
+      setStatus('');
+      // 自动播放
+      setTimeout(function(){ togglePlay(); }, 200);
+    }catch(e){
+      setStatus('⚠ 播放失败: ' + e.message, true);
+    }
+  }
+
+  function togglePlay(){
+    if(!audioState.audio){
+      setStatus('请先选择文件', true);
+      return;
+    }
+    if(audioState.playing){
+      audioState.audio.pause();
+      audioState.playing = false;
+      setLED(false);
+    }else{
+      var p = audioState.audio.play();
+      if(p && p.then){
+        p.then(function(){
+          audioState.playing = true;
+          setLED(true);
+          updatePlayIcon();
+        }).catch(function(e){
+          setStatus('⚠ 无法播放: ' + e.message, true);
+        });
+      }else{
+        audioState.playing = true;
+        setLED(true);
+      }
+    }
+    updatePlayIcon();
+  }
+
+  function updatePlayIcon(){
+    var icon = document.getElementById('playIcon');
+    if(!icon) return;
+    if(audioState.playing){
+      icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+    }else{
+      icon.innerHTML = '<polygon points="6 4 20 12 6 20 6 4"/>';
+    }
+  }
+
+  // 进度条
+  document.getElementById('progressBar').addEventListener('click', function(e){
+    if(!audioState.audio || !audioState.audio.duration) return;
+    var rect = this.getBoundingClientRect();
+    var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audioState.audio.currentTime = pct * audioState.audio.duration;
+    document.getElementById('progressFill').style.width = (pct*100) + '%';
+  });
+
+  document.getElementById('playBtn').addEventListener('click', togglePlay);
+
+  // ═══ 视频播放 ═══
+  window.playVideo = function(file){
+    try{
+      if(audioState.audio && audioState.playing){
+        audioState.audio.pause();
+        audioState.playing = false;
+        setLED(false);
+        updatePlayIcon();
+      }
+      var url = URL.createObjectURL(file);
+      var video = document.getElementById('videoEl');
+      video.src = url;
+      document.getElementById('videoTitle').textContent = file.name;
+      document.getElementById('videoSection').classList.add('show');
+      video.addEventListener('loadedmetadata', function(){
+        document.getElementById('videoDur').textContent = fmt(video.duration);
+      }, {once:true});
+      video.addEventListener('timeupdate', function(){
+        var dur = video.duration || 0;
+        var pct = dur > 0 ? (video.currentTime / dur * 100) : 0;
+        document.getElementById('videoCur').textContent = fmt(video.currentTime);
+        document.getElementById('videoFill').style.width = pct + '%';
+      });
+      video.addEventListener('ended', function(){
+        videoState.playing = false;
+        updateVideoIcon();
+      });
+      // 自动播放
+      setTimeout(function(){ toggleVideo(); }, 200);
+    }catch(e){
+      setStatus('⚠ 视频播放失败: ' + e.message, true);
+    }
+  };
+
+  window.closeVideo = function(){
+    var video = document.getElementById('videoEl');
+    var section = document.getElementById('videoSection');
+    if(video){ try{ video.pause(); video.src=''; }catch(_){} }
+    section.classList.remove('show');
+    videoState.playing = false;
+  };
+
+  window.toggleVideo = function(){
+    var video = document.getElementById('videoEl');
+    if(!video || !video.src) return;
+    if(videoState.playing){
+      video.pause();
+      videoState.playing = false;
+    }else{
+      var p = video.play();
+      if(p && p.then){
+        p.then(function(){ videoState.playing = true; updateVideoIcon(); }).catch(function(){});
+      }else{
+        videoState.playing = true;
+      }
+    }
+    updateVideoIcon();
+  };
+
+  function updateVideoIcon(){
+    var icon = document.getElementById('videoIcon');
+    if(!icon) return;
+    if(videoState.playing){
+      icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+    }else{
+      icon.innerHTML = '<polygon points="6 4 20 12 6 20 6 4"/>';
+    }
+  }
+
+  window.videoSeek = function(sec){
+    var video = document.getElementById('videoEl');
+    if(video && video.duration){
+      video.currentTime = Math.max(0, Math.min(video.duration, video.currentTime + sec));
+    }
+  };
+
+  window.setRate = function(rate){
+    var video = document.getElementById('videoEl');
+    if(video) video.playbackRate = parseFloat(rate);
+  };
+
+  window.toggleFullscreen = function(){
+    var video = document.getElementById('videoEl');
+    if(!video) return;
+    if(document.fullscreenElement){
+      document.exitFullscreen();
+    }else if(video.webkitEnterFullscreen){
+      video.webkitEnterFullscreen();
+    }else{
+      video.requestFullscreen().catch(function(){});
+    }
+  };
+
+  // 视频进度条
+  document.getElementById('videoProgress').addEventListener('click', function(e){
+    var video = document.getElementById('videoEl');
+    if(!video || !video.duration) return;
+    var rect = this.getBoundingClientRect();
+    var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    video.currentTime = pct * video.duration;
+  });
+
+  // 阻止双指缩放
+  document.addEventListener('gesturestart', function(e){ e.preventDefault(); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+[
+  { "file": "feature_goto_engine.md", "title": "GOTO Engine", "category": "核心组件" },
+  { "file": "feature_goto_base.md", "title": "GOTO Base", "category": "核心组件" },
+  { "file": "feature_goto_where.md", "title": "GOTO Where", "category": "核心组件" },
+  { "file": "goto_engine_intro.md", "title": "引擎介绍", "category": "引擎" },
+  { "file": "goto_extensions.md", "title": "扩展系统", "category": "引擎" },
+  { "file": "plugin_guide.md", "title": "插件指南", "category": "引擎" }
+]

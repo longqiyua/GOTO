@@ -1,0 +1,1852 @@
+/*
+ * GOTO Preview authority layer
+ * ----------------------------
+ * 本文件是预览页最终视觉规则。旧版样式暂时保留在 preview.html 中，
+ * 后续重构均从这里进入，避免继续在 2 万行单文件中叠加互相覆盖的规则。
+ */
+
+/* 00. 统一视觉令牌：唯一强调色、三级圆角、两级材质阴影。 */
+:root {
+  --goto-radius-control: 9px;
+  --goto-radius-card: 12px;
+  --goto-radius-shell: 16px;
+  --goto-shadow-soft: 0 4px 12px rgba(23,24,28,.07), 0 1px 2px rgba(23,24,28,.05);
+  --goto-shadow-material: 0 6px 18px rgba(23,24,28,.075), 0 1px 4px rgba(23,24,28,.05), inset 0 1px 0 rgba(255,255,255,.52);
+}
+.search-card { border-radius: var(--goto-radius-shell) !important; }
+.slot-card,.section-card,.sub-card,.stats-card-slot,.sc-ready-hint { border-radius: var(--goto-radius-card) !important; }
+button,input,.result-row,.custom-app-option,.custom-search-control { border-radius: var(--goto-radius-control); }
+.index-add-toggle,.accent-add-toggle,.custom-add-toggle { border-color: var(--accent) !important; background: var(--accent) !important; color: var(--accent-ink,#fff) !important; }
+
+/* 二级页顶栏固定在内部滚动区顶部，返回入口始终可见且避开状态栏。 */
+.bp-top-bar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 90 !important;
+  padding-top: 12px !important;
+  background: color-mix(in srgb,var(--bg) 90%,transparent) !important;
+  backdrop-filter: blur(14px) saturate(1.08);
+  -webkit-backdrop-filter: blur(14px) saturate(1.08);
+}
+
+/* 01. 取消大卡片标题装饰与快捷索引左侧竖线。 */
+.section-card > .sec-header,
+.section-card > .sec-header:first-child {
+  padding-left: 0 !important;
+}
+.section-card > .sec-header::before,
+.section-card > .sec-header::after,
+.stats-card-head::before,
+.stats-hero-head::before,
+.sec-title::before,
+.sec-title::after,
+#addIndexBtn::before,
+#addIndexBtn::after,
+#addIndexBtn .inline-editor::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* 02. 扁平模式：朴素但不简陋，以五级灰阶、细边界和空间建立层级。 */
+body.simple-mode:not(.light-sense) {
+  --flat-canvas: color-mix(in srgb, var(--surface) 96%, var(--ink) 4%);
+  --flat-panel: color-mix(in srgb, var(--surface) 99%, var(--ink) 1%);
+  --flat-control: color-mix(in srgb, var(--surface) 93%, var(--ink) 7%);
+  --flat-rule: color-mix(in srgb, var(--ink) 15%, transparent);
+  --flat-rule-strong: color-mix(in srgb, var(--ink) 24%, transparent);
+}
+body.dark.simple-mode:not(.light-sense) {
+  --flat-canvas: #202126;
+  --flat-panel: #28292f;
+  --flat-control: #303137;
+  --flat-rule: rgba(255,255,255,.12);
+  --flat-rule-strong: rgba(255,255,255,.2);
+}
+body.simple-mode:not(.light-sense) .section-card,
+body.simple-mode:not(.light-sense) .slot-card,
+body.simple-mode:not(.light-sense) .sub-card,
+body.simple-mode:not(.light-sense) .stats-card-slot {
+  background: var(--flat-panel) !important;
+  background-image: none !important;
+  border: 1px solid var(--flat-rule) !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+body.simple-mode:not(.light-sense) .section-card {
+  border-color: var(--flat-rule-strong) !important;
+  border-radius: 14px !important;
+}
+body.simple-mode:not(.light-sense) .section-card::after,
+body.simple-mode:not(.light-sense) .slot-card::after,
+body.simple-mode:not(.light-sense) .sub-card::after,
+body.simple-mode:not(.light-sense) .stats-card-slot::after,
+body.simple-mode:not(.light-sense) .sc-ready-hint::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* 03. 首页搜索：搜索框是唯一主体，首次点击后作为同一个表面向下展开。 */
+.search-container {
+  padding-inline: 5px !important;
+}
+body.slot-collapsed .search-container,
+body.slot-collapsed .search-container.is-active,
+body.slot-collapsed .search-container:has(.search-card.is-focused),
+body.slot-collapsed .search-container:has(.search-card.has-results) {
+  padding-inline: 5px !important;
+}
+body.simple-mode:not(.light-sense) .search-card {
+  width: 100% !important;
+  height: 82px !important;
+  min-height: 82px !important;
+  max-height: 82px !important;
+  padding: 12px 13px !important;
+  border: 1px solid var(--flat-rule-strong) !important;
+  border-radius: 16px !important;
+  background: var(--flat-panel) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  transition:
+    height .82s cubic-bezier(.16,1.14,.3,1),
+    min-height .82s cubic-bezier(.16,1.14,.3,1),
+    max-height .82s cubic-bezier(.16,1.14,.3,1),
+    padding .72s cubic-bezier(.18,1.08,.32,1),
+    border-color .28s ease,
+    transform .82s cubic-bezier(.16,1.14,.3,1) !important;
+}
+body.simple-mode:not(.light-sense) .search-card::before,
+body.simple-mode:not(.light-sense) .search-card::after {
+  content: none !important;
+  display: none !important;
+}
+body.simple-mode:not(.light-sense) .search-card .sc-input-row {
+  min-height: 56px !important;
+  height: 56px !important;
+  padding: 0 7px 0 4px;
+  gap: 12px !important;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  transition: background .28s ease !important;
+}
+.sc-search-icon {
+  width: 22px;
+  height: 22px;
+  margin-left: 3px;
+  flex: 0 0 22px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  opacity: .82;
+}
+.sc-search-icon svg {
+  width: 19px;
+  height: 19px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body.simple-mode:not(.light-sense) .search-card.is-focused .sc-input-row,
+body.simple-mode:not(.light-sense) .search-card.has-results .sc-input-row {
+  background: transparent !important;
+}
+body.simple-mode:not(.light-sense) .sc-input {
+  height: 100%;
+  padding-inline: 8px !important;
+  color: var(--ink) !important;
+  font-size: 16px !important;
+  font-weight: 560 !important;
+  letter-spacing: .005em !important;
+}
+body.simple-mode:not(.light-sense) .sc-acts {
+  width: 34px !important;
+  height: 34px !important;
+  border: 1px solid var(--flat-rule) !important;
+  border-radius: 9px !important;
+  background: var(--flat-panel) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) .sc-acts:hover {
+  border-color: color-mix(in srgb, var(--accent) 58%, var(--flat-rule)) !important;
+  color: var(--accent) !important;
+  transform: none !important;
+}
+body.simple-mode:not(.light-sense) .search-card.is-focused:not(.has-results) {
+  height: 130px !important;
+  min-height: 130px !important;
+  max-height: 130px !important;
+  padding: 12px 13px 13px !important;
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--flat-rule-strong)) !important;
+}
+body.simple-mode:not(.light-sense) .search-card.is-focused:not(.has-results) .sc-results {
+  display: block !important;
+  height: 60px !important;
+  min-height: 60px !important;
+  max-height: 60px !important;
+  margin-top: 6px !important;
+  padding: 0 !important;
+  opacity: 1 !important;
+  overflow: hidden !important;
+  animation: gotoReminderReveal .78s cubic-bezier(.16,1.12,.3,1) both !important;
+}
+body.simple-mode:not(.light-sense) .search-card:not(.is-focused):not(.has-results) .sc-results,
+body.simple-mode:not(.light-sense) .search-card:not(.is-focused):not(.has-results) #readyHint {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+}
+body.simple-mode:not(.light-sense) .sc-ready-hint {
+  width: 100% !important;
+  min-height: 60px !important;
+  height: 60px !important;
+  padding: 8px 12px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) .sc-ready-pred-item {
+  min-width: 44px;
+  min-height: 30px;
+  padding: 6px 9px !important;
+  border: 1px solid var(--flat-rule) !important;
+  border-radius: 8px !important;
+  background: var(--flat-panel) !important;
+  color: var(--ink) !important;
+}
+.sc-ready-pred-item {
+  appearance: none;
+  -webkit-appearance: none;
+  font: 650 10px var(--font-cn);
+  cursor: pointer;
+  pointer-events: auto !important;
+  transition: border-color .22s ease,background-color .22s ease,transform .16s ease !important;
+}
+#scReadyPredApps .sc-ready-pred-item {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+.sc-ready-pred-item:hover { border-color: color-mix(in srgb,var(--accent) 40%,var(--line)) !important; }
+.sc-ready-pred-item:active { transform: scale(.96); }
+@keyframes gotoReminderReveal {
+  0% { opacity: 0; transform: translateY(-8px); clip-path: inset(0 0 100% 0 round 11px); }
+  58% { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0 round 11px); }
+}
+@keyframes gotoResultSettle {
+  0% { opacity: 0; transform: translateY(-7px) scale(.992); }
+  68% { opacity: 1; transform: translateY(1px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.search-card.has-results .result-row {
+  animation: gotoResultSettle .5s cubic-bezier(.18,1.12,.3,1) both;
+}
+
+/* 聚焦态拆成两个独立卡片：输入卡 + 智能提醒卡，外层只负责动画与布局。 */
+body.simple-mode:not(.light-sense) .search-card.is-focused:not(.has-results),
+body.neumorphic-mode:not(.light-sense) .search-card.is-focused:not(.has-results),
+body.light-sense .search-card.is-focused:not(.has-results) {
+  min-height: 130px !important;
+  max-height: 130px !important;
+  padding: 12px 13px 13px !important;
+  overflow: hidden !important;
+}
+body.simple-mode:not(.light-sense) .search-card.is-focused:not(.has-results) {
+  border-color: color-mix(in srgb,var(--accent) 34%,var(--flat-rule-strong)) !important;
+  background: var(--flat-panel) !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) .search-card.is-focused:not(.has-results) .sc-input-row,
+body.neumorphic-mode:not(.light-sense) .search-card.is-focused:not(.has-results) .sc-input-row,
+body.light-sense .search-card.is-focused:not(.has-results) .sc-input-row {
+  min-height: 56px !important;
+  height: 56px !important;
+  padding: 0 7px 0 4px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) .search-card.is-focused:not(.has-results) .sc-results,
+body.neumorphic-mode:not(.light-sense) .search-card.is-focused:not(.has-results) .sc-results,
+body.light-sense .search-card.is-focused:not(.has-results) .sc-results {
+  margin-top: 8px !important;
+}
+body.simple-mode:not(.light-sense) .search-card.is-focused:not(.has-results) .sc-ready-hint,
+body.neumorphic-mode:not(.light-sense) .search-card.is-focused:not(.has-results) .sc-ready-hint,
+body.light-sense .search-card.is-focused:not(.has-results) .sc-ready-hint {
+  border: 1px solid var(--line) !important;
+  border-radius: 13px !important;
+  background: var(--surface-alt) !important;
+  box-shadow: none !important;
+}
+body.neumorphic-mode:not(.light-sense) .search-card.is-focused:not(.has-results) .sc-ready-hint {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.58),0 3px 10px rgba(0,0,0,.055) !important;
+}
+body.light-sense .search-card.is-focused:not(.has-results) .sc-ready-hint {
+  background: rgba(136,140,148,.28) !important;
+  border-color: rgba(255,255,255,.24) !important;
+  backdrop-filter: blur(22px) saturate(1.06) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.06) !important;
+}
+
+/* 搜索结果按数量自然延展，保持与搜索主体同宽。 */
+body.simple-mode:not(.light-sense) .search-card.has-results,
+body.neumorphic-mode:not(.light-sense) .search-card.has-results,
+body.light-sense .search-card.has-results {
+  height: var(--search-card-height,186px) !important;
+  min-height: var(--search-card-height,186px) !important;
+  max-height: var(--search-card-height,calc(100vh - 60px)) !important;
+  overflow: hidden !important;
+}
+
+/* 19. Reminder content must own its height. The fixed FOCUS height and the
+   search shell's clipping were cutting off the lower border of the reminder. */
+.search-card:has(.sc-ready-hint.has-reminder),
+.search-card.is-focused:has(.sc-ready-hint.has-reminder) {
+  height: auto !important;
+  min-height: 148px !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding-bottom: 16px !important;
+}
+.search-card:has(.sc-ready-hint.has-reminder) .sc-results,
+.search-card:has(.sc-ready-hint.has-reminder) #readyHint {
+  height: auto !important;
+  min-height: 92px !important;
+  max-height: none !important;
+  overflow: visible !important;
+  flex: 0 0 auto !important;
+}
+.search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  box-sizing: border-box !important;
+  min-height: 68px !important;
+  margin-bottom: 0 !important;
+  transform: none !important;
+}
+
+/* Standard mode: disciplined Bauhaus geometry, with one accent reserved for
+   state and action. */
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card {
+  background: var(--flat-section,#f5f5f3) !important;
+  border: 1px solid var(--flat-line-strong,#d2d2cf) !important;
+  border-radius: 13px !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card > .sec-header {
+  min-height: 34px !important;
+  margin: 0 0 6px !important;
+  padding: 6px 2px 5px !important;
+  border-bottom: 1px solid var(--flat-line,#dededb) !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card > .sec-header::before,
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card > .sec-header::after { display: none !important; content: none !important; }
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card > .sec-header .sec-title {
+  font: 760 13px/1.2 var(--font-cn) !important;
+  letter-spacing: .02em !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .sub-card {
+  background: var(--flat-sub,#fafaf8) !important;
+  border: 1px solid var(--flat-line,#dededb) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .setting-row { min-height: 44px !important; }
+body.simple-mode:not(.light-sense) #bpPanelSettings .sr-label { font-weight: 680 !important; }
+body.simple-mode:not(.light-sense) #bpPanelSettings .sr-meta { color: var(--muted) !important; font-size: 9px !important; }
+
+/* ═══ 搜索无结果空状态：覆盖 simple/neumorphic/light-sense 模式下的聚焦态高度限制 ═══ */
+.search-card.is-empty,
+body.simple-mode:not(.light-sense) .search-card.is-empty,
+body.neumorphic-mode:not(.light-sense) .search-card.is-empty,
+body.light-sense .search-card.is-empty{
+  height: var(--search-card-height,420px) !important;
+  max-height: var(--search-card-height,420px) !important;
+  min-height: 360px !important;
+  overflow: visible !important;
+}
+.search-card.is-empty .sc-results,
+body.simple-mode:not(.light-sense) .search-card.is-empty .sc-results,
+body.neumorphic-mode:not(.light-sense) .search-card.is-empty .sc-results,
+body.light-sense .search-card.is-empty .sc-results{
+  height: var(--sc-results-height,340px) !important;
+  max-height: var(--sc-results-height,340px) !important;
+  min-height: 240px !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+}
+
+/* 22. Structural authority: Standard and Material share one layout system. */
+#styleCapsule {
+  width: 116px !important;
+  grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+}
+#lightSenseCard {
+  display: block !important;
+  margin-top: 0 !important;
+}
+#bpPanelSettings .section-card {
+  width: auto !important;
+  padding: 14px 13px !important;
+  transform: none !important;
+}
+#bpPanelSettings .sub-card,
+#pioneerCard .pioneer-card,
+#pioneerCard .pioneer-subitem {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card,
+body.neumorphic-mode:not(.light-sense) #bpPanelSettings .section-card,
+body.simple-mode:not(.light-sense) #bpPanelSettings .sub-card,
+body.neumorphic-mode:not(.light-sense) #bpPanelSettings .sub-card {
+  transition: background-color .32s var(--ease-smooth),
+              border-color .32s var(--ease-smooth),
+              box-shadow .32s var(--ease-smooth),
+              color .24s ease !important;
+}
+
+/* Hierarchy comes from spacing and outer boundaries, not repeated rules. */
+#bpPanelSettings .section-card > .sec-header,
+#bpPanelSettings .sub-card > .setting-row,
+#bpPanelSettings .sub-card-header,
+#bpPanelSettings .sub-card-divider,
+#pioneerCard .pioneer-card,
+#pioneerCard .pioneer-subitem,
+#shortcutList .gs-row-v2 {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+#bpPanelSettings .section-card > .sec-header::before,
+#bpPanelSettings .section-card > .sec-header::after,
+#bpPanelSettings .sub-card::before,
+#bpPanelSettings .sub-card::after,
+#pioneerCard .pioneer-card::after,
+#pioneerCard .pioneer-subitem::after,
+#shortcutList .gs-row-v2::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Screenshot is a direct section action, without another card around it. */
+.section-footer-action {
+  display: flex;
+  width: 100%;
+  height: 36px;
+  margin: 8px 0 0;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 9px;
+  background: var(--accent);
+  color: var(--accent-ink,#fff);
+  box-shadow: none;
+  font: 700 10px/1 var(--font-cn);
+  cursor: pointer;
+  transition: filter .18s ease,transform .18s var(--ease-smooth);
+}
+.section-footer-action:hover { filter: brightness(1.04); }
+.section-footer-action:active { transform: scale(.985); }
+
+/* The reminder is a distinct card inside the expanded search surface. */
+.search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  width: calc(100% + 20px) !important;
+  max-width: calc(100% + 20px) !important;
+  margin-left: -10px !important;
+  margin-right: -10px !important;
+  box-sizing: border-box !important;
+  border: 1.2px solid color-mix(in srgb,var(--accent) 26%,var(--line-strong)) !important;
+  border-radius: 11px !important;
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  overflow: hidden !important;
+}
+body.neumorphic-mode:not(.light-sense) .search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  background: color-mix(in srgb,var(--surface) 90%,transparent) !important;
+  box-shadow: 3px 4px 10px rgba(0,0,0,.07),-2px -2px 7px rgba(255,255,255,.5) !important;
+}
+body.dark.neumorphic-mode:not(.light-sense) .search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  box-shadow: 3px 4px 10px rgba(0,0,0,.22),-2px -2px 7px rgba(255,255,255,.025) !important;
+}
+.sc-ready-hint.has-reminder .sc-ready-greeting { color: var(--ink) !important; }
+.sc-ready-hint.has-reminder .sc-ready-time { color: var(--muted) !important; }
+.sc-ready-hint.has-reminder .sc-ready-app {
+  color: var(--ink) !important;
+  border-color: var(--line-strong) !important;
+  background: var(--surface-alt) !important;
+}
+
+/* 21. Geometry is mode-independent. Material modes change finish, never size. */
+#bpPanelSettings .section-card {
+  width: auto !important;
+  max-width: none !important;
+  align-self: stretch !important;
+  padding: 14px 13px !important;
+  box-sizing: border-box !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+}
+body.neumorphic-mode #bpPanelSettings .sub-card,
+body.simple-mode #bpPanelSettings .sub-card,
+body.light-sense #bpPanelSettings .sub-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+}
+
+/* Shortcut index: one concise mode action plus the same binary switch used
+   everywhere else. Parent and child controls intentionally share geometry. */
+#shortcutSubCard .shortcut-mode-switch,
+#shortcutList .gs-mode-switch,
+#shortcutList .gs-mode-chip { display: none !important; }
+.shortcut-mode-button {
+  min-width: 38px !important;
+  height: 24px !important;
+  padding: 0 9px !important;
+  border: 1px solid color-mix(in srgb,var(--accent) 36%,var(--line-strong)) !important;
+  border-radius: 7px !important;
+  background: color-mix(in srgb,var(--accent) 9%,var(--surface)) !important;
+  color: color-mix(in srgb,var(--accent) 78%,var(--ink)) !important;
+  box-shadow: none !important;
+  font: 700 9px/1 var(--font-cn) !important;
+  white-space: nowrap !important;
+  cursor: pointer;
+}
+.shortcut-mode-button:active { transform: scale(.96) !important; }
+#shortcutToggle,
+#shortcutList .gs-mini-toggle {
+  width: 36px !important;
+  height: 20px !important;
+  min-width: 36px !important;
+  flex: 0 0 36px !important;
+  border-radius: 10px !important;
+}
+#shortcutToggle::before,
+#shortcutList .gs-mini-toggle::before { display: none !important; content: none !important; }
+#shortcutList .gs-row-v2 {
+  grid-template-columns: 32px minmax(0,1fr) auto 36px !important;
+  gap: 8px !important;
+  min-height: 58px !important;
+  padding: 9px 10px !important;
+}
+#shortcutList .gs-body { min-width: 0 !important; }
+#shortcutList .gs-name,
+#shortcutList .gs-desc { overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
+
+/* Remove internal/card-bottom rules. Outer boundaries remain for hierarchy. */
+#bpPanelSettings .sub-card-divider,
+#bpPanelSettings .setting-row,
+#shortcutList .gs-row-v2,
+#shortcutSubCard .sub-card-header,
+#pioneerCard .pioneer-card,
+#pioneerCard .pioneer-subitem {
+  border-bottom: 0 !important;
+}
+#bpPanelSettings .sub-card::after,
+#shortcutList .gs-row-v2::after,
+#pioneerCard .pioneer-card::after,
+#pioneerCard .pioneer-subitem::after { display: none !important; content: none !important; }
+
+/* Reminder fills the search extension while retaining a small optical inset. */
+.search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  width: calc(100% + 14px) !important;
+  max-width: calc(100% + 14px) !important;
+  margin-left: -7px !important;
+  margin-right: -7px !important;
+  padding: 14px 16px !important;
+}
+
+/* Contrast contract: ordinary copy follows the current surface, while text on
+   the accent follows the computed black/white accent ink token. */
+#bpPanelSettings .sec-title,
+#bpPanelSettings .sub-card-title,
+#bpPanelSettings .sr-label,
+#shortcutList .gs-name,
+.sc-ready-greeting { color: var(--ink) !important; }
+#bpPanelSettings .sr-meta,
+#shortcutList .gs-desc,
+.sc-ready-time { color: var(--muted) !important; }
+.toggle-switch.on,
+.pioneer-toggle.on,
+.index-add-toggle,
+.accent-add-toggle,
+.primary-btn,
+.sie-save-btn { color: var(--accent-ink,#fff) !important; }
+body.dark .shortcut-mode-button,
+body.light-sense.light-sense-dark .shortcut-mode-button {
+  color: color-mix(in srgb,var(--accent) 54%,var(--ink)) !important;
+  background: color-mix(in srgb,var(--accent) 14%,var(--surface)) !important;
+}
+body.simple-mode:not(.light-sense) .search-card.has-results .sc-results,
+body.neumorphic-mode:not(.light-sense) .search-card.has-results .sc-results,
+body.light-sense .search-card.has-results .sc-results {
+  height: var(--sc-results-height,112px) !important;
+  min-height: var(--sc-results-height,112px) !important;
+  max-height: var(--sc-results-height,112px) !important;
+}
+body.simple-mode:not(.light-sense) .search-card.has-results {
+  padding: 12px 13px 13px !important;
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--flat-rule-strong)) !important;
+  background: var(--flat-panel) !important;
+}
+body.simple-mode:not(.light-sense) .search-card.has-results .sc-results {
+  margin-top: 8px !important;
+  padding: 0 !important;
+  border: 1px solid var(--flat-rule) !important;
+  border-radius: 11px;
+  background: var(--flat-canvas);
+}
+body.simple-mode:not(.light-sense) .result-row {
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--flat-rule) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) .result-row:last-child { border-bottom: 0 !important; }
+
+/* 04. 快捷索引编辑：三个独立、等宽、可扫描的控制块。 */
+#addIndexBtn.index-add-card {
+  margin-top: 10px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 12px !important;
+  background: var(--surface) !important;
+}
+#addIndexBtn.index-add-card.expanded {
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--line)) !important;
+  box-shadow: none !important;
+}
+#addIndexBtn .index-add-head {
+  height: 48px !important;
+  padding: 0 12px 0 15px !important;
+  font-size: 12px !important;
+}
+#addIndexBtn .inline-editor {
+  padding: 0 12px 12px !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#addIndexBtn .inline-form {
+  display: grid !important;
+  gap: 8px !important;
+}
+#addIndexBtn .inline-field,
+#addIndexBtn .sie-search-wrap,
+#addIndexBtn .sie-mode-row {
+  min-height: 52px !important;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  display: grid !important;
+  grid-template-columns: 72px minmax(0,1fr) !important;
+  align-items: center !important;
+  gap: 10px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  background: var(--surface-alt) !important;
+}
+#addIndexBtn label,
+#addIndexBtn .so-key-label,
+#addIndexBtn .sie-mode-label {
+  margin: 0 !important;
+  color: var(--ink-soft) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .02em !important;
+}
+#addIndexBtn .inline-field input,
+#addIndexBtn .gss-search {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+#addIndexBtn .inline-field input,
+#addIndexBtn .gss-search input {
+  height: 34px !important;
+  padding: 0 10px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+#addIndexBtn .inline-field input:focus,
+#addIndexBtn .gss-search input:focus {
+  border-color: color-mix(in srgb, var(--accent) 58%, var(--line)) !important;
+  outline: 2px solid color-mix(in srgb, var(--accent) 13%, transparent) !important;
+}
+#addIndexBtn .gss-search-dot { display: none !important; }
+#addIndexBtn .sie-mode-capsule {
+  width: 100%;
+  height: 34px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+#addIndexBtn .sie-mode-capsule .smc-opt {
+  min-width: 0;
+  border-radius: 6px !important;
+  font-size: 9px !important;
+}
+#addIndexBtn .sie-mode-capsule .smc-opt.active {
+  background: var(--accent) !important;
+  color: var(--accent-ink,#fff) !important;
+  box-shadow: none !important;
+}
+#addIndexBtn .sie-results {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 9px !important;
+  background: var(--surface-alt) !important;
+  box-shadow: none !important;
+}
+#addIndexBtn .sie-selected {
+  min-height: 40px;
+  margin: 0 !important;
+  padding: 7px 10px !important;
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--line)) !important;
+  border-radius: 9px !important;
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface)) !important;
+}
+#addIndexBtn .sie-actions { margin-top: 4px !important; }
+#addIndexBtn #sieSaveBtn {
+  width: 100% !important;
+  height: 40px !important;
+  border-radius: 9px !important;
+  font-size: 11px !important;
+  box-shadow: none !important;
+}
+#addIndexBtn #sieDeleteBtn { margin-bottom: 5px !important; }
+body.simple-mode:not(.light-sense) #addIndexBtn,
+body.simple-mode:not(.light-sense) #addIndexBtn .inline-field,
+body.simple-mode:not(.light-sense) #addIndexBtn .sie-search-wrap,
+body.simple-mode:not(.light-sense) #addIndexBtn .sie-mode-row {
+  border-color: var(--flat-rule) !important;
+  box-shadow: none !important;
+}
+
+/* 05. 数据与统计：控件使用统一密度，不让“可用”停留在按钮文案层。 */
+#dataMgmtCard .cd-ext { padding: 0 10px 11px !important; }
+#dataMgmtCard .cd-grid { gap: 7px !important; }
+#dataMgmtCard .cd-ie-btn {
+  min-height: 36px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  background: var(--surface-alt) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+#dataMgmtCard .cd-ie-btn:hover {
+  border-color: color-mix(in srgb, var(--accent) 46%, var(--line)) !important;
+  color: var(--accent) !important;
+  transform: none !important;
+}
+#bpPanelStats .stats-card-slot {
+  min-height: 118px !important;
+  padding: 13px !important;
+  border-radius: 10px !important;
+}
+#bpPanelStats .stats-hero-row { align-items: stretch; }
+#bpPanelStats .scs-head { min-height: 27px; }
+#bpPanelStats .scs-num { margin-top: 3px; }
+
+/* 06. 小屏与英文状态保持呼吸感。 */
+body.lang-en #addIndexBtn .inline-field,
+body.lang-en #addIndexBtn .sie-search-wrap,
+body.lang-en #addIndexBtn .sie-mode-row {
+  grid-template-columns: 86px minmax(0,1fr) !important;
+}
+body.lang-en #addIndexBtn label,
+body.lang-en #addIndexBtn .so-key-label,
+body.lang-en #addIndexBtn .sie-mode-label {
+  line-height: 1.25 !important;
+}
+@media (max-width: 720px) {
+  .search-container { padding-inline: 4px !important; }
+  #addIndexBtn .inline-field,
+  #addIndexBtn .sie-search-wrap,
+  #addIndexBtn .sie-mode-row { grid-template-columns: 68px minmax(0,1fr) !important; }
+}
+
+/* 07. 首页自定义应用：卡片自身延展，统一“圆形加号 → X”动作语法。 */
+#customCard .slot-card-head {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.custom-add-toggle {
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink,#fff);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: none;
+}
+.custom-add-toggle:disabled { opacity: .35; cursor: not-allowed; }
+.custom-add-toggle svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: transform .42s cubic-bezier(.22,1,.36,1);
+}
+#customCard.custom-editor-open .custom-add-toggle svg { transform: rotate(45deg); }
+#customCard .add-custom-panel {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--goto-radius-card);
+  background: var(--surface-alt);
+  box-shadow: none;
+  animation: customEditorReveal .48s cubic-bezier(.22,1,.36,1) both;
+}
+#customCard.custom-editor-open { overflow: visible !important; }
+#customCard.custom-editor-open .add-custom-panel {
+  display: flex !important;
+  flex-direction: column;
+  width: 100%;
+  max-height: 356px;
+  overflow: hidden;
+}
+.home-cluster:has(#customCard.custom-editor-open) .shortcut-zone {
+  flex: 1 1 auto !important;
+  max-height: none !important;
+  padding-bottom: 22px !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  scroll-padding-bottom: 22px;
+}
+@keyframes customEditorReveal {
+  from { opacity: 0; transform: translateY(-7px); clip-path: inset(0 0 100% 0 round 11px); }
+  to { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0 round 11px); }
+}
+.custom-search-control {
+  height: 38px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+}
+.custom-search-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  color: var(--muted);
+}
+.custom-search-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+#customCard .custom-search-control input {
+  width: 100%;
+  min-width: 0;
+  height: 36px;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  color: var(--ink);
+  box-shadow: none !important;
+  font: 500 11px var(--font-cn);
+}
+.custom-app-list {
+  min-height: 0;
+  max-height: 236px;
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.custom-app-option {
+  min-width: 0;
+  height: 42px;
+  padding: 6px 8px;
+  display: grid;
+  grid-template-columns: 25px minmax(0,1fr) 14px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: none;
+}
+.custom-app-option.selected {
+  border-color: color-mix(in srgb,var(--accent) 58%,var(--line));
+  background: color-mix(in srgb,var(--accent) 6%,var(--surface));
+}
+.custom-app-option-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 750;
+}
+.custom-app-option-icon img { width: 100%; height: 100%; object-fit: cover; }
+.custom-app-option-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; font-size: 10px; font-weight: 650; }
+.custom-app-option-mark { color: var(--muted); opacity: .52; font-size: 13px; font-weight: 700; }
+.custom-app-option.selected .custom-app-option-mark { color: var(--accent); opacity: 1; font-size: 15px; }
+.custom-app-empty,.custom-grid-empty {
+  grid-column: 1/-1;
+  min-height: 46px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 9px;
+}
+#customCard .acp-footer {
+  margin-top: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+.custom-selection-count { align-self:flex-end;color: var(--muted); font: 600 9px var(--font-mono); }
+#customCard .acp-btn-add {
+  display: block !important;
+  align-self: stretch !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: none !important;
+  height: 38px;
+  border: 0;
+  border-radius: var(--goto-radius-control);
+  background: var(--accent);
+  color: var(--accent-ink,#fff);
+  font: 750 11px var(--font-cn);
+  box-shadow: none;
+}
+.custom-slot-item { position: relative; min-width: 0; }
+.custom-slot-item > .si { padding-right: 22px; }
+.custom-slot-remove {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 3;
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  font: 600 12px/17px var(--font-cn);
+  cursor: pointer;
+  opacity: .76;
+}
+.custom-slot-remove:hover { background: var(--accent); color: var(--accent-ink,#fff); opacity: 1; }
+body.simple-mode:not(.light-sense) #customCard .add-custom-panel,
+body.simple-mode:not(.light-sense) .custom-app-option,
+body.simple-mode:not(.light-sense) .custom-search-control { box-shadow: none !important; border-color: var(--flat-rule) !important; }
+
+/* 标准模式靠边界和灰阶建立秩序；质态模式才使用 Material 式高度与柔和投影。 */
+body.simple-mode:not(.light-sense) .search-card,
+body.simple-mode:not(.light-sense) .slot-card,
+body.simple-mode:not(.light-sense) .section-card,
+body.simple-mode:not(.light-sense) .sub-card,
+body.simple-mode:not(.light-sense) .result-row,
+body.simple-mode:not(.light-sense) .sc-ready-hint {
+  box-shadow: none !important;
+}
+body.neumorphic-mode:not(.light-sense) .search-card,
+body.neumorphic-mode:not(.light-sense) .slot-card,
+body.neumorphic-mode:not(.light-sense) .section-card,
+body.neumorphic-mode:not(.light-sense) .sub-card,
+body.neumorphic-mode:not(.light-sense) .result-row,
+body.neumorphic-mode:not(.light-sense) .sc-ready-hint {
+  border: 1px solid color-mix(in srgb,var(--ink) 9%,transparent) !important;
+  box-shadow: var(--goto-shadow-material) !important;
+}
+body.neumorphic-mode:not(.light-sense) #bpPanelSettings .section-card,
+body.neumorphic-mode:not(.light-sense) #bpPanelStats .section-card {
+  box-shadow: var(--goto-shadow-material) !important;
+}
+body.dark.neumorphic-mode:not(.light-sense) .search-card,
+body.dark.neumorphic-mode:not(.light-sense) .slot-card,
+body.dark.neumorphic-mode:not(.light-sense) .section-card,
+body.dark.neumorphic-mode:not(.light-sense) .sub-card,
+body.dark.neumorphic-mode:not(.light-sense) .result-row,
+body.dark.neumorphic-mode:not(.light-sense) .sc-ready-hint {
+  border-color: rgba(255,255,255,.1) !important;
+  box-shadow: 0 7px 20px rgba(0,0,0,.18),0 1px 4px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+body.dark.neumorphic-mode:not(.light-sense) #bpPanelSettings .section-card,
+body.dark.neumorphic-mode:not(.light-sense) #bpPanelStats .section-card {
+  box-shadow: 0 7px 20px rgba(0,0,0,.18),0 1px 4px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+
+/* 08. 质态搜索：严格两层 Material 表面，容器尺寸跟随内容，不产生空白夹层。 */
+body.neumorphic-mode:not(.light-sense) #searchCard:not(.is-focused):not(.has-results) {
+  height: 82px !important;
+  min-height: 82px !important;
+  max-height: 82px !important;
+  padding: 12px 13px !important;
+  justify-content: center !important;
+}
+body.neumorphic-mode:not(.light-sense) #searchCard.is-focused:not(.has-results) {
+  height: 160px !important;
+  min-height: 160px !important;
+  max-height: 160px !important;
+  padding: 12px 13px !important;
+  justify-content: flex-start !important;
+  background: var(--surface) !important;
+  border-color: color-mix(in srgb,var(--accent) 18%,var(--line)) !important;
+  box-shadow: 0 5px 16px rgba(23,24,28,.075),0 1px 4px rgba(23,24,28,.045),inset 0 1px 0 rgba(255,255,255,.56) !important;
+}
+body.neumorphic-mode:not(.light-sense) #searchCard.is-focused:not(.has-results)::after,
+body.neumorphic-mode:not(.light-sense) #searchCard.is-focused:not(.has-results)::before {
+  content: none !important;
+  display: none !important;
+}
+body.neumorphic-mode:not(.light-sense) #searchCard.is-focused:not(.has-results) .sc-input-row {
+  flex: 0 0 56px !important;
+  min-height: 56px !important;
+  height: 56px !important;
+}
+body.neumorphic-mode:not(.light-sense) #searchCard.is-focused:not(.has-results) #searchResults {
+  flex: 0 0 72px !important;
+  width: 100% !important;
+  height: 72px !important;
+  min-height: 72px !important;
+  max-height: 72px !important;
+  margin-top: 8px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: var(--goto-radius-card) !important;
+  box-shadow: none !important;
+}
+body.neumorphic-mode:not(.light-sense) #searchCard.is-focused:not(.has-results) #readyHint {
+  width: 100% !important;
+  height: 72px !important;
+  min-height: 72px !important;
+  max-height: 72px !important;
+  padding: 13px 15px !important;
+  border-radius: var(--goto-radius-card) !important;
+  background: var(--surface-alt) !important;
+  border: 1px solid color-mix(in srgb,var(--ink) 8%,transparent) !important;
+  box-shadow: 0 2px 7px rgba(23,24,28,.05),inset 0 1px 0 rgba(255,255,255,.5) !important;
+}
+body.dark.neumorphic-mode:not(.light-sense) #searchCard.is-focused:not(.has-results) {
+  background: var(--surface) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,.18),0 1px 4px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+body.dark.neumorphic-mode:not(.light-sense) #searchCard.is-focused:not(.has-results) #readyHint {
+  border-color: rgba(255,255,255,.09) !important;
+  box-shadow: 0 2px 7px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.045) !important;
+}
+
+
+/* 11. HAC 自适应刷新：开关即延展，开启期间常驻。 */
+#adaptiveCard { overflow: hidden !important; }
+#adaptiveCard #adaptiveExtendPanel {
+  margin: 0 10px 10px !important;
+  padding: 14px !important;
+  border-top: 1px solid color-mix(in srgb,var(--ink) 10%,transparent) !important;
+  background: color-mix(in srgb,var(--surface-alt) 82%,transparent) !important;
+  border-radius: 0 0 var(--goto-radius-card) var(--goto-radius-card) !important;
+}
+#adaptiveCard.is-open #adaptiveExtendPanel { display: block !important; }
+#adaptiveCard #adaptiveExtendPanel.adaptive-reveal { animation: adaptivePanelReveal 480ms cubic-bezier(.2,.78,.2,1) both; }
+#adaptiveCard #adaptiveExtendPanel.adaptive-hide { animation: adaptivePanelHide 320ms cubic-bezier(.4,0,.2,1) both; }
+@keyframes adaptivePanelReveal { from { opacity: 0; transform: translateY(-7px) scaleY(.96); } to { opacity: 1; transform: translateY(0) scaleY(1); } }
+@keyframes adaptivePanelHide { from { opacity: 1; transform: translateY(0) scaleY(1); } to { opacity: 0; transform: translateY(-5px) scaleY(.97); } }
+.adaptive-panel-head,.adaptive-control-row,.adaptive-slider-block label,.adaptive-actions {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.adaptive-panel-head { gap: 12px; margin-bottom: 11px; }
+.adaptive-panel-title { color: var(--ink); font-size: 13px; font-weight: 750; }
+.adaptive-panel-sub { margin-top: 3px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.adaptive-live-state {
+  flex: 0 0 auto; padding: 5px 8px; border-radius: 7px;
+  color: var(--accent); background: color-mix(in srgb,var(--accent) 9%,transparent);
+  border: 1px solid color-mix(in srgb,var(--accent) 18%,transparent); font-size: 9px; font-weight: 700;
+}
+.adaptive-sample-strip { display: grid; grid-template-columns: repeat(5,1fr); gap: 5px; margin-bottom: 10px; }
+.adaptive-sample-strip span {
+  height: 24px; display: grid; place-items: center; border: 1px solid var(--line);
+  border-radius: 7px; color: var(--muted); background: var(--surface); font: 650 9px/1 var(--font-en);
+}
+.adaptive-sample-strip span.valid { color: var(--ink-soft); border-color: color-mix(in srgb,var(--accent) 18%,var(--line)); }
+.adaptive-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 12px; }
+.adaptive-metrics div { padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.adaptive-metrics span { display: block; color: var(--muted); font: 600 9px/1 var(--font-en); }
+.adaptive-metrics b { display: block; margin-top: 5px; color: var(--ink); font: 700 12px/1 var(--font-en); }
+.adaptive-control-row { min-height: 46px; padding: 0 2px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.adaptive-control-row strong { display: block; color: var(--ink); font-size: 12px; }
+.adaptive-control-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; }
+.mini-toggle { width: 34px; height: 20px; border: 0; border-radius: 10px; background: var(--line-strong); position: relative; cursor: pointer; }
+.mini-toggle::after { content: ''; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); transition: transform 320ms cubic-bezier(.2,.8,.2,1); }
+.mini-toggle.on { background: var(--accent); }
+.mini-toggle.on::after { transform: translateX(14px); }
+.adaptive-slider-block { display: block; padding: 11px 2px 5px; }
+.adaptive-slider-block label { margin: 0 0 5px; color: var(--ink-soft); font-size: 10px; font-weight: 650; }
+.adaptive-slider-block output { color: var(--accent); font: 700 10px/1 var(--font-en); }
+.adaptive-slider-block input[type=range] { width: 100%; margin: 0 0 11px; accent-color: var(--accent); }
+.adaptive-formula { padding: 9px 10px; border-radius: 8px; background: color-mix(in srgb,var(--ink) 4%,transparent); color: var(--muted); font: 500 9px/1.65 var(--font-en); }
+.adaptive-actions { gap: 7px; margin-top: 10px; }
+.adaptive-actions button { flex: 1; height: 34px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink-soft); font-size: 10px; font-weight: 700; cursor: pointer; }
+.adaptive-actions .adaptive-reset { background: var(--accent); border-color: var(--accent); color: var(--accent-ink,#fff); }
+body.simple-mode:not(.light-sense) #adaptiveCard #adaptiveExtendPanel { background: var(--flat-panel) !important; }
+
+/* 09. 桌面预览比例：手机约四成，文档约六成；目录克制宽度，把空间还给正文。 */
+@media (min-width: 1100px) {
+  #sandboxLeft.entered { width: 42vw !important; }
+  #sandboxRight { width: 58vw !important; }
+  #sandboxRight .doc-tree { width: 184px !important; }
+  #sandboxRight .doc-content-wrap {
+    padding: 42px clamp(28px,3.2vw,50px) 64px !important;
+  }
+  #sandboxRight .doc-content { max-width: 820px !important; }
+}
+
+/* 10. Statistics: one factual data model, one accent, and consistent empty states. */
+.stats-empty-state,
+#trendChart:empty::before,
+#timePeriodBars:empty::before,
+#hourlyBars:empty::before,
+#gcBars:empty::before {
+  min-height: 84px;
+  display: grid;
+  place-items: center;
+  color: var(--muted) !important;
+  opacity: .58;
+  font-family: 'JetBrains Mono',var(--font-mono),monospace !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: .08em !important;
+  line-height: 1 !important;
+  text-transform: lowercase !important;
+}
+#trendChart:empty::before,
+#timePeriodBars:empty::before,
+#hourlyBars:empty::before,
+#gcBars:empty::before { content: "null" !important; }
+.stats-card-period {
+  color: var(--muted);
+  font: 650 9px/1 var(--font-mono);
+  letter-spacing: .08em;
+}
+#bpPanelStats .stats-card-slot {
+  background-image: linear-gradient(145deg,color-mix(in srgb,var(--accent) 3%,transparent),transparent 54%) !important;
+}
+#bpPanelStats .scs-progress-fill,
+#bpPanelStats .scs-dual-bar,
+#bpPanelStats .scs-bar-row-fill,
+#bpPanelStats .gc-bar-fill {
+  background: linear-gradient(90deg,color-mix(in srgb,var(--accent) 42%,var(--surface-alt)),var(--accent)) !important;
+}
+#bpPanelStats .stats-thanks {
+  background: color-mix(in srgb,var(--surface) 94%,var(--accent) 6%) !important;
+  border: 1px solid color-mix(in srgb,var(--accent) 20%,var(--line)) !important;
+  box-shadow: none !important;
+}
+#bpPanelStats .stats-thanks::before,
+#bpPanelStats .stats-thanks::after { content: none !important; animation: none !important; }
+#bpPanelStats .stats-thanks-idle-progress-icon { filter: none !important; animation: none !important; }
+#bpPanelStats .stats-thanks-idle-progress-icon svg { fill: none !important; stroke: var(--accent) !important; stroke-width: 1.8 !important; stroke-linecap: round; }
+#bpPanelStats .stats-thanks-idle-progress-ring .stp-fill { filter: none !important; }
+.stats-thanks-date-label {
+  color: var(--ink) !important;
+  font-size: 14px !important;
+  font-weight: 780 !important;
+  letter-spacing: .01em !important;
+}
+.stats-thanks-date-val { margin-top: 7px; color: var(--muted) !important; font-family: var(--font-mono) !important; }
+.stats-thanks-companion-lbl { color: var(--muted) !important; }
+.stats-thanks-companion-val #stRegDaysVal { font-size: 30px !important; line-height: 1 !important; letter-spacing: -.04em; }
+.trend-chart-line-search { stroke: color-mix(in srgb,var(--accent) 42%,var(--ink-soft)); }
+.trend-chart-line-launch { stroke: var(--accent); stroke-width: 2.25; }
+.trend-chart-area { opacity: 1 !important; }
+.stats-heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(12,minmax(0,1fr));
+  gap: 7px 5px;
+  padding: 5px 1px 2px;
+}
+.stats-heat-cell { min-width: 0; display: grid; gap: 4px; justify-items: center; }
+.stats-heat-cell i {
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: 20px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  background: var(--surface-alt);
+}
+.stats-heat-cell span { min-height: 8px; color: var(--muted); font: 500 7px/1 var(--font-mono); }
+.stats-heat-cell.heat-1 i { background: color-mix(in srgb,var(--accent) 12%,var(--surface)); }
+.stats-heat-cell.heat-2 i { background: color-mix(in srgb,var(--accent) 25%,var(--surface)); }
+.stats-heat-cell.heat-3 i { background: color-mix(in srgb,var(--accent) 42%,var(--surface)); }
+.stats-heat-cell.heat-4 i { background: color-mix(in srgb,var(--accent) 66%,var(--surface)); }
+.stats-heat-cell.heat-5 i { background: var(--accent); border-color: var(--accent); }
+.hourly-ranking-list { max-height: 470px; overflow-y: auto; overscroll-behavior: contain; }
+.hourly-slot {
+  margin: 0 0 8px !important;
+  padding: 9px !important;
+  background: var(--surface-alt) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 9px !important;
+}
+.gc-bars { max-height: 430px; overflow-y: auto; overscroll-behavior: contain; gap: 7px !important; }
+.gc-bar-row {
+  min-height: 25px;
+  padding: 3px 4px !important;
+  border-radius: 7px;
+}
+.gc-bar-row.rank-1 { background: color-mix(in srgb,var(--accent) 8%,transparent); }
+.gc-bar-row.rank-2 { background: color-mix(in srgb,var(--accent) 5%,transparent); }
+.gc-bar-row.rank-3 { background: color-mix(in srgb,var(--accent) 3%,transparent); }
+.gc-bar-name { flex-basis: 84px !important; color: var(--ink-soft) !important; }
+.gc-bar-track { height: 8px !important; }
+.gc-bar-fill { background: linear-gradient(90deg,color-mix(in srgb,var(--accent) 44%,var(--surface)),var(--accent)) !important; }
+.gc-bar-fill.l1 { opacity: 1 !important; }
+.gc-bar-fill.l2 { opacity: .82 !important; }
+.gc-bar-fill.l3 { opacity: .67 !important; }
+.gc-bar-fill.l4 { opacity: .53 !important; }
+.gc-bar-fill.l5 { opacity: .42 !important; }
+.bp-body { padding-bottom: max(46px,env(safe-area-inset-bottom)) !important; }
+
+/* 11. Light Sense: 基础兜底色与外层 body 渐变（光感专用中性灰玻璃）
+   注意：--bg/--ink/--surface 等主题变量由 _applyDaylightTheme JS 按日照强度连续插值，
+   这里不再 !important 覆盖，避免与 inline 变量抢优先级。 */
+body.light-sense,
+body.dark.light-sense,
+body.light-sense.light-sense-dark,
+body.light-sense.light-sense-light {
+  --line: rgba(255,255,255,.16);
+  --line-strong: rgba(255,255,255,.24);
+  --muted: rgba(239,241,245,.58);
+  --subtle: rgba(239,241,245,.40);
+  color-scheme: dark;
+  background: radial-gradient(circle at 18% 14%,#888c93 0,#686c73 34%,#555960 100%) !important;
+}
+/* 光感模式：去掉 doc-tree 右侧硬边线，用背景与正文区自然分隔，避免"左边黑边"视觉 */
+body.light-sense #sandboxRight .doc-tree,
+body.dark.light-sense #sandboxRight .doc-tree{
+  border-right: 0 !important;
+}
+body.light-sense #sandboxRight .doc-content-wrap,
+body.dark.light-sense #sandboxRight .doc-content-wrap{
+  border-left: 1px solid var(--line);
+}
+body.light-sense .phone,
+body.dark.light-sense .phone {
+  background: linear-gradient(145deg,rgba(120,124,132,.58),rgba(72,76,84,.52)) !important;
+  border-color: rgba(255,255,255,.24) !important;
+  box-shadow: 0 22px 52px rgba(21,23,27,.30),inset 0 1px 0 rgba(255,255,255,.25) !important;
+}
+body.light-sense .search-card,
+body.light-sense .slot-card,
+body.light-sense .section-card,
+body.light-sense .sub-card,
+body.light-sense .stats-card-slot,
+body.light-sense .result-row,
+body.light-sense .sc-ready-hint,
+body.dark.light-sense .search-card,
+body.dark.light-sense .slot-card,
+body.dark.light-sense .section-card,
+body.dark.light-sense .sub-card,
+body.dark.light-sense .stats-card-slot,
+body.dark.light-sense .result-row,
+body.dark.light-sense .sc-ready-hint {
+  background: linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.075)) !important;
+  border: 1px solid rgba(255,255,255,.19) !important;
+  box-shadow: 0 7px 22px rgba(24,27,32,.12),inset 0 1px 0 rgba(255,255,255,.22) !important;
+  backdrop-filter: blur(30px) saturate(.82) brightness(1.03) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(.82) brightness(1.03) !important;
+}
+#themeModeSubCard { position: relative; overflow: hidden; }
+#themeModeSubCard.theme-mode-locked .setting-row { opacity: .24; filter: grayscale(1); pointer-events: none; }
+#themeModeSubCard.theme-mode-locked::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: rgba(76,79,85,.42);
+  backdrop-filter: blur(3px) grayscale(1);
+  -webkit-backdrop-filter: blur(3px) grayscale(1);
+  pointer-events: auto;
+}
+#lightSenseStatusHint {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 4 !important;
+  margin: 0 !important;
+  padding: 8px 14px !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgba(255,255,255,.78) !important;
+  background: transparent !important;
+  font-size: 9px !important;
+  font-weight: 650;
+  line-height: 1.45;
+  pointer-events: none;
+}
+
+/* 12. Stable inline editors and consistent home empty states. */
+#addIndexBtn { width: 100%; transform: none !important; overflow: clip !important; }
+#addIndexBtn .inline-editor,
+#addIndexBtn.expanded .inline-editor { animation: none !important; transform: none !important; }
+#addIndexBtn .inline-editor { transition: max-height .46s cubic-bezier(.2,.78,.2,1),opacity .24s ease,visibility 0s linear .46s !important; }
+#addIndexBtn.expanded .inline-editor { transition: max-height .54s cubic-bezier(.2,.78,.2,1),opacity .28s ease .06s,visibility 0s !important; }
+#shortcutList .gesture-just-added { animation: shortcutFadeIn .36s ease both !important; }
+@keyframes shortcutFadeIn { from { opacity: 0; } to { opacity: 1; } }
+#recentGrid .slot-grid-state.is-null,
+#dailyGrid .slot-grid-state.is-null {
+  grid-column: 1/-1;
+  width: 100%;
+  min-height: 78px;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-alt);
+  color: var(--muted) !important;
+  opacity: .62;
+  font-family: 'JetBrains Mono',var(--font-mono),monospace !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: .08em !important;
+}
+.custom-add-toggle { width: 30px !important; height: 30px !important; flex: 0 0 30px; }
+.custom-add-toggle svg { width: 14px !important; height: 14px !important; }
+#customGrid[data-empty="true"] { min-height: 0 !important; }
+
+/* 13. Result count controls extension height; the same panel scrolls only when it reaches the phone edge. */
+#searchCard.has-results {
+  transition: height .62s cubic-bezier(.18,.82,.22,1.08),max-height .62s cubic-bezier(.18,.82,.22,1),transform .5s cubic-bezier(.2,.78,.2,1),border-color .28s ease,background .28s ease !important;
+  will-change: height;
+}
+#searchCard.has-results .sc-results {
+  transition: height .62s cubic-bezier(.18,.82,.22,1),opacity .3s ease !important;
+}
+#searchCard.has-results .sc-results-list { max-height: 100% !important; overflow-y: auto !important; }
+#searchCard.has-results:not(.results-scrollable) .sc-results-list { overflow-y: hidden !important; }
+.result-row-top-1 { background: color-mix(in srgb,var(--ink) 8%,var(--surface)) !important; }
+.result-row-top-2 { background: color-mix(in srgb,var(--ink) 5.5%,var(--surface)) !important; }
+.result-row-top-3 { background: color-mix(in srgb,var(--ink) 3.5%,var(--surface)) !important; }
+body.simple-mode:not(.light-sense) .result-row.result-row-top-1 { background: color-mix(in srgb,var(--ink) 8%,var(--flat-panel)) !important; }
+body.simple-mode:not(.light-sense) .result-row.result-row-top-2 { background: color-mix(in srgb,var(--ink) 5.5%,var(--flat-panel)) !important; }
+body.simple-mode:not(.light-sense) .result-row.result-row-top-3 { background: color-mix(in srgb,var(--ink) 3.5%,var(--flat-panel)) !important; }
+body.dark .result-row-top-1,
+body.light-sense .result-row-top-1 { background: color-mix(in srgb,var(--ink) 13%,var(--surface)) !important; }
+body.dark .result-row-top-2,
+body.light-sense .result-row-top-2 { background: color-mix(in srgb,var(--ink) 9%,var(--surface)) !important; }
+body.dark .result-row-top-3,
+body.light-sense .result-row-top-3 { background: color-mix(in srgb,var(--ink) 6%,var(--surface)) !important; }
+
+/* 14. Welcome screen is a neutral entry surface, independent from the persisted theme. */
+html:not(.embedded) .phone,
+html:not(.embedded) .phone::before { border-radius: 64px !important; }
+
+#sandboxLeft.welcome-mode,
+body.dark #sandboxLeft.welcome-mode {
+  background: #f3f2ef !important;
+}
+#sandboxLeft.welcome-mode::before {
+  background:
+    radial-gradient(ellipse 72% 48% at 100% 0%, rgba(198,93,33,.16) 0%, rgba(198,93,33,.055) 32%, transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,.76) 0%, rgba(246,245,242,.84) 52%, rgba(237,236,233,.92) 100%) !important;
+}
+#sandboxLeft.welcome-mode::after {
+  background:
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(198,93,33,.06) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 56px, rgba(40,40,44,.045) 56px, rgba(40,40,44,.045) 56.3px),
+    repeating-linear-gradient(90deg, transparent, transparent 56px, rgba(40,40,44,.045) 56px, rgba(40,40,44,.045) 56.3px) !important;
+}
+.welcome-screen {
+  background: #f3f2ef !important;
+  color: #25262a !important;
+}
+.welcome-goto-bg { color: rgba(37,38,42,.085) !important; }
+.welcome-goto-bg::before {
+  background: radial-gradient(ellipse 50% 55% at center, rgba(255,255,255,.55) 0%, rgba(198,93,33,.045) 40%, transparent 75%) !important;
+}
+.welcome-typewriter .wt-line { color: #242529 !important; }
+.welcome-typewriter .wt-line-2 { color: rgba(36,37,41,.62) !important; }
+.welcome-typewriter .wt-line-en { color: rgba(36,37,41,.48) !important; }
+.welcome-decor.left-num { color: rgba(36,37,41,.32) !important; }
+.welcome-decor.right-num { color: rgba(166,72,30,.50) !important; }
+.welcome-lang-hbtn {
+  border-color: rgba(36,37,41,.13) !important;
+  background: rgba(255,255,255,.58) !important;
+  color: rgba(36,37,41,.68) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 2px 5px rgba(36,37,41,.07) !important;
+}
+.welcome-lang-hbtn:hover { background: rgba(255,255,255,.82) !important; color: #242529 !important; }
+.welcome-lang-hbtn.active { background: rgba(255,255,255,.90) !important; color: #242529 !important; border-color: rgba(36,37,41,.18) !important; }
+
+/* 15. Mode changes are surface changes, not layout changes. Keep every card
+   in the same geometry while its material fades to the next surface. */
+:root {
+  --user-font-cn: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  --font-cn: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+}
+.search-card,
+.search-card::before,
+.search-card::after,
+.slot-card,
+.slot-panel,
+.section-card,
+.sub-card,
+.stats-card-slot,
+.stats-card,
+.result-card,
+.result-row,
+.sc-ready-hint,
+.extend-panel,
+.pioneer-subitem,
+.adaptive-metrics div,
+.adaptive-actions button {
+  transition-property: background, background-color, background-image, border-color, box-shadow, color, opacity, filter;
+  transition-duration: .42s;
+  transition-timing-function: cubic-bezier(.22,.72,.2,1);
+}
+body.lv-reduceMotion .search-card,
+body.lv-reduceMotion .slot-card,
+body.lv-reduceMotion .section-card,
+body.lv-reduceMotion .sub-card,
+body.lv-reduceMotion .stats-card-slot,
+body.lv-reduceMotion .result-row,
+body.lv-reduceMotion .sc-ready-hint { transition-duration: .01ms !important; }
+
+/* Every large category uses the same quiet heading rhythm. */
+.section-card > .sec-header,
+.section-card > .sec-header:first-child,
+.stats-card-head,
+.stats-hero-head {
+  min-height: 36px !important;
+  padding: 12px 14px 8px !important;
+  align-items: center !important;
+}
+.section-card > .sec-header .sec-title,
+.stats-card-head .sec-title,
+.stats-hero-head .sec-title {
+  margin: 0 !important;
+  color: var(--ink) !important;
+  font: 720 13px/1.3 var(--font-cn) !important;
+  letter-spacing: .01em !important;
+}
+
+/* Standard is intentionally flat, but still has a deliberate outline. */
+body.simple-mode:not(.light-sense) .section-card .setting-row,
+body.simple-mode:not(.light-sense) .section-card .shortcut-row,
+body.simple-mode:not(.light-sense) .section-card .sub-card-item,
+body.simple-mode:not(.light-sense) .section-card .adaptive-control-row,
+body.simple-mode:not(.light-sense) .section-card .extend-panel,
+body.simple-mode:not(.light-sense) .section-card .pioneer-subitem {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+body.simple-mode:not(.light-sense) .section-card .extend-panel {
+  border: 1px solid var(--flat-rule) !important;
+  background: var(--flat-control) !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) .search-card:has(.sc-ready-hint.has-reminder),
+body.simple-mode:not(.light-sense) .search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  background: var(--flat-panel) !important;
+  border-color: var(--flat-rule) !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* Adaptive Refresh keeps a visual panel when opened; do not let the parent
+   clipping or a mode override collapse it into bare text. */
+#adaptiveCard { overflow: visible !important; }
+#adaptiveCard #adaptiveExtendPanel { box-sizing: border-box !important; min-height: 0 !important; }
+#adaptiveCard.is-open #adaptiveExtendPanel { display: block !important; opacity: 1 !important; visibility: visible !important; }
+#adaptiveCard #adaptiveExtendPanel > * { position: relative; z-index: 1; }
+#adaptiveCard #adaptiveExtendPanel .adaptive-metrics div,
+#adaptiveCard #adaptiveExtendPanel .adaptive-formula,
+#adaptiveCard #adaptiveExtendPanel .adaptive-actions button {
+  border-radius: 9px !important;
+}
+
+/* Neumorphic: light material depth, applied to the complete visible surface
+   hierarchy, including the category card and its nested controls. */
+body.neumorphic-mode:not(.light-sense) .search-card,
+body.neumorphic-mode:not(.light-sense) .slot-card,
+body.neumorphic-mode:not(.light-sense) .section-card,
+body.neumorphic-mode:not(.light-sense) .sub-card,
+body.neumorphic-mode:not(.light-sense) .stats-card-slot,
+body.neumorphic-mode:not(.light-sense) .result-card,
+body.neumorphic-mode:not(.light-sense) .result-row,
+body.neumorphic-mode:not(.light-sense) .sc-ready-hint,
+body.neumorphic-mode:not(.light-sense) .extend-panel,
+body.neumorphic-mode:not(.light-sense) .pioneer-subitem,
+body.neumorphic-mode:not(.light-sense) .adaptive-metrics div,
+body.neumorphic-mode:not(.light-sense) .adaptive-formula {
+  background: linear-gradient(145deg,
+    color-mix(in srgb,var(--surface) 96%,#fff 4%),
+    color-mix(in srgb,var(--surface) 91%,#000 9%)) !important;
+  border-color: color-mix(in srgb,var(--line-strong) 70%,transparent) !important;
+  box-shadow: 0 5px 16px rgba(22,23,27,.08), inset 0 1px 0 rgba(255,255,255,.46) !important;
+  backdrop-filter: blur(18px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.08) !important;
+}
+body.dark.neumorphic-mode:not(.light-sense) .search-card,
+body.dark.neumorphic-mode:not(.light-sense) .slot-card,
+body.dark.neumorphic-mode:not(.light-sense) .section-card,
+body.dark.neumorphic-mode:not(.light-sense) .sub-card,
+body.dark.neumorphic-mode:not(.light-sense) .stats-card-slot,
+body.dark.neumorphic-mode:not(.light-sense) .result-card,
+body.dark.neumorphic-mode:not(.light-sense) .result-row,
+body.dark.neumorphic-mode:not(.light-sense) .sc-ready-hint,
+body.dark.neumorphic-mode:not(.light-sense) .extend-panel,
+body.dark.neumorphic-mode:not(.light-sense) .pioneer-subitem {
+  box-shadow: 0 6px 18px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.10) !important;
+}
+
+/* Predicted apps are actionable rectangular controls, without competing app icons. */
+.sc-ready-pred-item { border-radius: 9px !important; padding: 8px 12px !important; min-height: 32px; }
+.sc-ready-pred-item .scrp-icon-wrap,
+.sc-ready-pred-item .scrp-icon { display: none !important; }
+.sc-ready-pred-item .scrp-name { font: 650 11px/1.2 var(--font-cn) !important; }
+
+/* Light Sense stays independent: brighter gray glass and stronger text layers. */
+body.light-sense,
+body.dark.light-sense,
+body.light-sense.light-sense-dark,
+body.light-sense.light-sense-light {
+  --bg: #747980 !important;
+  --surface: rgba(255,255,255,.22) !important;
+  --surface-alt: rgba(255,255,255,.14) !important;
+  --ink: rgba(255,255,255,.98) !important;
+  --ink-soft: rgba(255,255,255,.86) !important;
+  --muted: rgba(248,249,251,.74) !important;
+  --subtle: rgba(248,249,251,.56) !important;
+  --line: rgba(255,255,255,.24) !important;
+  --line-strong: rgba(255,255,255,.34) !important;
+  background: radial-gradient(circle at 16% 10%,#94989f 0,#767b82 38%,#62676e 100%) !important;
+}
+body.light-sense .phone,
+body.dark.light-sense .phone {
+  background: linear-gradient(145deg,rgba(154,158,165,.66),rgba(91,96,104,.60)) !important;
+}
+
+/* Directory rail: refined single vertical thread — intermediary node ticks removed for cleaner look. */
+#sandboxRight .doc-tree { width: 170px !important; padding-left: 16px !important; }
+#sandboxRight .doc-tree-progress { width: 1px !important; left: 0 !important; opacity: .5; }
+/* 节点间的小刻度线已彻底移除（由 preview-final.css 中的 refined 导轨设计接管） */
+#sandboxRight .doc-tree-node:not(.active)::after { display: none !important; }
+#sandboxRight .doc-tree-node:last-child:not(.active)::after { display: none !important; }
+
+/* 16. Advanced cards: one outer boundary only. Internal rows and the
+   collapsed/expanded seam are intentionally invisible. */
+.pioneer-card .setting-row,
+.pioneer-card .pioneer-subitem,
+.pioneer-card .sub-card-divider,
+.pioneer-card > .extend-panel,
+.pioneer-card .pioneer-extend-section,
+.pioneer-card .pioneer-subitems,
+#pioneerCard .setting-row,
+#pioneerCard .pioneer-subitem {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+.pioneer-card > .extend-panel,
+.pioneer-card .pioneer-extend-section {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+.pioneer-card .pioneer-subitem {
+  border-radius: 9px !important;
+  background: color-mix(in srgb,var(--surface-alt) 72%,transparent) !important;
+}
+.pioneer-card .pioneer-subitem + .pioneer-subitem { margin-top: 5px !important; }
+
+/* 17. Keep material surfaces inside the phone width; a mode switch must not
+   change card geometry or pull the card edges outward. */
+body.neumorphic-mode #bpPanelSettings .section-card,
+body.neumorphic-mode #bpPanelSettings .sub-card,
+body.neumorphic-mode #pioneerCard .pioneer-card,
+body.neumorphic-mode #pioneerCard .pioneer-subitem {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+}
+body.neumorphic-mode #bpPanelSettings .section-card,
+body.neumorphic-mode #bpPanelSettings .sub-card {
+  background-image: linear-gradient(145deg,
+    color-mix(in srgb,var(--surface) 98%,#fff 2%),
+    color-mix(in srgb,var(--surface) 90%,#000 10%)) !important;
+}
+body.neumorphic-mode .accent-add-toggle,
+body.neumorphic-mode .pioneer-toggle.on,
+body.neumorphic-mode .toggle-switch.on,
+body.neumorphic-mode .gs-mini-toggle.on,
+body.neumorphic-mode .mini-toggle.on {
+  background: linear-gradient(135deg,
+    color-mix(in srgb,var(--accent) 78%,#fff 22%),
+    var(--accent) 58%,
+    color-mix(in srgb,var(--accent) 76%,#000 24%)) !important;
+  box-shadow: 0 3px 9px color-mix(in srgb,var(--accent) 20%,transparent), inset 0 1px 0 rgba(255,255,255,.35) !important;
+}
+
+/* One consistent switch language for parent and child shortcut controls. */
+#shortcutToggle,
+#shortcutList .gs-mini-toggle {
+  width: 34px !important;
+  height: 20px !important;
+  min-width: 34px !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--line-strong) !important;
+  background: var(--surface-alt) !important;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.08) !important;
+}
+#shortcutToggle::before,
+#shortcutList .gs-mini-toggle::before {
+  width: 16px !important;
+  height: 16px !important;
+  left: 1px !important;
+  top: 1px !important;
+  border-radius: 50% !important;
+  background: var(--surface) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.16) !important;
+}
+#shortcutToggle.on::before,
+#shortcutList .gs-mini-toggle.on::before { transform: translateX(14px) !important; }
+#shortcutToggle.on,
+#shortcutList .gs-mini-toggle.on { background: var(--accent) !important; border-color: var(--accent) !important; }
+
+/* The large category container owns the boundary; no white seam underneath. */
+#pioneerCard .sec-content,
+#pioneerCard .pioneer-extend-section,
+#pioneerCard .pioneer-subitems {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+#pioneerCard .pioneer-card + .pioneer-card { margin-top: 7px !important; }
+
+/* Shortcut editor: remove placeholder copy from the key field and keep the
+   destructive action below Save only while editing an existing index. */
+#sieKeyInput::placeholder { color: transparent !important; }
+#addIndexBtn .sie-actions { display: flex !important; flex-direction: column !important; align-items: stretch !important; gap: 6px !important; }
+#addIndexBtn #sieSaveBtn { order: 1 !important; width: 100% !important; }
+#addIndexBtn #sieDeleteBtn { order: 2 !important; width: 100% !important; margin: 0 !important; text-align: center !important; }
+
+/* Main search indicator: quiet accent breathing is present even before focus,
+   then briefly intensifies through the existing is-searching state. */
+.search-card .sc-dot { opacity: .68 !important; animation: scDotBreathe 5.2s cubic-bezier(.4,0,.6,1) infinite !important; }
+.search-card .sc-dot::before { opacity: .18 !important; animation: scDotHalo 5.2s cubic-bezier(.4,0,.6,1) infinite !important; }
+.search-card .sc-dot.is-searching { animation: scDotPulse .5s var(--ease-out) 1, scDotBreathe 5.2s .5s cubic-bezier(.4,0,.6,1) infinite !important; }
+
+/* Light Sense follows the resolved day/night phase instead of a fixed gray
+   theme. Location/time-zone code supplies the phase classes. */
+body.light-sense.light-sense-light,
+body.light-sense:not(.light-sense-dark) {
+  --bg: color-mix(in srgb,#F7F7F5 86%,var(--color-temp,#F4D7B1) 14%) !important;
+  --surface: rgba(255,255,255,.46) !important;
+  --surface-alt: rgba(255,255,255,.30) !important;
+  --ink: #25272B !important;
+  --ink-soft: rgba(37,39,43,.78) !important;
+  --muted: rgba(37,39,43,.58) !important;
+  --line: rgba(37,39,43,.14) !important;
+  --line-strong: rgba(37,39,43,.22) !important;
+  color-scheme: light !important;
+  background: radial-gradient(circle at 80% 6%,rgba(255,214,166,.34),transparent 42%),#F1F1EF !important;
+}
+body.light-sense.light-sense-dark,
+body.dark.light-sense {
+  --bg: color-mix(in srgb,#17191E 88%,var(--color-temp,#5D6F9D) 12%) !important;
+  --surface: rgba(52,55,63,.56) !important;
+  --surface-alt: rgba(66,69,78,.44) !important;
+  --ink: rgba(248,249,252,.96) !important;
+  --ink-soft: rgba(248,249,252,.82) !important;
+  --muted: rgba(248,249,252,.64) !important;
+  --line: rgba(255,255,255,.16) !important;
+  --line-strong: rgba(255,255,255,.25) !important;
+  color-scheme: dark !important;
+  background: radial-gradient(circle at 78% 4%,rgba(109,127,178,.22),transparent 42%),#1C1E23 !important;
+}
+body.light-sense.light-sense-light .phone,
+body.light-sense:not(.light-sense-dark) .phone { background: linear-gradient(145deg,rgba(255,255,255,.63),rgba(213,216,218,.48)) !important; }
+body.light-sense.light-sense-dark .phone,
+body.dark.light-sense .phone { background: linear-gradient(145deg,rgba(76,80,91,.62),rgba(30,32,38,.70)) !important; }
+
+/* Light Sense is configured from Advanced / Other Settings, not mixed into
+   the three ordinary appearance choices. */
+#styleLightSenseBtn { display: none !important; }
+#styleCapsule { min-width: 88px !important; }
+#lightSenseCard.relocated-light-sense-card { margin-top: 8px !important; }
+
+/* 18. Keep the reminder card visually independent from the search surface. */
+.search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  border: 1.25px solid color-mix(in srgb,var(--ink) 22%,var(--line-strong)) !important;
+  box-shadow: 0 3px 10px rgba(20,22,26,.07), inset 0 1px 0 rgba(255,255,255,.28) !important;
+  background: color-mix(in srgb,var(--surface-alt) 82%,var(--surface)) !important;
+}
+body.dark .search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder,
+body.light-sense.light-sense-dark .search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  border-color: color-mix(in srgb,var(--ink) 28%,var(--line-strong)) !important;
+  box-shadow: 0 4px 13px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.10) !important;
+}
+body.simple-mode:not(.light-sense) .search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  border: 1px solid var(--flat-rule-strong,var(--flat-rule)) !important;
+  box-shadow: none !important;
+}
+
+/* Search extension boundary: the accent ring is part of the state change and
+   is shared by Standard, Neumorphic and Light Sense. */
+.search-card.is-focused:not(.has-results),
+.search-card.has-results {
+  border: 1.25px solid color-mix(in srgb,var(--accent) 72%,var(--line-strong)) !important;
+  box-shadow: 0 0 0 1.5px color-mix(in srgb,var(--accent) 18%,transparent), var(--shadow-md,0 4px 12px rgba(0,0,0,.08)) !important;
+}
+body.simple-mode:not(.light-sense) .search-card.is-focused:not(.has-results),
+body.simple-mode:not(.light-sense) .search-card.has-results {
+  border-color: color-mix(in srgb,var(--accent) 70%,var(--flat-rule-strong)) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb,var(--accent) 14%,transparent) !important;
+}
+body.light-sense .search-card.is-focused:not(.has-results),
+body.light-sense .search-card.has-results {
+  border-color: color-mix(in srgb,var(--accent) 68%,var(--line-strong)) !important;
+  box-shadow: 0 0 0 1.5px color-mix(in srgb,var(--accent) 20%,transparent), 0 8px 20px rgba(20,22,26,.12) !important;
+}
+
+/* Shortcut parent/child controls share one compact segmented control. */
+.shortcut-mode-switch,
+.gs-mode-switch {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  background: var(--surface-alt) !important;
+}
+.shortcut-mode-switch button,
+.gs-mode-switch button {
+  min-width: 30px;
+  height: 22px;
+  padding: 0 6px;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  font: 650 9px/1 var(--font-cn) !important;
+  cursor: pointer;
+}
+.shortcut-mode-switch button.active,
+.gs-mode-switch button.active {
+  background: var(--accent) !important;
+  color: var(--accent-ink,#fff) !important;
+}
+.gs-row-v2 { position: relative; gap: 8px !important; }
+.gs-row-v2 .gs-mode-switch { flex: 0 0 auto; }
+.gs-row-v2 .gs-mini-toggle { flex: 0 0 28px !important; }
+
+/* 20. Final reminder-height and Standard-mode polish overrides. */
+.search-card:has(.sc-ready-hint.has-reminder),
+.search-card.is-focused:has(.sc-ready-hint.has-reminder) {
+  height: auto !important;
+  min-height: 148px !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding-bottom: 16px !important;
+}
+.search-card:has(.sc-ready-hint.has-reminder) .sc-results,
+.search-card:has(.sc-ready-hint.has-reminder) #readyHint {
+  height: auto !important;
+  min-height: 92px !important;
+  max-height: none !important;
+  overflow: visible !important;
+  flex: 0 0 auto !important;
+}
+.search-card:has(.sc-ready-hint.has-reminder) .sc-ready-hint.has-reminder {
+  box-sizing: border-box !important;
+  min-height: 68px !important;
+  margin-bottom: 0 !important;
+  transform: none !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card {
+  background: var(--flat-section,#f5f5f3) !important;
+  border: 1px solid var(--flat-line-strong,#d2d2cf) !important;
+  border-radius: 13px !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card > .sec-header {
+  min-height: 34px !important;
+  margin: 0 0 6px !important;
+  padding: 6px 2px 5px !important;
+  border-bottom: 1px solid var(--flat-line,#dededb) !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card > .sec-header::before,
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card > .sec-header::after { display: none !important; content: none !important; }
+body.simple-mode:not(.light-sense) #bpPanelSettings .section-card > .sec-header .sec-title {
+  font: 760 13px/1.2 var(--font-cn) !important;
+  letter-spacing: .02em !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .sub-card {
+  background: var(--flat-sub,#fafaf8) !important;
+  border: 1px solid var(--flat-line,#dededb) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+body.simple-mode:not(.light-sense) #bpPanelSettings .setting-row { min-height: 44px !important; }
+body.simple-mode:not(.light-sense) #bpPanelSettings .sr-label { font-weight: 680 !important; }
+body.simple-mode:not(.light-sense) #bpPanelSettings .sr-meta { color: var(--muted) !important; font-size: 9px !important; }
+
+/* ═══ 搜索无结果空状态：覆盖 simple/neumorphic/light-sense 模式下的聚焦态高度限制 ═══ */
+.search-card.is-empty,
+body.simple-mode:not(.light-sense) .search-card.is-empty,
+body.neumorphic-mode:not(.light-sense) .search-card.is-empty,
+body.light-sense .search-card.is-empty{
+  height: var(--search-card-height,420px) !important;
+  max-height: var(--search-card-height,420px) !important;
+  min-height: 360px !important;
+  overflow: visible !important;
+}
+.search-card.is-empty .sc-results,
+body.simple-mode:not(.light-sense) .search-card.is-empty .sc-results,
+body.neumorphic-mode:not(.light-sense) .search-card.is-empty .sc-results,
+body.light-sense .search-card.is-empty .sc-results{
+  height: var(--sc-results-height,340px) !important;
+  max-height: var(--sc-results-height,340px) !important;
+  min-height: 240px !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+}

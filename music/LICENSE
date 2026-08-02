@@ -1,0 +1,103 @@
+GOTO Music Asset License
+========================
+Version: 1.0
+Effective Date: 2026-07-25
+Scope: All files within this /music folder (including but not limited to
+       MP3, WAV, OGG, M4A, FLAC, WEBM audio files, lyrics, posters,
+       cover artwork, playlist.json, and any other media assets).
+
+------------------------------------------------------------------------
+1. INDEPENDENT LICENSE
+------------------------------------------------------------------------
+The contents of this /music folder are NOT covered by the GNU Affero
+General Public License v3.0 (AGPL-3.0) that governs the project's
+source code in the repository root.
+
+Instead, all media assets in this folder are licensed under:
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
+    International (CC BY-NC-ND 4.0)
+    https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+------------------------------------------------------------------------
+2. WHAT YOU CAN DO
+------------------------------------------------------------------------
+You are free to:
+  - Share — copy and redistribute the material in any medium or format
+    under the following terms.
+
+Under the following terms:
+  - Attribution (BY) — You must give appropriate credit, provide a link
+    to the license, and indicate if changes were made. You may do so in
+    any reasonable manner, but not in any way that suggests the licensor
+    endorses you or your use.
+  - NonCommercial (NC) — You may not use the material for commercial
+    purposes. Commercial use includes but is not limited to: selling the
+    audio, licensing it to third parties for money, using it in
+    advertisements, using it in a paid product/service, or generating
+    revenue through distribution.
+  - NoDerivatives (ND) — If you remix, transform, or build upon the
+    material, you may not distribute the modified material. You may
+    remix for personal use only.
+
+------------------------------------------------------------------------
+3. PROJECT-SPECIFIC CLARIFICATIONS
+------------------------------------------------------------------------
+a. Demonstration Use: Within the GOTO project's own demonstration
+   scenarios (local preview, GitHub Pages deployment, project
+   screenshots, project documentation), the assets may be freely
+   distributed and played back.
+
+b. Social Media传播: Social media sharing of the project demo is
+   permitted, provided that original authorship and source are
+   preserved.
+
+c. "火了算我的" Principle: If the project becomes popular, the
+   authorship and credit remain with the original creators. Any viral
+   spread must retain the original author declaration and source link.
+
+d. Personal Modification: Users may modify the assets for personal use
+   only. Modified versions MUST NOT be redistributed publicly. To share
+   improvements, contribute to the source code instead (under AGPL-3.0)
+   — the media assets themselves remain NoDerivatives.
+
+e. Commercial Prohibition: 严禁 any form of commercial extraction,
+   re-licensing,二次混音后发行, or unattributed redistribution.
+
+------------------------------------------------------------------------
+4. GOTO 宣传曲 (GOTO Theme Song) Slot
+------------------------------------------------------------------------
+The "GOTO 宣传曲" entry in playlist.json is a reserved slot
+(slot: "easter_egg_2"). When a user binds an MP3 file to this slot,
+the bound file inherits this CC BY-NC-ND 4.0 license automatically
+and may not be extracted, redistributed, or used commercially outside
+the GOTO project context.
+
+------------------------------------------------------------------------
+5. EXCLUSION OF CODE
+------------------------------------------------------------------------
+This license applies ONLY to media assets within this /music folder.
+Source code files (.js, .html, .css, etc.) in the repository root and
+other directories remain governed by AGPL-3.0.
+
+------------------------------------------------------------------------
+6. ATTRIBUTION
+------------------------------------------------------------------------
+Original Author: GOTO Contributors
+Project: https://github.com/longqiyua/goto
+License URL: https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+When attributing, include:
+  "GOTO Music Demo — © 2025-2026 GOTO Contributors. Licensed under
+   CC BY-NC-ND 4.0."
+
+------------------------------------------------------------------------
+7. NO WARRANTIES
+------------------------------------------------------------------------
+The materials are provided "AS IS", without warranty of any kind,
+express or implied, including but not limited to the warranties of
+merchantability, fitness for a particular purpose, and non-infringement.
+In no event shall the authors or copyright holders be liable for any
+claim, damages, or other liability arising from the use of the materials.
+
+------------------------------------------------------------------------
+Full legal text: https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode

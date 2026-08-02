@@ -1,0 +1,72 @@
+<article class="ui-contract-doc" lang="en">
+<h1>GOTO UI and Interaction Specification</h1>
+<h2>Documentation and phone linkage</h2>
+<ul>
+<li>Desktop preview allocates 40% to the phone and 60% to documentation.</li>
+<li>Documentation steps can open the corresponding phone surface, enter a test query, and highlight the target component.</li>
+<li>Content progresses from product conclusion to state flow, search paths, advanced modules, feedback, and responsibility boundaries.</li>
+<li>Visited pages are marked in the directory; previous/next navigation and reading progress remain available.</li>
+<li>Documentation interactions must not create fake statistics or perform destructive actions without explicit confirmation.</li>
+</ul>
+<h2>Top-level category cards</h2>
+<p>Basic Settings, Personalization, Quick Operations, Advanced, Extensions, Accessibility, Data &amp; Configuration, and Log use one outer-card contract. Functional differences are expressed inside the card, not through inconsistent width, radius, or shadow.</p>
+<h2>Light Sense</h2>
+<p>Location, time zone, and preview time jointly drive Light Sense. Any moment of the day can be previewed. Light and dark ceramic/jade surfaces share identical geometry; only color, restrained glow, and highlight direction may change. Location is requested through the system prompt when available; timezone longitude is the non-blocking fallback.</p>
+<p>This page is the shared UI contract for the web preview and Android application. Requirements are maintained in local Markdown and converted to the HTML used by the documentation panel through <code>scripts/build-docs.js</code>.</p>
+<h2>1. Product posture</h2>
+<ul>
+<li>GOTO is a low-distraction utility, not a showcase toy.</li>
+<li>Standard mode uses five neutral steps plus one accent color.</li>
+<li>Bauhaus principles define grid, proportion, and hierarchy; decorative rules, glow, and duplicate containers are avoided.</li>
+<li>Text must preserve contrast across light, dark, and Light Sense surfaces.</li>
+</ul>
+<h2>2. Web and Android parity</h2>
+<ul>
+<li>The phone on the left is the visual baseline for the Android XML + Kotlin screen, not a thumbnail.</li>
+<li>Both targets use a 10dp/px horizontal safe inset, 8dp card gap, 10dp card radius, and 40dp primary action height.</li>
+<li>Width must not be simulated with <code>scale()</code> or negative margins.</li>
+<li>System insets protect the status bar, while long content scrolls inside the phone surface without ancestor clipping.</li>
+</ul>
+<h2>3. Card hierarchy</h2>
+<ul>
+<li>Each top-level category has one outer card.</li>
+<li>Child features use one slightly lighter but readable outline, whether collapsed or expanded.</li>
+<li>Remove repeated separators, white underlayers, short pseudo-element rules, and colored decoration bars.</li>
+<li>Light Sense may change material, but not geometry or DOM hierarchy.</li>
+</ul>
+<h2>4. Search and reminder</h2>
+<ul>
+<li>The search field is the only primary interaction surface.</li>
+<li>First focus lifts and expands the field, then reveals the reminder as a distinct inner card.</li>
+<li>Typing hides the reminder and grows results according to count; overflow scrolls within the same page.</li>
+<li>Clearing restores the reminder; tapping outside again closes the focused state.</li>
+<li>Recommendation buttons launch apps through the shared pipeline and show an “Opened XX” toast.</li>
+</ul>
+<h2>5. Shortcut Index</h2>
+<ul>
+<li>Creation reads as: “I want to open [app] by entering [key].”</li>
+<li>Launch mode is the only secondary row. Save and edit-only Delete span the full editor width.</li>
+<li>Master and child switches synchronize in both directions and share one visual language.</li>
+<li>Case sensitivity is automatic: tolerant when unambiguous, exact when conflicting variants coexist.</li>
+<li>Quick Launch and Standard Pin both use the unified GOTO Engine search, launch, statistics, and feedback pipeline.</li>
+</ul>
+<h2>6. Engine, adaptive refresh, and statistics</h2>
+<ul>
+<li>Exact, prefix, fuzzy, and shortcut paths remain active and merge by deterministic priority.</li>
+<li>Adjacent transposition requires character overlap and has the lowest score priority. Keyboard distance affects penalties, and mixed Chinese/English candidates are supported.</li>
+<li>Adaptive refresh stays open while enabled, samples during typing when auto-detect is active, ignores deviations above 50%, and defaults to 200ms until five valid samples exist.</li>
+<li>Statistics remain zero before activation and update in real time after activation. Only launches performed from GOTO count.</li>
+</ul>
+<h2>7. Personalization, extensions, and data</h2>
+<ul>
+<li>Standard is the default base style. Personalization keeps light/dark theme, clock, and accent controls.</li>
+<li>Light Sense and Super Voice belong to the Extension category. Light Sense follows daylight from location or a custom time zone; Super Voice remains unavailable during development.</li>
+<li>Accessibility restores its last child state. Import, export, reset, clear-statistics, and PNG capture controls perform real operations.</li>
+</ul>
+<h2>8. Documentation contract</h2>
+<ul>
+<li>The plaque below Log reads <code>Focus , And More</code> on the left and <code>Lesong</code> on the right in Geist.</li>
+<li>Documentation navigation remains compact, while the content column retains enough reading width.</li>
+<li>Every functional change updates this specification, the relevant feature page, and the PRD when scope or acceptance criteria change.</li>
+</ul>
+</article>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- 顶部返回栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="← 返回"
+                android:textSize="15sp"
+                android:textColor="@color/accent"
+                android:padding="8dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <!-- Logo -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SuperGOTO"
+            android:textSize="28sp"
+            android:textColor="@color/gold"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已有授权码？输入即可解锁更多功能"
+            android:textSize="14sp"
+            android:textColor="@color/text_tertiary"
+            android:layout_marginBottom="32dp" />
+
+        <!-- 会员权益卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="20dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="解锁后可用的功能"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚡ 模糊匹配引擎 / Fuzzy Match Engine"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎨 主题强调色自定义"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📊 使用数据统计面板"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🏷️ 专属金色 SuperGOTO 名牌"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📱 设备随便换，同一时刻仅一台可用"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary" />
+
+        </LinearLayout>
+
+        <!-- 授权码输入 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="输入授权码"
+            android:textSize="15sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/licenseInput"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/search_bg"
+            android:hint="XXXX-XXXX-XXXX-XXXX"
+            android:inputType="textCapCharacters"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_tertiary"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/activateMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/text_tertiary"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 激活按钮 -->
+        <TextView
+            android:id="@+id/btnActivate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/activate_btn_bg"
+            android:gravity="center"
+            android:text="激 活"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 已激活状态 -->
+        <LinearLayout
+            android:id="@+id/activatedPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:visibility="gone">
+
+            <!-- 金色名牌 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/badge_bg"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                android:layout_marginBottom="12dp">
+
+                <!-- 品牌文字：SuperGOTO -->
+                <TextView
+                    android:id="@+id/brandText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SuperGOTO "
+                    android:textSize="18sp"
+                    android:textColor="@color/gold"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/memberIdText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="U00001"
+                    android:textSize="18sp"
+                    android:textColor="@color/gold"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- 注册日期 + 使用天数 -->
+            <TextView
+                android:id="@+id/registerDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册于 2026-06-02 · 已使用 0 天"
+                android:textSize="13sp"
+                android:textColor="@color/text_tertiary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/deviceInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本设备已激活"
+                android:textSize="13sp"
+                android:textColor="@color/text_tertiary"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/btnDeactivate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注销当前设备"
+                android:textSize="13sp"
+                android:textColor="@color/text_tertiary"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

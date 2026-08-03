@@ -1,0 +1,31 @@
+{
+  "comment": "GOTO Music demo playlist. Files are local assets and are only used for the preview player.",
+  "defaultCover": "../goto-logo.png",
+  "tracks": [
+    {
+      "id": "tomorrow",
+      "name": "明天见",
+      "type": "folder",
+      "folder": "tomorrow",
+      "artist": "GOTO Music Demo",
+      "album": "明天见",
+      "lyrics": "",
+      "versions": [
+        { "label": "Rock", "file": "tomorrow/Rock.mp3" }
+      ]
+    },
+    {
+      "id": "summer_escape",
+      "name": "盛夏逃亡",
+      "type": "folder",
+      "folder": "盛夏逃亡（Demo）",
+      "artist": "GOTO Music Demo",
+      "album": "盛夏逃亡（Demo）",
+      "lyrics": "",
+      "versions": [
+        { "label": "Chamber Pop", "file": "盛夏逃亡（Demo）/Chamber_Pop.mp3" },
+        { "label": "Dream Pop", "file": "盛夏逃亡（Demo）/Dream_Pop.mp3" }
+      ]
+    }
+  ]
+}

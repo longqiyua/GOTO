@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  26 键 / 9 键 选择芯片背景
+  26-key / 9-key selection chip background
+  - 未选中：白底淡灰边
+              White background with light grey border
+  - 选中态 (state_selected=true) ：蓝色高亮
+                                   Blue highlight (accent)
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/accent_light" />
+                    <corners android:radius="8dp" />
+                    <stroke android:width="1.5dp" android:color="@color/accent" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/surface_default" />
+                    <corners android:radius="8dp" />
+                    <stroke android:width="1dp" android:color="@color/divider" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

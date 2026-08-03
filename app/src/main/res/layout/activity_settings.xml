@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/goto_screen_edge">
+
+        <!-- 顶部栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="← 返回"
+                android:textSize="14sp"
+                android:textColor="@color/accent"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackground" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- 会员名牌（点击切换显示） -->
+            <LinearLayout
+                android:id="@+id/memberCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/badge_bg"
+                android:gravity="center_horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/badgeBrandText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SuperGOTO"
+                    android:textSize="13sp"
+                    android:textColor="@color/gold"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/badgeIdText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="U00000"
+                    android:textSize="10sp"
+                    android:textColor="@color/gold_dark" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设置"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+        </LinearLayout>
+
+        <!-- 注册日期卡片 -->
+        <LinearLayout
+            android:id="@+id/regDateCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册日期"
+                android:textSize="8sp"
+                android:textColor="@color/text_tertiary"
+                android:letterSpacing="0.5"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/regDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="—"
+                android:textSize="12sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- 使用统计卡片 -->
+        <LinearLayout
+            android:id="@+id/statsCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:translationZ="2dp">
+
+            <!-- 标题 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用统计"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Row1: 三列指标卡片 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <!-- 使用天数 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/search_bg"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="使用天数"
+                        android:textSize="9sp"
+                        android:textColor="@color/text_tertiary"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.5"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/statDaysUsed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="0dp" />
+
+                <!-- 搜索次数 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/search_bg"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="搜索次数"
+                        android:textSize="9sp"
+                        android:textColor="@color/text_tertiary"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.5"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/statSearchCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="0dp" />
+
+                <!-- 打开次数 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/search_bg"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="打开次数"
+                        android:textSize="9sp"
+                        android:textColor="@color/text_tertiary"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.5"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/statOpenCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Row2: 累计输入字符（全宽） -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/search_bg"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="累计输入字符"
+                    android:textSize="9sp"
+                    android:textColor="@color/text_tertiary"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.5"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/statCharsTyped"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/accent" />
+
+            </LinearLayout>
+
+            <!-- 功能入口按钮 -->
+            <TextView
+                android:id="@+id/btnGoRanking"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:background="@drawable/search_bg"
+                android:gravity="center"
+                android:text="应用启动排名"
+                android:textSize="13sp"
+                android:textColor="@color/accent"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/btnGoGesture"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:background="@drawable/search_bg"
+                android:gravity="center"
+                android:text="手势快捷启动（会员）"
+                android:textSize="13sp"
+                android:textColor="@color/accent"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/btnGoFolder"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:background="@drawable/search_bg"
+                android:gravity="center"
+                android:text="文件夹管理"
+                android:textSize="13sp"
+                android:textColor="@color/accent"
+                android:layout_marginTop="6dp" />
+
+        </LinearLayout>
+
+        <!-- ═══ 基本设置 ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="18dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:translationZ="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="基本设置"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_tertiary"
+                android:letterSpacing="1.2"
+                android:layout_marginBottom="12dp" />
+
+            <!-- 深色模式 -->
+            <LinearLayout
+                android:id="@+id/darkModeToggle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="深色模式"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/darkModeSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp" />
+
+            <!-- 悬浮条开关 -->
+            <LinearLayout
+                android:id="@+id/overlayToggle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="桌面悬浮条"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/overlaySwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ═══ 外观设置 ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="14dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:translationZ="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="外观"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_tertiary"
+                android:letterSpacing="1.2"
+                android:layout_marginBottom="10dp" />
+
+            <!-- 强调色 -->
+            <TextView
+                android:id="@+id/accentSectionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="强调色（会员专属）"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/accent"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/accentColorGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- 背景颜色 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="背景颜色"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/accent"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/bgColorGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- 搜索卡片透明度 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="搜索卡片透明度"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/accent"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <SeekBar
+                    android:id="@+id/cardOpacitySlider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:progress="100" />
+
+                <TextView
+                    android:id="@+id/cardOpacityValue"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:text="100%"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_tertiary"
+                    android:gravity="end" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- 自定义壁纸 -->
+            <LinearLayout
+                android:id="@+id/wallpaperToggle"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="自定义壁纸"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/wallpaperStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未设置"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_tertiary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- ═══ 模糊匹配引擎 ═══ -->
+        <!-- ═══ Fuzzy Match Engine ═══ -->
+        <LinearLayout
+            android:id="@+id/searchEngineCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="18dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:translationZ="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="模糊匹配引擎 / Fuzzy Match Engine"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/superMatchSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:focusable="false" />
+
+            </LinearLayout>
+
+            <!-- 参数调节区域（模糊匹配引擎开启时显示） -->
+            <!-- Param section (visible when Fuzzy Match Engine is on) -->
+            <LinearLayout
+                android:id="@+id/paramSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/divider"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="参数调节"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="调整搜索算法参数，影响匹配精度和范围"
+                    android:textSize="9sp"
+                    android:textColor="@color/text_tertiary"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- 树形参数列表 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/search_bg"
+                    android:padding="10dp"
+                    android:layout_marginBottom="8dp">
+
+                    <!-- 根节点 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="├ 搜索算法"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="6dp" />
+
+                    <!-- 匹配阈值 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="6dp"
+                        android:paddingStart="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="│  ├ 匹配阈值"
+                            android:textSize="10sp"
+                            android:textColor="@color/text_secondary" />
+
+                        <TextView
+                            android:id="@+id/btnThresholdMinus"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:gravity="center"
+                            android:text="−"
+                            android:textSize="14sp"
+                            android:textColor="@color/accent"
+                            android:background="?attr/selectableItemBackground" />
+
+                        <TextView
+                            android:id="@+id/matchThresholdValue"
+                            android:layout_width="28dp"
+                            android:layout_height="wrap_content"
+                            android:text="25"
+                            android:textSize="11sp"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/btnThresholdPlus"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:gravity="center"
+                            android:text="+"
+                            android:textSize="14sp"
+                            android:textColor="@color/accent"
+                            android:background="?attr/selectableItemBackground" />
+
+                    </LinearLayout>
+
+                    <!-- 容错权重 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="6dp"
+                        android:paddingStart="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="│  ├ 容错权重"
+                            android:textSize="10sp"
+                            android:textColor="@color/text_secondary" />
+
+                        <TextView
+                            android:id="@+id/btnFuzzyMinus"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:gravity="center"
+                            android:text="−"
+                            android:textSize="14sp"
+                            android:textColor="@color/accent"
+                            android:background="?attr/selectableItemBackground" />
+
+                        <TextView
+                            android:id="@+id/fuzzyWeightValue"
+                            android:layout_width="28dp"
+                            android:layout_height="wrap_content"
+                            android:text="50"
+                            android:textSize="11sp"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/btnFuzzyPlus"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:gravity="center"
+                            android:text="+"
+                            android:textSize="14sp"
+                            android:textColor="@color/accent"
+                            android:background="?attr/selectableItemBackground" />
+
+                    </LinearLayout>
+
+                    <!-- 使用频率加权 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="6dp"
+                        android:paddingStart="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="│  └ 频率加权"
+                            android:textSize="10sp"
+                            android:textColor="@color/text_secondary" />
+
+                        <TextView
+                            android:id="@+id/btnUsageMinus"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:gravity="center"
+                            android:text="−"
+                            android:textSize="14sp"
+                            android:textColor="@color/accent"
+                            android:background="?attr/selectableItemBackground" />
+
+                        <TextView
+                            android:id="@+id/usageWeightValue"
+                            android:layout_width="28dp"
+                            android:layout_height="wrap_content"
+                            android:text="30"
+                            android:textSize="11sp"
+                            android:textColor="@color/text_primary"
+                            android:textStyle="bold"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/btnUsagePlus"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:gravity="center"
+                            android:text="+"
+                            android:textSize="14sp"
+                            android:textColor="@color/accent"
+                            android:background="?attr/selectableItemBackground" />
+
+                    </LinearLayout>
+
+                    <!-- 自适应刷新 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="└ 刷新间隔"
+                            android:textSize="10sp"
+                            android:textColor="@color/text_secondary" />
+
+                        <TextView
+                            android:id="@+id/refreshIntervalText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="200ms"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/accent" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/card_adaptive_params" />
+
+                </LinearLayout>
+
+                <!-- 恢复默认参数 -->
+                <TextView
+                    android:id="@+id/btnResetParams"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:gravity="center"
+                    android:text="恢复默认参数"
+                    android:textSize="11sp"
+                    android:textColor="#C0392B"
+                    android:layout_marginTop="4dp"
+                    android:background="?attr/selectableItemBackground" />
+
+                <!-- ═══ 26 键 / 9 键 切换 / 26-key / 9-key toggle ═══ -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@color/divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="输入键盘布局 / Input Layout"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/keyboardLayoutBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp"
+                        android:background="@drawable/badge_bg"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent"
+                        android:text="26 键 / QWERTY" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:id="@+id/keyboardLayoutQwert"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="8dp"
+                        android:gravity="center"
+                        android:background="@drawable/keyboard_chip_bg"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="26 键"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/keyboardLayoutT9"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="8dp"
+                        android:gravity="center"
+                        android:background="@drawable/keyboard_chip_bg"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9 键"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- 9 键 T9 开关（紧凑的 SwitchCompat 风格） -->
+                <!-- Compact 9-key T9 switch -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="启用 9 键模式"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_secondary" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/keyboardLayoutSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 模糊匹配引擎关闭时的提示 -->
+            <!-- Hint shown when Fuzzy Match Engine is off -->
+            <TextView
+                android:id="@+id/superMatchOffHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="模糊匹配引擎已关闭，搜索使用基础匹配 / Fuzzy engine off, basic match only"
+                android:textSize="10sp"
+                android:textColor="@color/text_tertiary" />
+
+        </LinearLayout>
+
+        <!-- ═══ 快捷绑定 ═══ -->
+        <LinearLayout
+            android:id="@+id/shortcutCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_bg"
+            android:padding="18dp"
+            android:layout_marginBottom="12dp"
+            android:elevation="4dp"
+            android:translationZ="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="快捷绑定"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_tertiary"
+                    android:letterSpacing="1.2" />
+
+                <TextView
+                    android:id="@+id/shortcutCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/3"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_tertiary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/shortcutList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/btnAddShortcut"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@drawable/search_bg"
+                android:gravity="center"
+                android:text="+ 添加绑定"
+                android:textSize="13sp"
+                android:textColor="@color/accent"
+                android:layout_marginTop="6dp" />
+
+        </LinearLayout>
+
+        <!-- ══—组件状态（读取 assets/release/component-status.json，不在 XML 中写死状态）══—-->
+        <LinearLayout
+            android:id="@+id/componentStatusSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/frosted_card_bg"
+            android:padding="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="组件状态"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/componentStatusOverall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="正在加载组件状态…"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:lineSpacingExtra="2dp"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/componentStatusList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- 由 ComponentHealthChecker.combinedSummary() 动态渲染 -->
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="状态源：assets/release/component-status.json\n运行时状态由 ComponentHealthChecker 覆盖。"
+                android:textSize="10sp"
+                android:textColor="@color/text_primary"
+                android:lineSpacingExtra="2dp" />
+
+        </LinearLayout>
+
+        <!-- 清空数据 -->
+        <TextView
+            android:id="@+id/btnClearData"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="清空数据"
+            android:textSize="13sp"
+            android:textColor="#FF6666"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">极速应用搜索</string>
+
+    <!-- ═══ 模糊匹配引擎 / Fuzzy Match Engine ═══ -->
+    <string name="fuzzy_engine_title">模糊匹配引擎</string>
+    <string name="fuzzy_engine_title_en">Fuzzy Match Engine</string>
+    <string name="fuzzy_engine_bilingual">模糊匹配引擎 / Fuzzy Match Engine</string>
+    <string name="fuzzy_engine_off_hint">模糊匹配引擎已关闭，搜索使用基础匹配</string>
+    <string name="fuzzy_engine_off_hint_en">Fuzzy engine off, basic match only</string>
+    <string name="fuzzy_engine_off_hint_bilingual">模糊匹配引擎已关闭，搜索使用基础匹配 / Fuzzy engine off, basic match only</string>
+    <string name="fuzzy_engine_need_license">模糊匹配引擎需要激活会员</string>
+    <string name="fuzzy_engine_need_license_en">Fuzzy Match Engine requires activation</string>
+    <string name="fuzzy_engine_status_on">模糊引擎</string>
+    <string name="fuzzy_engine_status_on_en">Fuzzy Engine</string>
+    <string name="fuzzy_engine_status_off">标准</string>
+    <string name="fuzzy_engine_status_off_en">Standard</string>
+
+    <!-- ═══ 输入键盘布局 / Input Keyboard Layout ═══ -->
+    <string name="input_layout_title">输入键盘布局</string>
+    <string name="input_layout_title_en">Input Layout</string>
+    <string name="input_layout_bilingual">输入键盘布局 / Input Layout</string>
+    <string name="input_layout_desc">选择您常用的输入方式：26 键全键盘 或 9 键九宫格 (T9)。由模糊匹配引擎驱动，纯本地处理。</string>
+    <string name="input_layout_desc_en">Choose your input: 26-key QWERTY or 9-key T9. Powered by the Fuzzy Match Engine, processed locally.</string>
+    <string name="input_layout_both">选择您常用的输入方式：26 键全键盘 或 9 键九宫格 (T9)。由模糊匹配引擎驱动，纯本地处理。\nChoose your common input: 26-key QWERTY or 9-key T9. Powered by the Fuzzy Match Engine, processed locally.</string>
+    <string name="input_layout_qwerty">26 键 / QWERTY</string>
+    <string name="input_layout_qwerty_sub">全键盘 · Full Keyboard</string>
+    <string name="input_layout_t9">9 键 / T9</string>
+    <string name="input_layout_t9_sub">九宫格 · 9-key</string>
+    <string name="input_layout_t9_toggle">启用 9 键 T9 模式</string>
+    <string name="input_layout_t9_toggle_en">Enable 9-key T9</string>
+    <string name="input_layout_t9_toggle_both">启用 9 键 T9 模式 / Enable 9-key T9</string>
+    <string name="input_layout_switched_qwerty">已切换到 26 键 QWERTY</string>
+    <string name="input_layout_switched_t9">已切换到 9 键 T9 / Switched to 9-key T9</string>
+    <!-- App 宿主层状态提示：不改变 GOTO Page 与冻结组件的内容。 -->
+    <string name="goto_loading_title">正在启动 GOTO</string>
+    <string name="goto_loading_subtitle">正在准备本地页面与应用索引</string>
+    <string name="goto_load_error">GOTO 页面暂时没有准备好</string>
+    <string name="goto_load_error_detail">请重新加载。搜索与核心组件仍在本地运行。</string>
+    <string name="goto_retry">重新加载</string>
+    <string name="goto_web_content_desc">GOTO 主界面</string>
+</resources>

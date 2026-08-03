@@ -1,0 +1,2270 @@
+/* GOTO Page final visual contract.
+   Standard mode stays minimal and line-led. Ceramic material belongs only to
+   Light Sense, where it is deliberately restrained and performance-friendly. */
+
+:root {
+  --goto-spring: cubic-bezier(.16, 1.16, .28, 1);
+  --goto-soft-spring: cubic-bezier(.14, .96, .24, 1);
+  --goto-ease: cubic-bezier(.22, 1, .36, 1);
+  --goto-control-radius: 8px;
+}
+
+/* The phone mock reserves a clear system-status area instead of letting the
+   first card slide behind it. Its tone follows the active taskbar/background
+   token so the safe area never becomes a detached white strip. */
+.phone {
+  padding-top: 34px !important;
+}
+.status-bar {
+  height: 34px !important;
+  min-height: 34px !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 600 !important;
+  background: var(--taskbar-color, var(--status-bar-bg, var(--bg))) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+.status-bar::before,
+.status-bar::after {
+  opacity: 0 !important;
+}
+
+/* Restore the standard line-style surface. No ceramic gradients, blur or
+   decorative shadow leak into the ordinary light/dark modes. */
+body.simple-mode:not(.light-sense) .phone,
+body.simple-mode:not(.light-sense) #phoneBody {
+  background: var(--bg) !important;
+  background-image: none !important;
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent) !important;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--ink) 58%, transparent),
+    inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body.simple-mode:not(.light-sense) .search-card,
+body.simple-mode:not(.light-sense) .slot-card,
+body.simple-mode:not(.light-sense) .section-card,
+body.simple-mode:not(.light-sense) .sub-card,
+body.simple-mode:not(.light-sense) .result-row,
+body.simple-mode:not(.light-sense) .sc-ready-hint,
+body.simple-mode:not(.light-sense) .doc-tree,
+body.simple-mode:not(.light-sense) .doc-content-wrap {
+  background: var(--flat-sub, var(--surface)) !important;
+  background-image: none !important;
+  border-color: var(--flat-line, var(--line)) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body.dark.simple-mode:not(.light-sense) .search-card,
+body.dark.simple-mode:not(.light-sense) .slot-card,
+body.dark.simple-mode:not(.light-sense) .section-card,
+body.dark.simple-mode:not(.light-sense) .sub-card,
+body.dark.simple-mode:not(.light-sense) .result-row,
+body.dark.simple-mode:not(.light-sense) .sc-ready-hint,
+body.dark.simple-mode:not(.light-sense) .doc-tree,
+body.dark.simple-mode:not(.light-sense) .doc-content-wrap {
+  background: var(--flat-sub, var(--surface)) !important;
+  background-image: none !important;
+  border-color: var(--flat-line, var(--line)) !important;
+}
+body.simple-mode:not(.light-sense) .search-card,
+body.simple-mode:not(.light-sense) .slot-card,
+body.simple-mode:not(.light-sense) .section-card,
+body.simple-mode:not(.light-sense) .sub-card {
+  transition:
+    background-color .28s ease,
+    border-color .28s ease,
+    color .28s ease,
+    transform .42s var(--goto-spring) !important;
+}
+
+/* Search alignment and compact no-result expansion. The old inline layer
+   reserved 180–200px for an empty state; this keeps the same interaction but
+   gives it a short, stable landing zone. */
+#searchZone.search-container,
+#searchCard {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+#searchCard {
+  margin-inline: 0 !important;
+}
+#searchCard.is-focused:not(.has-results) {
+  height: 176px !important;
+  min-height: 176px !important;
+  max-height: 176px !important;
+  /* Keep the expanded surface below the iPhone top curve instead of letting
+     the rounded frame visually clip its upper corners. */
+  margin-top: 12px !important;
+  padding: 10px 12px !important;
+  overflow: hidden !important;
+  justify-content: flex-start !important;
+  transition:
+    height .72s var(--goto-spring),
+    min-height .72s var(--goto-spring),
+    max-height .72s var(--goto-spring),
+    padding .58s var(--goto-spring),
+    border-color .28s ease,
+    box-shadow .28s ease !important;
+  will-change: height, padding;
+}
+#searchCard.is-focused:not(.has-results) {
+  transition-property: height, min-height, max-height, margin-top, padding,
+    border-color, box-shadow !important;
+}
+#searchCard.is-focused:not(.has-results) .sc-input-row {
+  flex: 0 0 48px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+}
+#searchCard.is-focused:not(.has-results) #searchResults,
+#searchCard.is-focused:not(.has-results) .sc-results {
+  flex: 0 0 92px !important;
+  height: 92px !important;
+  min-height: 92px !important;
+  max-height: 92px !important;
+  margin-top: 6px !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  animation: none !important;
+  transition: opacity .32s ease, transform .62s var(--goto-soft-spring) !important;
+}
+/* preview-final.css has a more specific legacy :not(.is-empty) rule; mirror
+   that specificity so the compact contract wins without changing its state
+   semantics. */
+#searchCard.is-focused:not(.has-results):not(.is-empty) #searchResults,
+#searchCard.is-focused:not(.has-results):not(.is-empty) .sc-results {
+  flex: 0 0 92px !important;
+  height: 92px !important;
+  min-height: 92px !important;
+  max-height: 92px !important;
+  margin-top: 6px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+#searchCard.is-focused:not(.has-results) #readyHint,
+#searchCard.is-focused:not(.has-results) .sc-ready-hint {
+  height: 92px !important;
+  min-height: 92px !important;
+  max-height: 92px !important;
+  padding: 12px 12px !important;
+  overflow: hidden !important;
+  animation: none !important;
+}
+#searchCard.is-focused:not(.has-results) .sc-ready-title { font-size: 12px !important; }
+#searchCard.is-focused:not(.has-results) .sc-ready-sub { font-size: 10px !important; }
+#searchCard.is-focused:not(.has-results) .sc-ready-pred { gap: 5px !important; }
+#searchCard.is-focused:not(.has-results) .sc-quick-bubbles { display: none !important; }
+#searchCard.is-focused:not(.has-results) .sc-results-empty {
+  min-height: 92px !important;
+  padding: 12px 10px !important;
+}
+
+/* Settings / stats / back controls: one compact capsule language. */
+.bp-top-bar {
+  padding: 8px 12px 6px !important;
+}
+.bp-btn-stack {
+  width: 136px !important;
+  gap: 4px !important;
+}
+.bp-capsule {
+  height: 28px !important;
+  border-radius: var(--goto-control-radius) !important;
+}
+.bp-icon-btn,
+.bp-icon-btn--full,
+.bp-icon-btn--half {
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 8px !important;
+  border-radius: var(--goto-control-radius) !important;
+  gap: 4px !important;
+  font-size: 9px !important;
+  letter-spacing: .08px !important;
+}
+.bp-capsule .bp-icon-btn--half:first-child,
+.bp-capsule .bp-icon-btn--half:last-child {
+  border-radius: 0 !important;
+}
+.bp-capsule .bp-icon-btn--half:first-child { border-radius: var(--goto-control-radius) 0 0 var(--goto-control-radius) !important; }
+.bp-capsule .bp-icon-btn--half:last-child { border-radius: 0 var(--goto-control-radius) var(--goto-control-radius) 0 !important; }
+.bp-icon-arrow,
+.bp-icon-btn svg {
+  width: 11px !important;
+  height: 11px !important;
+  font-size: 11px !important;
+}
+
+/* Custom-app picker: compact, calm, and ready for Android iconURI payloads. */
+#customCard .custom-search-control {
+  height: 32px !important;
+  min-height: 32px !important;
+  border-radius: var(--goto-control-radius) !important;
+  padding: 0 9px !important;
+  gap: 7px !important;
+}
+#customCard .custom-search-control input {
+  height: 30px !important;
+  font-size: 10px !important;
+}
+#customCard .custom-app-list {
+  max-height: 210px !important;
+  margin-top: 6px !important;
+  gap: 5px !important;
+  contain: layout paint;
+  overscroll-behavior: contain;
+}
+#customCard .custom-app-option {
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 5px 7px !important;
+  grid-template-columns: 24px minmax(0,1fr) 12px !important;
+  gap: 6px !important;
+  border-radius: var(--goto-control-radius) !important;
+  background: color-mix(in srgb, var(--app-color, #7c8490) 8%, var(--surface)) !important;
+  border-color: color-mix(in srgb, var(--app-color, #7c8490) 16%, var(--line)) !important;
+  transition: transform .34s var(--goto-spring), background-color .22s ease, border-color .22s ease !important;
+}
+#customCard .custom-app-option:hover,
+#customCard .custom-app-option.selected {
+  background: color-mix(in srgb, var(--app-color, var(--accent)) 14%, var(--surface)) !important;
+  border-color: color-mix(in srgb, var(--app-color, var(--accent)) 34%, var(--line)) !important;
+}
+#customCard .custom-app-option:active { transform: scale(.985); }
+#customCard .custom-app-option-icon {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 6px !important;
+  background: var(--app-color, #777) !important;
+  box-shadow: none !important;
+}
+#customCard .custom-app-option-name { font-size: 10px !important; }
+#customCard .custom-app-option-mark { font-size: 12px !important; }
+
+/* App slots use the same light application-colour wash; real Android icons
+   are inserted by _makeSlotItem when iconURI is present. */
+.si {
+  background: color-mix(in srgb, var(--si-color, #888) 8%, var(--surface)) !important;
+  border-color: color-mix(in srgb, var(--si-color, #888) 20%, var(--line)) !important;
+  transition: transform .36s var(--goto-spring), background-color .22s ease, border-color .22s ease !important;
+}
+.si:hover { background: color-mix(in srgb, var(--si-color, #888) 13%, var(--surface)) !important; }
+.si:active { transform: scale(.985) !important; }
+.si-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Light Sense only: restrained ceramic / jade surface with a small amount of
+   diffusion. The material is opaque enough to avoid the cheap frosted-glass
+   look, while the low blur and ambient glow preserve the “light follows time”
+   feeling without heavy shadows. */
+body.light-sense.light-sense-light .phone,
+body.light-sense.light-sense-dark .phone {
+  background:
+    radial-gradient(110% 46% at 12% 0%, rgba(255,255,255,.22), transparent 62%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--bg) 92%, #fff 8%),
+      color-mix(in srgb, var(--bg) 96%, var(--accent) 2%) 56%,
+      color-mix(in srgb, var(--bg) 94%, #000 6%)) !important;
+}
+body.light-sense .search-card,
+body.light-sense .slot-card,
+body.light-sense .section-card,
+body.light-sense .sub-card,
+body.light-sense .result-row,
+body.light-sense .sc-ready-hint,
+body.light-sense .doc-tree,
+body.light-sense .doc-content-wrap {
+  background:
+    radial-gradient(115% 100% at 0% 0%, rgba(255,255,255,.23), transparent 62%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--surface) 94%, #fff 6%),
+      color-mix(in srgb, var(--surface) 97%, var(--accent) 3%)) !important;
+  border-color: color-mix(in srgb, var(--ink) 11%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.30),
+    inset 0 -1px 0 rgba(0,0,0,.05),
+    0 7px 18px rgba(25,28,35,.10) !important;
+  backdrop-filter: blur(10px) saturate(1.03) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.03) !important;
+}
+body.light-sense.light-sense-dark .search-card,
+body.light-sense.light-sense-dark .slot-card,
+body.light-sense.light-sense-dark .section-card,
+body.light-sense.light-sense-dark .sub-card,
+body.light-sense.light-sense-dark .result-row,
+body.light-sense.light-sense-dark .sc-ready-hint,
+body.light-sense.light-sense-dark .doc-tree,
+body.light-sense.light-sense-dark .doc-content-wrap {
+  background:
+    radial-gradient(115% 100% at 0% 0%, rgba(255,255,255,.08), transparent 62%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--surface) 92%, #fff 8%),
+      color-mix(in srgb, var(--surface) 96%, var(--accent) 3%)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.12),
+    0 7px 18px rgba(0,0,0,.12) !important;
+}
+body.light-sense.light-sense-light .search-card,
+body.light-sense.light-sense-dark .search-card {
+  transition:
+    height .46s var(--goto-spring),
+    min-height .46s var(--goto-spring),
+    max-height .46s var(--goto-spring),
+    padding .38s var(--goto-spring),
+    background .42s ease,
+    border-color .32s ease,
+    box-shadow .32s ease !important;
+}
+body.light-sense .phone::after {
+  content: '';
+  position: absolute;
+  inset: 34px 16px 10px;
+  border-radius: 36px;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(65% 32% at 18% 3%, rgba(255,255,255,.16), transparent 75%);
+  filter: blur(12px);
+  opacity: .65;
+}
+body.light-sense.light-sense-light .phone,
+body.light-sense.light-sense-dark .phone,
+body.light-sense.light-sense-light #phoneBody,
+body.light-sense.light-sense-dark #phoneBody {
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent) !important;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--ink) 42%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.18) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Final specificity guard: the legacy material layer also targets
+   body.dark.light-sense. Keep the palette direction explicit so the live
+   daylight class, not the base theme class, decides the finish. */
+body.light-sense.light-sense-light .search-card,
+body.light-sense.light-sense-light .slot-card,
+body.light-sense.light-sense-light .section-card,
+body.light-sense.light-sense-light .sub-card,
+body.light-sense.light-sense-light .stats-card-slot,
+body.light-sense.light-sense-light .result-row,
+body.light-sense.light-sense-light .sc-ready-hint,
+body.light-sense.light-sense-light .doc-tree,
+body.light-sense.light-sense-light .doc-content-wrap {
+  background:
+    radial-gradient(115% 100% at 0% 0%, rgba(255,255,255,.23), transparent 62%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--surface) 94%, #fff 6%),
+      color-mix(in srgb, var(--surface) 97%, var(--accent) 3%)) !important;
+  border-color: color-mix(in srgb, var(--ink) 11%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -1px 0 rgba(0,0,0,.035),
+    0 5px 14px rgba(25,28,35,.065) !important;
+  backdrop-filter: blur(6px) saturate(1.02) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.02) !important;
+}
+
+body.light-sense.light-sense-light #searchCard {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -1px 0 rgba(0,0,0,.035),
+    0 5px 14px rgba(25,28,35,.065) !important;
+  backdrop-filter: blur(6px) saturate(1.02) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.02) !important;
+}
+body.light-sense.light-sense-dark #searchCard {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.09),
+    inset 0 -1px 0 rgba(0,0,0,.10),
+    0 5px 14px rgba(0,0,0,.10) !important;
+  backdrop-filter: blur(6px) saturate(1.02) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.02) !important;
+}
+body.light-sense.light-sense-dark .search-card,
+body.light-sense.light-sense-dark .slot-card,
+body.light-sense.light-sense-dark .section-card,
+body.light-sense.light-sense-dark .sub-card,
+body.light-sense.light-sense-dark .stats-card-slot,
+body.light-sense.light-sense-dark .result-row,
+body.light-sense.light-sense-dark .sc-ready-hint,
+body.light-sense.light-sense-dark .doc-tree,
+body.light-sense.light-sense-dark .doc-content-wrap {
+  background:
+    radial-gradient(115% 100% at 0% 0%, rgba(255,255,255,.08), transparent 62%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--surface) 92%, #fff 8%),
+      color-mix(in srgb, var(--surface) 96%, var(--accent) 3%)) !important;
+  border-color: color-mix(in srgb, var(--ink) 14%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.09),
+    inset 0 -1px 0 rgba(0,0,0,.10),
+    0 5px 14px rgba(0,0,0,.10) !important;
+  backdrop-filter: blur(6px) saturate(1.02) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.02) !important;
+}
+body.light-sense .phone > *:not(.status-bar) { position: relative; z-index: 1; }
+
+/* Motion: use spring timing on small interactive surfaces only. Large lists
+   remain layout-stable, avoiding an all-property animation tax. */
+button,
+.custom-app-option,
+.slot-item,
+.doc-tree-node,
+.bp-icon-btn,
+.custom-add-toggle,
+.index-add-toggle {
+  transition-timing-function: var(--goto-spring) !important;
+}
+button:active,
+.custom-app-option:active,
+.slot-item:active,
+.doc-tree-node:active {
+  transform: scale(.985);
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .001ms !important;
+  }
+  #searchCard.is-focused:not(.has-results) { will-change: auto; }
+}
+
+/* SuperGOTO owns the advanced stack. Keep the existing cards in the DOM so
+   their state and documentation links remain stable, but reveal them only
+   from the single master switch. */
+.super-goto-control {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font: 700 9px/1 var(--font-en, Arial, sans-serif);
+  letter-spacing: .45px;
+}
+.super-goto-label { white-space: nowrap; }
+#pioneerCard #pioneerSubitems { display: none !important; }
+body.super-goto-on #pioneerCard #pioneerSubitems { display: flex !important; }
+#pioneerCard #pioneerSubitems {
+  margin-top: 10px !important;
+  gap: 7px !important;
+  overflow: hidden;
+  transform-origin: top center;
+}
+body.super-goto-on #pioneerCard #pioneerSubitems {
+  animation: superGotoReveal .72s var(--goto-spring) both;
+}
+@keyframes superGotoReveal {
+  from { opacity: 0; transform: translateY(-10px) scaleY(.94); }
+  68% { opacity: 1; transform: translateY(2px) scaleY(1.01); }
+  to { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+#pioneerCard #pioneerMasterToggle { flex-shrink: 0; }
+
+/* Advanced cards stay dense when expanded; the master control carries the
+   hierarchy instead of adding another decorative container. */
+#pioneerCard .pioneer-subcards .sub-card {
+  transition: transform .58s var(--goto-spring), background-color .3s ease,
+    border-color .3s ease !important;
+}
+
+/* Page preview refinements: keep the phone shell visible even in a short
+   browser viewport, while leaving the embedded Android mirror untouched. */
+html:not(.embedded) body.light-sense.light-sense-dark #phoneBody,
+html:not(.embedded) body.light-sense.light-sense-dark .phone,
+html:not(.embedded) body.light-sense.light-sense-light #phoneBody,
+html:not(.embedded) body.light-sense.light-sense-light .phone,
+html:not(.embedded) body:not(.light-sense) #phoneBody,
+html:not(.embedded) body:not(.light-sense) .phone {
+  border: 2px solid #111318 !important;
+  border-radius: 52px !important;
+  overflow: hidden !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.30),
+    0 18px 42px rgba(15,18,24,.22) !important;
+}
+html:not(.embedded) body.phone-frame-white.light-sense.light-sense-dark #phoneBody,
+html:not(.embedded) body.phone-frame-white.light-sense.light-sense-dark .phone,
+html:not(.embedded) body.phone-frame-white.light-sense.light-sense-light #phoneBody,
+html:not(.embedded) body.phone-frame-white.light-sense.light-sense-light .phone,
+html:not(.embedded) body.phone-frame-white:not(.light-sense) #phoneBody,
+html:not(.embedded) body.phone-frame-white:not(.light-sense) .phone {
+  border-color: #f4f2ed !important;
+  box-shadow:
+    0 0 0 1px rgba(20,22,26,.22),
+    0 18px 42px rgba(15,18,24,.18) !important;
+}
+.phone-frame-hit {
+  position: absolute !important;
+  z-index: 420 !important;
+  display: block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  cursor: pointer !important;
+}
+.phone-frame-hit-top { top: 0; left: 54px; right: 54px; height: 8px; }
+.phone-frame-hit-bottom { bottom: 0; left: 54px; right: 54px; height: 8px; }
+.phone-frame-hit-left { top: 54px; bottom: 54px; left: 0; width: 8px; }
+.phone-frame-hit-right { top: 54px; bottom: 54px; right: 0; width: 8px; }
+.phone-version-mark {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 12px !important;
+  transform: translateX(-50%) !important;
+  z-index: 430 !important;
+  pointer-events: none !important;
+  white-space: nowrap;
+  font-family: 'Outfit', 'Poppins', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: .16em !important;
+  color: color-mix(in srgb, var(--ink) 62%, transparent) !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.35);
+}
+.phone-version-mark::before,
+.phone-version-mark::after {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 1px;
+  margin: 0 7px 3px;
+  background: color-mix(in srgb, var(--accent) 54%, transparent);
+  vertical-align: middle;
+}
+
+/* Light Sense home state: the idle search stays near the safe area instead
+   of being vertically centered below a large blank canvas. Focus/results
+   states keep their existing spring expansion rules. */
+body.light-sense:not(.slot-collapsed) .search-container:not(.is-active):not(:has(.search-card.is-focused)):not(:has(.search-card.has-results)) {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  padding: 4px 8px 10px !important;
+  transform: none !important;
+}
+body.light-sense:not(.slot-collapsed) #searchZone.search-container:not(.is-active):not(:has(.search-card.is-focused)):not(:has(.search-card.has-results)) {
+  padding-top: 4px !important;
+  padding-bottom: 10px !important;
+}
+body.light-sense:not(.slot-collapsed) .search-container:not(.is-active):not(:has(.search-card.is-focused)):not(:has(.search-card.has-results)) .search-card {
+  margin-top: 0 !important;
+}
+
+/* Hidden onboarding/loading layers are overlays, never flex children. Their
+   old relative layout consumed the phone's height and pushed the light-sense
+   home view below the fold. */
+body.light-sense #phoneBody > .welcome-screen.hidden,
+body.light-sense #phoneBody > .global-overlay,
+body.light-sense #phoneBody > .page-corner-glow {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  flex: none !important;
+  pointer-events: none !important;
+}
+
+/* Music belongs to the directory rail, with a small left inset rather than
+   floating in the middle of the footer. */
+.doc-tree-bottom-zone {
+  justify-content: flex-start !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+.doc-tree-bottom-btn { margin-left: 0 !important; margin-right: 0 !important; }
+
+/* The dedicated card is the only in-stack master surface. The header control
+   remains a compact status affordance and gains a restrained SuperGOTO glow. */
+#pioneerCard .super-goto-card {
+  margin-bottom: 8px !important;
+  cursor: pointer;
+  transition: transform .62s var(--goto-spring), border-color .32s ease,
+    box-shadow .32s ease, background .32s ease !important;
+}
+#pioneerCard .super-goto-card:hover { transform: translateY(-1px); }
+#pioneerCard .super-goto-card.is-on {
+  border-color: color-mix(in srgb, var(--accent) 52%, transparent) !important;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 12%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.26) !important;
+}
+#pioneerCard .super-goto-card .sr-label,
+#pioneerCard .super-goto-card .sr-meta { transition: color .3s ease; }
+body.super-goto-on #pioneerCard .super-goto-card .sr-label,
+body.super-goto-on .super-goto-label {
+  background: linear-gradient(110deg, #e28b2d 0%, #f0b45a 38%, #9fc6b8 72%, #e28b2d 100%);
+  background-size: 180% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: superGotoShimmer 5.8s ease-in-out infinite;
+}
+body.super-goto-on .super-goto-control {
+  padding: 4px 7px;
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(110deg,
+    color-mix(in srgb, var(--accent) 11%, transparent),
+    color-mix(in srgb, #9fc6b8 12%, transparent));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+@keyframes superGotoShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── Documentation rail finish ────────────────────────────────────────────
+   The document area is a parallel information rail: keep its geometry quiet,
+   move labels closer to the edge, and let the active item speak through one
+   small accent bar rather than a filled selection tile. */
+#sandboxRight {
+  isolation: isolate !important;
+}
+#sandboxRight::before {
+  z-index: 0 !important;
+  opacity: .22 !important;
+  background-image:
+    repeating-radial-gradient(ellipse 72% 38% at 18% 82%,
+      transparent 0 42px,
+      color-mix(in srgb, var(--accent) 13%, transparent) 43px 44px,
+      transparent 45px 86px),
+    repeating-radial-gradient(ellipse 58% 32% at 82% 18%,
+      transparent 0 54px,
+      color-mix(in srgb, var(--ink) 7%, transparent) 55px 56px,
+      transparent 57px 112px),
+    linear-gradient(rgba(0,0,0,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.018) 1px, transparent 1px) !important;
+  background-size: auto, auto, 40px 40px, 40px 40px !important;
+  background-position: center, center, 0 0, 0 0 !important;
+  pointer-events: none !important;
+}
+#sandboxRight > * {
+  z-index: 1;
+}
+body.dark #sandboxRight::before {
+  opacity: .26 !important;
+  mix-blend-mode: screen;
+  background-image:
+    repeating-radial-gradient(ellipse 72% 38% at 18% 82%,
+      transparent 0 42px,
+      rgba(255,255,255,.075) 43px 44px,
+      transparent 45px 86px),
+    repeating-radial-gradient(ellipse 58% 32% at 82% 18%,
+      transparent 0 54px,
+      rgba(255,255,255,.045) 55px 56px,
+      transparent 57px 112px),
+    linear-gradient(rgba(255,255,255,.014) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.014) 1px, transparent 1px) !important;
+}
+
+#docBody .doc-tree {
+  width: 156px !important;
+  min-width: 156px !important;
+  flex: 0 0 156px !important;
+  border-radius: 0 !important;
+  border-left: 1px solid color-mix(in srgb, var(--ink) 8%, transparent) !important;
+  border-right: 1px solid color-mix(in srgb, var(--ink) 12%, transparent) !important;
+  padding-left: 0 !important;
+  background: color-mix(in srgb, var(--surface) 86%, transparent) !important;
+}
+#docBody .doc-tree-scroll {
+  padding-left: 0 !important;
+}
+#docBody .doc-tree-folder {
+  padding-left: 14px !important;
+  padding-right: 8px !important;
+}
+#docBody .doc-tree-node,
+#docBody .doc-tree-node.active,
+#docBody .doc-tree-node.active:hover,
+body.dark #docBody .doc-tree-node.active,
+body.light-sense #docBody .doc-tree-node.active,
+body.dark.light-sense #docBody .doc-tree-node.active {
+  margin: 0 !important;
+  padding-left: 14px !important;
+  padding-right: 8px !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#docBody .doc-tree-node.active {
+  color: var(--ink) !important;
+  font-weight: 700 !important;
+}
+#docBody .doc-tree-node.active::before {
+  content: '';
+  display: block !important;
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px !important;
+  border-radius: 0 2px 2px 0;
+  background: var(--accent) !important;
+  box-shadow: 0 0 9px color-mix(in srgb, var(--accent) 38%, transparent);
+  transform-origin: top center;
+  animation: docTreeMarkerReveal .58s var(--goto-spring) both !important;
+}
+#docBody .doc-tree-node.active::after {
+  content: '';
+  position: absolute;
+  left: 14px !important;
+  bottom: 2px !important;
+  width: 42px !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 18%, transparent));
+  transform-origin: left center;
+  animation: docTreeUnderlineReveal .62s var(--goto-spring) both !important;
+  pointer-events: none;
+}
+#docBody .doc-tree-node.active .doc-node-desc {
+  color: var(--muted) !important;
+}
+#docBody .doc-content-wrap {
+  padding: 38px 34px 56px !important;
+}
+@keyframes docTreeMarkerReveal {
+  0% { opacity: 0; transform: scaleY(0); }
+  62% { opacity: 1; transform: scaleY(1.12); }
+  100% { opacity: 1; transform: scaleY(1); }
+}
+@keyframes docTreeUnderlineReveal {
+  0% { opacity: 0; transform: scaleX(0); }
+  62% { opacity: .75; transform: scaleX(1.08); }
+  100% { opacity: .55; transform: scaleX(1); }
+}
+
+/* ── Sponsor / contact cards ─────────────────────────────────────────────
+   A restrained poster-like contour line and compact spacing give both cards
+   the same visual language without turning them into glass panels. */
+#docBody .community-page-wrap {
+  padding-top: 2px !important;
+  padding-bottom: 24px !important;
+}
+#docBody .community-page-head {
+  margin-bottom: 16px !important;
+  padding-bottom: 12px !important;
+  border-bottom-color: color-mix(in srgb, var(--ink) 13%, transparent) !important;
+}
+#docBody .community-cards-grid {
+  gap: 12px !important;
+}
+#docBody .comm-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px !important;
+  border-color: color-mix(in srgb, var(--ink) 14%, transparent) !important;
+  background: color-mix(in srgb, var(--surface) 94%, #fff 6%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28),
+    0 10px 26px color-mix(in srgb, var(--ink) 8%, transparent) !important;
+  transition: border-color .45s ease, box-shadow .55s var(--goto-ease-light),
+    transform .55s var(--goto-spring), background .45s ease !important;
+}
+#docBody .comm-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .16;
+  background: repeating-radial-gradient(ellipse 75% 42% at 5% 0%,
+    transparent 0 34px,
+    color-mix(in srgb, var(--accent) 15%, transparent) 35px 36px,
+    transparent 37px 72px);
+}
+#docBody .comm-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--ink) 14%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.34),
+    0 14px 30px color-mix(in srgb, var(--accent) 10%, transparent) !important;
+}
+#docBody .comm-card-head,
+#docBody .comm-card-body {
+  position: relative;
+  z-index: 1;
+}
+#docBody .comm-card-head {
+  padding: 13px 16px 10px !important;
+  border-bottom-color: color-mix(in srgb, var(--ink) 11%, transparent) !important;
+}
+#docBody .comm-card-body {
+  padding: 12px 16px 14px !important;
+  gap: 9px !important;
+}
+#docBody .comm-card-num {
+  letter-spacing: .12em !important;
+  color: var(--accent) !important;
+}
+#docBody .comm-qr-frame,
+#docBody .comm-kofi-link,
+#docBody .comm-field-input,
+#docBody .comm-id-actions button,
+#docBody .comm-badge-btn {
+  border-radius: 6px !important;
+}
+#docBody .comm-qr-frame {
+  border-color: color-mix(in srgb, var(--ink) 14%, transparent) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35),
+    0 5px 14px color-mix(in srgb, var(--ink) 9%, transparent) !important;
+}
+#docBody .comm-kofi-link,
+#docBody .comm-field-input,
+#docBody .comm-id-actions button {
+  transition: border-color .35s ease, background .35s ease, color .35s ease,
+    transform .45s var(--goto-spring) !important;
+}
+#docBody .comm-id-actions button:hover,
+#docBody .comm-kofi-link:hover {
+  transform: translateY(-1px);
+}
+body.dark #docBody .comm-card {
+  background: color-mix(in srgb, var(--surface) 92%, #fff 8%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12),
+    0 12px 28px rgba(0,0,0,.18) !important;
+}
+
+/* Standalone preview footer: keep the release mark outside the iPhone frame.
+   Embedded Android pages do not render this mark. */
+html.standalone body #sandboxLeft {
+  overflow: visible !important;
+  position: relative !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+html.standalone body #sandboxLeft #phoneBody {
+  align-self: center !important;
+}
+html.standalone #phoneBody {
+  /* Keep the standalone mock at a device-like height instead of stretching
+     to the full desktop viewport; retain a responsive fallback for short
+     screens and leave the external version mark clear below it. */
+  height: min(960px, calc(100% - 96px)) !important;
+  max-height: min(960px, calc(100% - 96px)) !important;
+}
+html.standalone #phoneVersionMark {
+  bottom: 4px !important;
+  top: auto !important;
+  z-index: 900 !important;
+  font-size: 10px !important;
+}
+html.embedded #phoneVersionMark {
+  display: none !important;
+}
+
+/* Empty search state: one compact, stable landing frame across themes and
+   entry paths, so a missing app never makes the phone content jump. */
+html body #searchCard.is-empty {
+  height: 220px !important;
+  min-height: 220px !important;
+  max-height: 220px !important;
+  margin-top: 12px !important;
+  padding: 10px 12px !important;
+  overflow: hidden !important;
+  transform: none !important;
+}
+html body #searchCard.is-empty #searchResults,
+html body #searchCard.is-empty .sc-results {
+  height: 136px !important;
+  min-height: 136px !important;
+  max-height: 136px !important;
+  flex: 0 0 136px !important;
+  margin-top: 8px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  display: flex !important;
+}
+html body #searchCard.is-empty #resultsEmpty,
+html body #searchCard.is-empty .sc-results-empty {
+  width: 100% !important;
+  height: 136px !important;
+  min-height: 136px !important;
+  max-height: 136px !important;
+  padding: 16px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+html body #searchCard.is-empty .sc-ready-hint,
+html body #searchCard.is-empty .sc-quick-bubbles {
+  display: none !important;
+}
+
+/* Documentation index rail: a quiet instrument scale at the far edge of the
+   directory. Repeated ticks keep the rail legible without turning the tree
+   into a decorated card; the fill is driven by _updateDocTreeProgress(). */
+#docBody .doc-tree {
+  position: relative !important;
+}
+#docBody .doc-tree-rail {
+  position: absolute !important;
+  z-index: 3 !important;
+  left: 5px !important;
+  top: 20px !important;
+  bottom: 68px !important;
+  width: 14px !important;
+  pointer-events: none !important;
+  opacity: .64;
+}
+#docBody .doc-tree-rail-track,
+#docBody .doc-tree-rail-fill {
+  position: absolute !important;
+  left: 6px !important;
+  top: 0 !important;
+  width: 2px !important;
+  border-radius: 2px !important;
+}
+#docBody .doc-tree-rail-track {
+  bottom: 0 !important;
+  background:
+    linear-gradient(to bottom,
+      color-mix(in srgb, var(--ink) 20%, transparent),
+      color-mix(in srgb, var(--ink) 9%, transparent)) !important;
+}
+#docBody .doc-tree-rail-track::before {
+  content: '';
+  position: absolute;
+  inset: 0 -6px;
+  background:
+    repeating-linear-gradient(to bottom,
+      transparent 0 8px,
+      color-mix(in srgb, var(--ink) 24%, transparent) 8px 9px,
+      transparent 9px 18px) !important;
+  opacity: .58;
+}
+#docBody .doc-tree-rail-track::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 0;
+  height: 1px;
+  background: color-mix(in srgb, var(--ink) 28%, transparent);
+}
+#docBody .doc-tree-rail-fill {
+  height: 0;
+  background:
+    repeating-linear-gradient(to bottom,
+      var(--accent) 0 2px,
+      color-mix(in srgb, var(--accent) 45%, transparent) 2px 4px,
+      transparent 4px 18px) !important;
+  box-shadow: 0 0 7px color-mix(in srgb, var(--accent) 28%, transparent) !important;
+  transition: height .62s var(--goto-spring), top .62s var(--goto-spring) !important;
+}
+#docBody .doc-tree-rail-fill::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  bottom: 4px;
+  width: 12px;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent) 88%, transparent);
+  box-shadow: 0 0 5px color-mix(in srgb, var(--accent) 42%, transparent);
+}
+#docBody .doc-tree-rail-fill::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  bottom: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--accent) 12%, transparent),
+    0 0 8px color-mix(in srgb, var(--accent) 34%, transparent);
+}
+#docBody .doc-tree-folder {
+  padding-left: 18px !important;
+}
+#docBody .doc-tree-node,
+#docBody .doc-tree-node.active,
+#docBody .doc-tree-node.active:hover {
+  padding-left: 18px !important;
+}
+#docBody .doc-tree-node.active::after {
+  left: 18px !important;
+}
+#docBody .credits-summary {
+  border-left: 2px solid color-mix(in srgb, var(--accent) 55%, transparent) !important;
+  padding-left: 18px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GOTO TOPO ARCHIVE / 地形科技档案
+   70% reading utility · 20% brand language · 10% experimental detail.
+   The variables are scoped to the documentation half so the phone remains
+   governed by the Kotlin/WebView product tokens. */
+#sandboxRight {
+  --doc-paper: #f3efe6;
+  --doc-paper-deep: #ebe4d7;
+  --doc-ink: #11110f;
+  --doc-ink-soft: #5f5a51;
+  --doc-muted: #8b857a;
+  --doc-orange: #ff5a00;
+  --doc-line: rgba(40, 35, 28, .12);
+  --doc-line-strong: rgba(40, 35, 28, .22);
+  --doc-grid: rgba(40, 35, 28, .035);
+  --doc-texture-opacity: .055;
+  --doc-radius-control: 8px;
+  --doc-radius-panel: 3px;
+  --doc-motion: 280ms;
+  color: var(--doc-ink) !important;
+  background: var(--doc-paper) !important;
+}
+body.dark #sandboxRight {
+  --doc-paper: #171612;
+  --doc-paper-deep: #201e19;
+  --doc-ink: #f2ede3;
+  --doc-ink-soft: #c0b9ad;
+  --doc-muted: #8d877d;
+  --doc-line: rgba(242, 237, 227, .12);
+  --doc-line-strong: rgba(242, 237, 227, .23);
+  --doc-grid: rgba(242, 237, 227, .032);
+}
+
+/* Light Sense is a continuous daylight interpolation, not a binary theme.
+   Follow the live application tokens so every ceramic temperature keeps the
+   correct foreground contrast, including timezone-only fallback estimates. */
+body.light-sense #sandboxRight {
+  --doc-paper: var(--bg);
+  --doc-paper-deep: var(--surface-alt);
+  --doc-ink: var(--ink);
+  --doc-ink-soft: var(--ink-soft);
+  --doc-muted: var(--muted);
+  --doc-line: color-mix(in srgb, var(--ink) 12%, transparent);
+  --doc-line-strong: color-mix(in srgb, var(--ink) 22%, transparent);
+  --doc-grid: color-mix(in srgb, var(--ink) 3.5%, transparent);
+}
+
+/* Technical index: section numbers, a calibrated vertical scale, and one
+   orange coordinate node. No menu tile backgrounds are introduced. */
+#docBody .doc-tree {
+  width: 156px !important;
+  min-width: 156px !important;
+  flex-basis: 156px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-right: 1px solid var(--doc-line-strong) !important;
+  border-radius: 0 !important;
+  background: color-mix(in srgb, var(--doc-paper-deep) 80%, transparent) !important;
+  box-shadow: inset -1px 0 0 rgba(255,255,255,.18) !important;
+}
+body.dark #docBody .doc-tree {
+  box-shadow: inset -1px 0 0 rgba(255,255,255,.025) !important;
+}
+#docBody .doc-tree-scroll {
+  counter-reset: goto-doc-section;
+  padding: 14px 0 10px !important;
+}
+#docBody .doc-tree-folder {
+  counter-increment: goto-doc-section;
+  min-height: 20px !important;
+  margin: 13px 0 3px !important;
+  padding: 4px 28px 3px 24px !important;
+  color: var(--doc-muted) !important;
+  font: 720 8.5px/1.35 var(--font-mono) !important;
+  letter-spacing: .11em !important;
+  text-transform: uppercase !important;
+  opacity: 1 !important;
+}
+#docBody .doc-tree-folder:first-child {
+  margin-top: 2px !important;
+}
+#docBody .doc-tree-folder::before {
+  content: counter(goto-doc-section, decimal-leading-zero) !important;
+  display: block !important;
+  position: absolute !important;
+  left: auto !important;
+  right: 9px !important;
+  top: 5px !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: color-mix(in srgb, var(--doc-muted) 72%, transparent) !important;
+  font: 620 7px/1 var(--font-mono) !important;
+  letter-spacing: .03em !important;
+}
+#docBody .doc-tree-node,
+#docBody .doc-tree-node.active,
+#docBody .doc-tree-node.active:hover,
+body.dark #docBody .doc-tree-node.active,
+body.light-sense #docBody .doc-tree-node.active,
+body.dark.light-sense #docBody .doc-tree-node.active {
+  min-height: 27px !important;
+  margin: 0 !important;
+  padding: 5px 9px 5px 24px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--doc-ink-soft) !important;
+  font-size: 11px !important;
+  font-weight: 470 !important;
+  letter-spacing: .008em !important;
+  transition: color var(--doc-motion) ease, letter-spacing var(--doc-motion) ease !important;
+}
+#docBody .doc-tree-node:hover {
+  color: var(--doc-ink) !important;
+  letter-spacing: .018em !important;
+}
+#docBody .doc-tree-node::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  left: 24px !important;
+  bottom: 3px !important;
+  width: 0 !important;
+  height: 1px !important;
+  border-radius: 0 !important;
+  background: var(--doc-orange) !important;
+  opacity: .58;
+  transform: none !important;
+  animation: none !important;
+  transition: width var(--doc-motion) cubic-bezier(.22,1,.36,1), opacity var(--doc-motion) ease !important;
+}
+#docBody .doc-tree-node:hover::after {
+  width: 16px !important;
+  opacity: .42;
+}
+#docBody .doc-tree-node.active {
+  color: var(--doc-ink) !important;
+  font-weight: 720 !important;
+}
+#docBody .doc-tree-node.active::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  left: 18px !important;
+  top: 50% !important;
+  bottom: auto !important;
+  width: 5px !important;
+  height: 5px !important;
+  border-radius: 0 !important;
+  background: var(--doc-orange) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--doc-orange) 10%, transparent) !important;
+  transform: translateY(-50%) !important;
+  transform-origin: center !important;
+  animation: gotoArchiveNode 2.8s ease-in-out infinite !important;
+}
+#docBody .doc-tree-node.active::after {
+  left: 24px !important;
+  width: 34px !important;
+  opacity: .82;
+}
+#docBody .doc-tree-rail-fill {
+  background: repeating-linear-gradient(to bottom,
+    var(--doc-orange) 0 2px,
+    color-mix(in srgb, var(--doc-orange) 42%, transparent) 2px 4px,
+    transparent 4px 18px) !important;
+  box-shadow: none !important;
+}
+#docBody .doc-tree-rail-fill::before,
+#docBody .doc-tree-rail-fill::after {
+  background: var(--doc-orange) !important;
+  box-shadow: none !important;
+}
+@keyframes gotoArchiveNode {
+  0%, 100% { opacity: .72; transform: translateY(-50%) scale(.92); }
+  50% { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
+/* Localized cartographic field. The central reading column stays clean; grid,
+   paper grain and contour hints gather at the perimeter and title corner. */
+#sandboxRight::before {
+  opacity: 1 !important;
+  mix-blend-mode: multiply !important;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(55,47,37,.08) 0 .55px, transparent .7px),
+    linear-gradient(var(--doc-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--doc-grid) 1px, transparent 1px),
+    repeating-radial-gradient(ellipse 58% 34% at 96% 8%,
+      transparent 0 26px,
+      rgba(255,90,0,.055) 27px 28px,
+      transparent 29px 52px),
+    repeating-radial-gradient(ellipse 46% 30% at 5% 88%,
+      transparent 0 32px,
+      rgba(40,35,28,.045) 33px 34px,
+      transparent 35px 66px) !important;
+  background-size: 5px 5px, 42px 42px, 42px 42px, auto, auto !important;
+  background-position: 0 0, 0 0, 0 0, center, center !important;
+  pointer-events: none !important;
+}
+body.dark #sandboxRight::before {
+  mix-blend-mode: screen !important;
+  opacity: .72 !important;
+}
+#docBody .doc-content-wrap {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow-x: hidden !important;
+  padding: 46px clamp(36px, 4.2vw, 66px) 92px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: color-mix(in srgb, var(--doc-paper) 96%, transparent) !important;
+  box-shadow: none !important;
+}
+#docBody .doc-content-wrap::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 18px;
+  right: -72px;
+  width: 300px;
+  height: 230px;
+  pointer-events: none;
+  opacity: .7;
+  background:
+    linear-gradient(90deg, transparent 49.7%, color-mix(in srgb, var(--doc-ink) 8%, transparent) 50%, transparent 50.3%),
+    linear-gradient(transparent 49.7%, color-mix(in srgb, var(--doc-ink) 8%, transparent) 50%, transparent 50.3%),
+    repeating-radial-gradient(ellipse 56% 31% at 50% 50%,
+      transparent 0 18px,
+      color-mix(in srgb, var(--doc-orange) 10%, transparent) 19px 20px,
+      transparent 21px 38px);
+  mask-image: linear-gradient(135deg, #000 0 54%, transparent 88%);
+}
+#docBody .doc-content-wrap::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: 18px;
+  bottom: 22px;
+  width: 132px;
+  height: 132px;
+  border: 1px solid color-mix(in srgb, var(--doc-ink) 8%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: .55;
+  background:
+    radial-gradient(circle at center, var(--doc-orange) 0 2px, transparent 2.5px),
+    linear-gradient(90deg, transparent 49.5%, color-mix(in srgb, var(--doc-ink) 10%, transparent) 50%, transparent 50.5%),
+    linear-gradient(transparent 49.5%, color-mix(in srgb, var(--doc-ink) 10%, transparent) 50%, transparent 50.5%),
+    repeating-radial-gradient(circle, transparent 0 15px, color-mix(in srgb, var(--doc-ink) 8%, transparent) 16px 17px);
+}
+#docBody .doc-content {
+  position: relative !important;
+  z-index: 1 !important;
+  max-width: 760px !important;
+  counter-reset: goto-doc-h2 !important;
+  color: var(--doc-ink-soft) !important;
+  font-size: 14.5px !important;
+  line-height: 1.86 !important;
+  letter-spacing: .012em !important;
+}
+#docBody .doc-content h1 {
+  position: relative !important;
+  margin: 0 0 38px !important;
+  padding: 24px 82px 20px 0 !important;
+  color: var(--doc-ink) !important;
+  font-size: clamp(34px, 3.25vw, 52px) !important;
+  font-weight: 850 !important;
+  line-height: 1.04 !important;
+  letter-spacing: -.045em !important;
+}
+#docBody .doc-content h1::before {
+  content: attr(data-archive-label) !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  color: var(--doc-orange) !important;
+  font: 700 8px/1 var(--font-mono) !important;
+  letter-spacing: .14em !important;
+}
+#docBody .doc-content h1::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 92px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, var(--doc-orange) 0 34px, color-mix(in srgb, var(--doc-orange) 20%, transparent) 34px 100%) !important;
+}
+#docBody .doc-content h2 {
+  counter-increment: goto-doc-h2 !important;
+  position: relative !important;
+  margin: 58px 0 21px !important;
+  padding: 15px 54px 0 0 !important;
+  border-top: 1px solid var(--doc-line-strong) !important;
+  color: var(--doc-ink) !important;
+  font-size: 20px !important;
+  font-weight: 780 !important;
+  line-height: 1.28 !important;
+  letter-spacing: -.016em !important;
+}
+#docBody .doc-content h2::before {
+  content: 'SEC.' counter(goto-doc-h2, decimal-leading-zero) !important;
+  display: block !important;
+  position: absolute !important;
+  left: auto !important;
+  right: 0 !important;
+  top: 17px !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--doc-orange) !important;
+  font: 680 7px/1 var(--font-mono) !important;
+  letter-spacing: .08em !important;
+}
+#docBody .doc-content h3 {
+  position: relative !important;
+  margin: 34px 0 14px !important;
+  padding-left: 13px !important;
+  color: var(--doc-ink) !important;
+  font-size: 15px !important;
+  font-weight: 720 !important;
+  letter-spacing: -.004em !important;
+}
+#docBody .doc-content h3::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: .55em !important;
+  width: 4px !important;
+  height: 4px !important;
+  background: var(--doc-orange) !important;
+}
+#docBody .doc-content p,
+#docBody .doc-content li {
+  color: var(--doc-ink-soft) !important;
+  font-size: 14.5px !important;
+  line-height: 1.86 !important;
+  letter-spacing: .012em !important;
+}
+#docBody .doc-content strong { color: var(--doc-ink) !important; }
+#docBody .doc-content a { color: var(--doc-orange) !important; text-decoration-thickness: 1px !important; text-underline-offset: 3px !important; }
+#docBody .doc-content li::marker { color: var(--doc-orange) !important; }
+
+/* Editorial archive panels: square geometry, fine rules, and one clipped
+   dark terminal module. Interactive controls retain a modest radius. */
+#docBody .doc-content blockquote,
+#docBody .doc-story-intro,
+#docBody .doc-logic-callout,
+#docBody .doc-preview-actions {
+  border-radius: var(--doc-radius-panel) !important;
+  background: color-mix(in srgb, var(--doc-paper-deep) 58%, transparent) !important;
+  box-shadow: none !important;
+}
+#docBody .doc-content blockquote {
+  position: relative !important;
+  margin: 12px 0 32px !important;
+  padding: 19px 22px 18px 25px !important;
+  border: 1px solid var(--doc-line-strong) !important;
+  border-left: 3px solid var(--doc-orange) !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%) !important;
+}
+#docBody .doc-story-intro {
+  border: 1px solid var(--doc-line-strong) !important;
+  border-top: 2px solid var(--doc-ink) !important;
+}
+#docBody .doc-story-kicker,
+#docBody .doc-preview-actions-label {
+  color: var(--doc-orange) !important;
+  font-family: var(--font-mono) !important;
+  letter-spacing: .13em !important;
+}
+#docBody .doc-logic-callout {
+  border: 0 !important;
+  border-top: 1px solid var(--doc-orange) !important;
+  border-bottom: 1px solid var(--doc-line-strong) !important;
+}
+#docBody .doc-story-flow button,
+#docBody .doc-preview-actions button,
+#docBody .doc-inline-demo,
+#docBody .doc-sequence-nav button {
+  border-radius: var(--doc-radius-control) !important;
+  border-color: var(--doc-line-strong) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: border-color var(--doc-motion) ease, color var(--doc-motion) ease, transform var(--doc-motion) cubic-bezier(.22,1,.36,1) !important;
+}
+#docBody .doc-story-flow button:hover,
+#docBody .doc-preview-actions button:hover,
+#docBody .doc-inline-demo:hover,
+#docBody .doc-sequence-nav button:hover {
+  border-color: color-mix(in srgb, var(--doc-orange) 62%, var(--doc-line)) !important;
+  box-shadow: none !important;
+  transform: translateY(-1px) !important;
+}
+#docBody .doc-content table {
+  border: 1px solid var(--doc-line-strong) !important;
+  border-radius: 0 !important;
+  border-collapse: collapse !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#docBody .doc-content th,
+#docBody .doc-content td {
+  border-right: 1px solid var(--doc-line) !important;
+  border-bottom: 1px solid var(--doc-line) !important;
+  padding: 12px 14px !important;
+}
+#docBody .doc-content th {
+  background: color-mix(in srgb, var(--doc-paper-deep) 72%, transparent) !important;
+  color: var(--doc-ink) !important;
+  font-size: 10px !important;
+  letter-spacing: .04em !important;
+}
+#docBody .doc-content th:first-child { color: var(--doc-orange) !important; }
+#docBody .doc-content pre {
+  position: relative !important;
+  border: 0 !important;
+  border-top: 2px solid var(--doc-orange) !important;
+  border-radius: 0 !important;
+  background: #11110f !important;
+  color: #f3efe6 !important;
+  box-shadow: none !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%) !important;
+}
+#docBody .doc-content pre code { color: #f3efe6 !important; background: transparent !important; }
+#docBody .doc-end-statement {
+  padding: 20px !important;
+  border: 0 !important;
+  border-top: 2px solid var(--doc-orange) !important;
+  background: #11110f !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%) !important;
+}
+#docBody .doc-end-statement span { color: #f3efe6 !important; }
+#docBody .doc-end-statement b,
+#docBody .doc-end-statement small { color: #a9a197 !important; }
+#docBody .doc-scroll-progress { height: 1px !important; background: transparent !important; }
+#docBody .doc-scroll-progress-fill { background: var(--doc-orange) !important; box-shadow: none !important; }
+
+/* Light Sense keeps the ceramic volume, while the same 2D cartographic ink is
+   printed over the glaze at very low opacity. */
+body.light-sense #docBody .doc-content-wrap {
+  background:
+    radial-gradient(120% 70% at 8% -4%, rgba(255,255,255,.28), transparent 58%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--surface) 94%, #fff 6%),
+      color-mix(in srgb, var(--surface) 97%, var(--color-temp, #ffd9a8) 3%) 56%,
+      color-mix(in srgb, var(--surface) 94%, #000 6%)) !important;
+  border-left: 1px solid color-mix(in srgb, var(--doc-ink) 8%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.30),
+    inset 0 -1px 0 rgba(0,0,0,.045),
+    0 8px 20px rgba(34,30,24,.07) !important;
+  backdrop-filter: blur(6px) saturate(1.02) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.02) !important;
+}
+body.light-sense #docBody .doc-tree {
+  background:
+    radial-gradient(120% 60% at 0 0, rgba(255,255,255,.20), transparent 62%),
+    linear-gradient(155deg,
+      color-mix(in srgb, var(--surface) 92%, var(--doc-paper-deep) 8%),
+      color-mix(in srgb, var(--surface) 96%, var(--color-temp, #ffd9a8) 4%)) !important;
+  border-right: 1px solid color-mix(in srgb, var(--doc-ink) 13%, transparent) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.24), inset -1px 0 0 rgba(0,0,0,.035) !important;
+  backdrop-filter: blur(6px) saturate(1.02) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.02) !important;
+}
+body.light-sense #docBody .doc-content-wrap::before,
+body.light-sense #docBody .doc-content-wrap::after {
+  mix-blend-mode: multiply;
+  opacity: .62;
+}
+body.dark.light-sense #docBody .doc-content-wrap {
+  background:
+    radial-gradient(120% 70% at 8% -4%, rgba(255,255,255,.09), transparent 58%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--surface) 93%, #fff 7%),
+      color-mix(in srgb, var(--surface) 97%, var(--color-temp, #ffd9a8) 3%) 56%,
+      color-mix(in srgb, var(--surface) 94%, #000 6%)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09), inset 0 -1px 0 rgba(0,0,0,.14), 0 8px 20px rgba(0,0,0,.12) !important;
+}
+body.dark.light-sense #docBody .doc-content-wrap::before,
+body.dark.light-sense #docBody .doc-content-wrap::after {
+  mix-blend-mode: screen;
+  opacity: .48;
+}
+
+/* One icon fallback contract across search, home cards and the custom picker. */
+.app-icon-null {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  color: var(--muted, #8b857a) !important;
+  font: 650 5.5px/1 var(--font-mono) !important;
+  letter-spacing: .08em !important;
+  text-shadow: none !important;
+}
+.app-icon-null {
+  width: 100%;
+  height: 100%;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 30%;
+  background: transparent !important;
+  color: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+.app-icon-placeholder {
+  display: block;
+  width: 34%;
+  height: 34%;
+  border-radius: 5px;
+  background: rgba(128,136,146,.28);
+  border: 1px solid rgba(100,108,118,.34);
+  box-shadow: none;
+}
+.app-picker-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+.gss-item-icon .app-icon-placeholder {
+  width: 42%;
+  height: 42%;
+}
+body.dark .app-icon-placeholder { background: rgba(184,192,202,.28); border-color: rgba(210,216,224,.34); }
+body.light-sense .app-icon-placeholder { background: rgba(118,126,136,.22); border-color: rgba(92,100,110,.26); }
+.rr-icon.is-empty,
+.rr-icon.is-null-icon,
+.si-icon.is-null-icon,
+#customCard .custom-app-option-icon.is-null-icon {
+  color: var(--muted) !important;
+  background: color-mix(in srgb, var(--ink) 4%, var(--surface)) !important;
+  border: 1px solid color-mix(in srgb, var(--ink) 13%, transparent) !important;
+  box-shadow: none !important;
+}
+.rr-icon.is-null-icon::before,
+.rr-icon.is-null-icon::after,
+.si-icon.is-null-icon::before,
+#customCard .custom-app-option-icon.is-null-icon::before,
+#customCard .custom-app-option-icon.is-null-icon::after {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FINAL RESTRAINT PASS
+   Keep the archive language in the reading pane, but return the index to the
+   neutral product UI and reduce its decoration to one divider + one marker. */
+#docBody .doc-tree,
+body.dark #docBody .doc-tree,
+body.light-sense #docBody .doc-tree {
+  border-right: 1px solid color-mix(in srgb, var(--ink) 14%, transparent) !important;
+  background: color-mix(in srgb, var(--surface) 97%, var(--bg) 3%) !important;
+  box-shadow: none !important;
+}
+#docBody .doc-tree-scroll {
+  padding: 14px 0 10px !important;
+}
+#docBody .doc-tree-folder {
+  margin: 12px 0 3px !important;
+  padding: 4px 14px 3px 18px !important;
+  color: var(--muted) !important;
+  font-family: inherit !important;
+  font-size: 9px !important;
+  font-weight: 650 !important;
+  letter-spacing: .035em !important;
+  text-transform: none !important;
+}
+#docBody .doc-tree-folder::before {
+  display: none !important;
+  content: none !important;
+}
+#docBody .doc-tree-node,
+#docBody .doc-tree-node.active,
+#docBody .doc-tree-node.active:hover,
+body.dark #docBody .doc-tree-node.active,
+body.light-sense #docBody .doc-tree-node.active {
+  min-height: 27px !important;
+  padding: 5px 11px 5px 18px !important;
+  color: var(--ink-soft) !important;
+  letter-spacing: 0 !important;
+  transition: color var(--doc-motion) ease, transform var(--doc-motion) cubic-bezier(.22,1,.36,1) !important;
+}
+#docBody .doc-tree-node:hover {
+  color: var(--ink) !important;
+  letter-spacing: 0 !important;
+  transform: translateX(1px) !important;
+}
+#docBody .doc-tree-node::after,
+#docBody .doc-tree-node:hover::after,
+#docBody .doc-tree-node.active::after {
+  display: none !important;
+  content: none !important;
+}
+#docBody .doc-tree-node.active {
+  color: var(--ink) !important;
+  font-weight: 700 !important;
+}
+#docBody .doc-tree-node.active::before {
+  left: 5px !important;
+  top: 6px !important;
+  width: 2px !important;
+  height: 15px !important;
+  border-radius: 1px !important;
+  background: color-mix(in srgb, var(--accent) 66%, var(--ink) 34%) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  animation: none !important;
+}
+#docBody .doc-tree-rail-fill {
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--ink) 26%, transparent),
+    color-mix(in srgb, var(--accent) 30%, var(--ink) 70%)) !important;
+  box-shadow: none !important;
+}
+#docBody .doc-tree-rail-fill::before,
+#docBody .doc-tree-rail-fill::after {
+  display: none !important;
+}
+
+/* Sponsor and contact are two chapters of one page, not two dashboard tiles.
+   Stack them and use the same fine rules, radii and type hierarchy as docs. */
+#docBody .community-cards-grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 18px !important;
+}
+#docBody .comm-card,
+body.dark #docBody .comm-card {
+  border: 1px solid var(--doc-line-strong) !important;
+  border-radius: var(--doc-radius-panel) !important;
+  background: color-mix(in srgb, var(--doc-paper-deep) 42%, transparent) !important;
+  box-shadow: none !important;
+}
+#docBody .comm-card::before {
+  display: none !important;
+  content: none !important;
+}
+#docBody .comm-card:hover {
+  transform: translateY(-1px) !important;
+  border-color: color-mix(in srgb, var(--doc-orange) 34%, var(--doc-line-strong)) !important;
+  box-shadow: none !important;
+}
+#docBody .comm-card-head {
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  padding: 15px 18px 13px !important;
+  border-bottom: 1px solid var(--doc-line) !important;
+}
+#docBody .comm-card-head h2 {
+  order: -1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--doc-ink) !important;
+  font-size: 17px !important;
+  font-weight: 760 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -.015em !important;
+}
+#docBody .comm-card-head h2::before,
+#docBody .comm-card-head h2::after {
+  display: none !important;
+  content: none !important;
+}
+#docBody .comm-card-num {
+  margin: 0 !important;
+  color: var(--doc-muted) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 8px !important;
+  letter-spacing: .08em !important;
+}
+#docBody .comm-card-body {
+  padding: 16px 18px 18px !important;
+  gap: 12px !important;
+}
+#docBody .sponsor-card .comm-card-body {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, .42fr) !important;
+  grid-template-rows: auto 1fr !important;
+  align-items: start !important;
+  column-gap: 16px !important;
+}
+#docBody .sponsor-card .comm-locked-wrap {
+  grid-column: 1 !important;
+  grid-row: 1 / span 2 !important;
+}
+#docBody .sponsor-card .comm-badge-btn,
+#docBody .sponsor-card .comm-purpose {
+  grid-column: 2 !important;
+  margin: 0 !important;
+}
+#docBody .sponsor-card .comm-badge-btn {
+  align-self: start !important;
+}
+#docBody .sponsor-card .comm-purpose {
+  align-self: end !important;
+  padding-top: 12px !important;
+  border-top: 1px solid var(--doc-line) !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-align: left !important;
+  text-overflow: clip !important;
+}
+#docBody .comm-qr-frame,
+#docBody .comm-kofi-link,
+#docBody .comm-field-input,
+#docBody .comm-id-actions button,
+#docBody .comm-badge-btn {
+  border-radius: var(--doc-radius-control) !important;
+  box-shadow: none !important;
+}
+@media (max-width: 760px) {
+  #docBody .sponsor-card .comm-card-body {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  #docBody .sponsor-card .comm-locked-wrap,
+  #docBody .sponsor-card .comm-badge-btn,
+  #docBody .sponsor-card .comm-purpose {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+}
+
+/* Restore a readable ceramic glaze in Light Sense. The bright area follows
+   the calculated sun position; cartographic ink remains a quiet 2D overlay. */
+body.light-sense #docBody .doc-content-wrap,
+body.light-sense #docBody .doc-tree,
+body.light-sense #docBody .comm-card {
+  background:
+    radial-gradient(72% 48% at var(--sun-position-x, 28%) var(--sun-position-y, 12%),
+      rgba(var(--color-temp-r,255), var(--color-temp-g,240), var(--color-temp-b,220), .23) 0%,
+      transparent 62%),
+    linear-gradient(var(--light-angle, 135deg),
+      rgba(255,255,255,.14) 0%,
+      rgba(255,255,255,.035) 28%,
+      transparent 48%,
+      rgba(0,0,0,.055) 100%),
+    radial-gradient(120% 74% at 4% -8%, rgba(255,255,255,.24), transparent 54%),
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--surface) 90%, #fff 10%),
+      color-mix(in srgb, var(--surface) 97%, var(--color-temp, #ffd9a8) 3%) 55%,
+      color-mix(in srgb, var(--surface) 93%, #000 7%)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.40),
+    inset 1px 0 0 rgba(255,255,255,.08),
+    inset -10px -12px 24px rgba(0,0,0,.035),
+    0 8px 20px rgba(0,0,0,.11) !important;
+  backdrop-filter: blur(5px) saturate(1.04) !important;
+  -webkit-backdrop-filter: blur(5px) saturate(1.04) !important;
+}
+body.light-sense #docBody .doc-content-wrap::before,
+body.light-sense #docBody .doc-content-wrap::after {
+  mix-blend-mode: soft-light !important;
+  opacity: .48 !important;
+}
+
+/* Plain documentation index. Deliberately remove the archive ornaments here:
+   one wider column, comfortable type, and one short active underline only. */
+#docBody .doc-tree,
+body.dark #docBody .doc-tree,
+body.light-sense #docBody .doc-tree {
+  width: 190px !important;
+  min-width: 190px !important;
+  flex-basis: 190px !important;
+}
+#docBody .doc-tree-rail {
+  display: none !important;
+}
+#docBody .doc-tree-scroll {
+  padding: 18px 0 16px !important;
+}
+#docBody .doc-tree-folder {
+  margin: 17px 0 5px !important;
+  padding: 4px 18px !important;
+  font-family: inherit !important;
+  font-size: 10.5px !important;
+  font-weight: 650 !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0 !important;
+}
+#docBody .doc-tree-node,
+#docBody .doc-tree-node.active,
+#docBody .doc-tree-node.active:hover,
+body.dark #docBody .doc-tree-node.active,
+body.light-sense #docBody .doc-tree-node.active {
+  min-height: 33px !important;
+  padding: 7px 18px 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 450 !important;
+  line-height: 1.45 !important;
+  transform: none !important;
+}
+#docBody .doc-tree-node:hover {
+  transform: none !important;
+}
+#docBody .doc-tree-node.active {
+  font-weight: 650 !important;
+}
+#docBody .doc-tree-node.active::before {
+  display: none !important;
+  content: none !important;
+}
+#docBody .doc-tree-node.active::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  left: 18px !important;
+  bottom: 2px !important;
+  width: 62px !important;
+  height: 1.5px !important;
+  background: var(--accent) !important;
+  opacity: .82 !important;
+  transform: none !important;
+  clip-path: inset(0 100% 0 0);
+  transform-origin: left center !important;
+  animation: docPlainActiveUnderline 560ms cubic-bezier(.22,1,.36,1) both !important;
+  transition: opacity 220ms ease !important;
+}
+
+@keyframes docPlainActiveUnderline {
+  0% { clip-path: inset(0 100% 0 0); opacity: 0; }
+  72% { clip-path: inset(0 0 0 0); opacity: .86; }
+  100% { clip-path: inset(0 0 0 0); opacity: .82; }
+}
+
+/* Final restraint pass: the version stamp is a clean external phone label,
+   not a decorated rule; normal documentation uses a neutral reading field. */
+html.standalone #phoneVersionMark,
+.phone-version-mark {
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: .08em !important;
+  text-shadow: none !important;
+}
+html.standalone #phoneVersionMark::before,
+html.standalone #phoneVersionMark::after,
+.phone-version-mark::before,
+.phone-version-mark::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Keep the default reading field neutral and coherent with the directory.
+   Ceramic remains scoped to Light Sense; dark mode loses the warm cast that
+   previously made the document column look like a different surface. */
+body:not(.dark):not(.light-sense) #sandboxRight {
+  --doc-paper: #f5f6f8;
+  --doc-paper-deep: #ffffff;
+  --doc-ink: #191a1f;
+  --doc-ink-soft: #5f636b;
+  --doc-muted: #8a8e96;
+  --doc-line: rgba(25, 26, 31, .12);
+  --doc-line-strong: rgba(25, 26, 31, .20);
+  --doc-grid: rgba(25, 26, 31, .032);
+  background: #f5f6f8 !important;
+}
+body.dark #sandboxRight {
+  --doc-paper: #252831;
+  --doc-paper-deep: #2b2e36;
+  --doc-ink: #f2f2f4;
+  --doc-ink-soft: #c4c6cb;
+  --doc-muted: #92959d;
+  --doc-line: rgba(242, 242, 244, .13);
+  --doc-line-strong: rgba(242, 242, 244, .21);
+  --doc-grid: rgba(242, 242, 244, .032);
+  background: linear-gradient(145deg, #252831 0%, #20232a 58%, #1c1f26 100%) !important;
+}
+
+/* No-match state: one predictable extension position, with a small spring
+   instead of inheriting the previous result list's tall scroll geometry. */
+#searchCard.is-empty,
+body.light-sense #searchCard.is-empty,
+body.dark #searchCard.is-empty {
+  height: 248px !important;
+  min-height: 248px !important;
+  max-height: 248px !important;
+  overflow: hidden !important;
+  animation: gotoNoMatchCardIn 460ms cubic-bezier(.16,1.16,.28,1) both !important;
+}
+#searchCard.is-empty #searchResults,
+body.light-sense #searchCard.is-empty #searchResults,
+body.dark #searchCard.is-empty #searchResults {
+  height: 166px !important;
+  min-height: 166px !important;
+  max-height: 166px !important;
+  margin-top: 8px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  opacity: 1 !important;
+}
+#searchCard.is-empty #resultsEmpty {
+  display: flex !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  padding: 12px 18px 16px !important;
+  gap: 7px !important;
+  animation: gotoNoMatchContentIn 520ms cubic-bezier(.16,1.16,.28,1) 45ms both !important;
+}
+#searchCard.is-empty #resultsEmpty .scre-icon {
+  width: 34px !important;
+  height: 34px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: var(--accent) !important;
+  opacity: .78 !important;
+  animation: gotoNoMatchIcon 1.8s ease-in-out 520ms infinite !important;
+}
+#searchCard.is-empty #resultsEmpty .scre-icon svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+#searchCard.is-empty #resultsEmpty .scre-title {
+  color: var(--ink-soft) !important;
+  font-size: 12px !important;
+  letter-spacing: .02em !important;
+}
+#searchCard.is-empty #resultsEmpty .scre-sub {
+  max-width: 94% !important;
+  font-size: 10px !important;
+  line-height: 1.55 !important;
+  color: var(--muted) !important;
+}
+@keyframes gotoNoMatchCardIn {
+  0% { opacity: .45; transform: translateY(-8px) scale(.985); }
+  72% { opacity: 1; transform: translateY(1px) scale(1.008); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes gotoNoMatchContentIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  70% { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes gotoNoMatchIcon {
+  0%,100% { transform: translateY(0) rotate(0); }
+  40% { transform: translateY(-2px) rotate(-4deg); }
+  72% { transform: translateY(0) rotate(2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #searchCard.is-empty,
+  #searchCard.is-empty #resultsEmpty,
+  #searchCard.is-empty #resultsEmpty .scre-icon { animation: none !important; }
+}
+
+/* Final launch polish: preserve the existing 34px directory marker length;
+   only the selected rule becomes stronger. Default slots are flat and solid;
+   Light Sense adds a restrained mist-glass layer. */
+#docBody .doc-tree-node.active::after {
+  display: block !important;
+  content: '' !important;
+  position: absolute !important;
+  left: 24px !important;
+  bottom: 3px !important;
+  width: 34px !important;
+  height: 2px !important;
+  border-radius: 0 !important;
+  background: var(--accent) !important;
+  opacity: .86 !important;
+  clip-path: none !important;
+  transform-origin: left center !important;
+  animation: docTreeUnderlineReveal .62s var(--goto-spring) both !important;
+  transition: opacity .24s ease, height .24s ease !important;
+  pointer-events: none !important;
+}
+
+body:not(.light-sense) .si {
+  background: color-mix(in srgb, var(--si-color, #888) 10%, var(--surface)) !important;
+  border-color: color-mix(in srgb, var(--si-color, #888) 24%, var(--line)) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body:not(.light-sense) .si:hover {
+  background: color-mix(in srgb, var(--si-color, #888) 16%, var(--surface)) !important;
+  filter: brightness(1.045) saturate(1.02) !important;
+}
+body.light-sense .si {
+  background: color-mix(in srgb, var(--si-color, #888) 24%, rgba(255,255,255,.38)) !important;
+  border-color: color-mix(in srgb, var(--si-color, #888) 38%, rgba(255,255,255,.52)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.34),
+    inset 0 -1px 0 rgba(25,28,35,.06),
+    0 5px 14px rgba(25,28,35,.08) !important;
+  backdrop-filter: blur(10px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.08) !important;
+}
+body.light-sense .si:hover {
+  background: color-mix(in srgb, var(--si-color, #888) 30%, rgba(255,255,255,.42)) !important;
+  border-color: color-mix(in srgb, var(--si-color, #888) 46%, rgba(255,255,255,.62)) !important;
+}
+
+/* Document reading pass: tighter margins, no decorative emoji glyphs, and a
+   larger touch target for the two app hints shown beside an expanded search. */
+#docBody .doc-content-wrap {
+  padding: 28px 24px 42px !important;
+}
+#docBody .doc-content {
+  max-width: 760px !important;
+}
+#docBody .doc-content .scrp-icon-emoji,
+#docBody .doc-content .doc-emoji,
+#docBody .doc-content [data-emoji] {
+  display: none !important;
+}
+.app-suggest {
+  min-width: min(100%, 250px) !important;
+  max-height: 220px !important;
+  padding: 5px !important;
+}
+.app-suggest-item {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 48px !important;
+  padding: 10px 13px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+  touch-action: manipulation !important;
+}
+.app-suggest-item:hover,
+.app-suggest-item:focus-visible,
+.app-suggest-item.active {
+  padding-left: 16px !important;
+  background: color-mix(in srgb, var(--accent) 8%, transparent) !important;
+}
+
+/* Safe-area and irregular-display support. The desktop three-column geometry
+   remains unchanged; these rules only activate at constrained widths or when
+   the host reports a fold/hinge segment. */
+html:not(.embedded) body,
+html.embedded body {
+  padding-left: env(safe-area-inset-left, 0px) !important;
+  padding-right: env(safe-area-inset-right, 0px) !important;
+  padding-top: env(safe-area-inset-top, 0px) !important;
+  padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+}
+@media (max-width: 1080px) {
+  html:not(.embedded) body #sandboxLeft { width: clamp(300px, 36vw, 430px) !important; }
+  html:not(.embedded) body #sandboxRight { min-width: 0 !important; }
+  #docBody .doc-tree { width: 168px !important; min-width: 168px !important; flex-basis: 168px !important; }
+  #docBody .doc-content-wrap { padding-left: 22px !important; padding-right: 22px !important; }
+}
+@media (max-width: 760px) {
+  html:not(.embedded) body { display: block !important; overflow: auto !important; }
+  html:not(.embedded) body #sandboxLeft { width: 100% !important; min-height: 100dvh !important; padding: 22px 16px 28px !important; }
+  html:not(.embedded) body #sandboxRight { display: none !important; }
+  html:not(.embedded) body #phoneBody,
+  html:not(.embedded) body .phone { width: min(94vw, 430px) !important; height: min(84dvh, 760px) !important; max-height: 760px !important; }
+  #docBody .doc-content-wrap { padding: 24px 18px 36px !important; }
+}
+@media (max-width: 760px) and (orientation: landscape) {
+  html:not(.embedded) body #sandboxLeft { padding-top: 12px !important; padding-bottom: 12px !important; }
+  html:not(.embedded) body #phoneBody,
+  html:not(.embedded) body .phone { height: min(82dvh, 520px) !important; }
+}
+@media (horizontal-viewport-segments: 2), (spanning: single-fold-vertical) {
+  html:not(.embedded) body { column-gap: env(viewport-segment-left 1 0, 0px) !important; }
+  html:not(.embedded) body #sandboxLeft { min-width: 0 !important; }
+  html:not(.embedded) body #sandboxRight { min-width: 0 !important; }
+}
+@media (vertical-viewport-segments: 2), (spanning: single-fold-horizontal) {
+  html:not(.embedded) body #sandboxLeft { min-height: 0 !important; }
+  html:not(.embedded) body #phoneBody,
+  html:not(.embedded) body .phone { max-height: calc(100dvh - 46px) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-suggest,
+  .app-suggest-item { animation: none !important; transition: none !important; }
+}
+
+/* Final documentation index treatment: no filled active card, only a measured underline. */
+#docBody .doc-tree-node,
+#docBody .doc-tree-node:hover,
+#docBody .doc-tree-node.active,
+#docBody .doc-tree-node.active:hover {
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+#docBody .doc-tree-node:hover { color: var(--ink) !important; }
+#docBody .doc-tree-node.active,
+body.dark #docBody .doc-tree-node.active,
+body.light-sense #docBody .doc-tree-node.active,
+body.dark.light-sense #docBody .doc-tree-node.active {
+  color: var(--ink) !important;
+  font-weight: 650 !important;
+}
+#docBody .doc-tree-node.active::before {
+  display: none !important;
+  content: none !important;
+}
+#docBody .doc-tree-node.active::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 1px !important;
+  width: auto !important;
+  height: 2px !important;
+  border: 0 !important;
+  border-radius: 2px !important;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 34%, transparent)) !important;
+  opacity: .92 !important;
+  clip-path: none !important;
+  transform: scaleX(1) !important;
+  transform-origin: left center !important;
+  animation: docTreeUnderlineFlow .48s cubic-bezier(.22,1,.36,1) both !important;
+  pointer-events: none !important;
+}
+@keyframes docTreeUnderlineFlow {
+  0% { opacity: 0; transform: scaleX(0); }
+  60% { opacity: .92; transform: scaleX(.94); }
+  100% { opacity: .92; transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #docBody .doc-tree-node.active::after { animation: none !important; transform: scaleX(1) !important; }
+}
+
+/* Quiet editorial document surface: keep the index rail intact while the
+   reading column stays calm, spacious, and easy to scan on wide browsers. */
+@media (min-width: 901px) {
+  html:not(.embedded) body #sandboxLeft,
+  html:not(.embedded) body #sandboxLeft.entered,
+  html:not(.embedded) body #sandboxLeft.welcome-mode {
+    width: 42vw !important;
+    flex: 0 0 42vw !important;
+  }
+  html:not(.embedded) body #sandboxRight,
+  html:not(.embedded) body #sandboxLeft.welcome-mode ~ #sandboxRight {
+    width: 58vw !important;
+    flex: 0 0 58vw !important;
+    min-width: 0 !important;
+  }
+  html:not(.embedded) body #sandboxLeft .phone {
+    margin-inline: auto !important;
+  }
+}
+
+#docBody .doc-content-wrap {
+  padding: 46px clamp(30px, 2vw, 48px) 84px !important;
+  background: var(--doc-paper, var(--surface)) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+#docBody .doc-content-wrap::before,
+#docBody .doc-content-wrap::after {
+  display: none !important;
+  content: none !important;
+}
+#docBody .doc-content {
+  width: 100% !important;
+  max-width: none !important;
+  font-size: clamp(15px, .84vw, 17px) !important;
+  line-height: 1.78 !important;
+  letter-spacing: .012em !important;
+}
+#docBody .doc-content h2 {
+  font-size: clamp(20px, 1.08vw, 25px) !important;
+  line-height: 1.28 !important;
+}
+#docBody .doc-content h3 {
+  font-size: clamp(17px, .94vw, 21px) !important;
+  line-height: 1.42 !important;
+}
+#docBody .doc-content p,
+#docBody .doc-content li,
+#docBody .doc-content td,
+#docBody .doc-content th {
+  font-size: clamp(15px, .84vw, 17px) !important;
+  line-height: 1.78 !important;
+}
+#docBody .doc-content h1::before,
+#docBody .doc-content h2::before,
+#docBody .doc-content h3::before {
+  content: none !important;
+  display: none !important;
+}
+#docBody .doc-content h1::after {
+  width: 64px !important;
+  height: 2px !important;
+  background: var(--doc-orange, var(--accent)) !important;
+}
+#docBody .doc-content h3 {
+  padding-left: 10px !important;
+  border-left: 2px solid var(--doc-orange, var(--accent)) !important;
+}
+#docBody .doc-content blockquote,
+#docBody .doc-story-intro,
+#docBody .doc-logic-callout,
+#docBody .doc-preview-actions {
+  border-radius: 6px !important;
+  background: color-mix(in srgb, var(--doc-paper, var(--surface)) 97%, var(--ink) 3%) !important;
+  box-shadow: none !important;
+}
+body.light-sense #docBody .doc-content-wrap,
+body.dark.light-sense #docBody .doc-content-wrap {
+  background: color-mix(in srgb, var(--doc-paper, var(--surface)) 98%, #fff 2%) !important;
+  background-image: none !important;
+}
+body.dark #docBody .doc-content-wrap {
+  background: var(--surface) !important;
+}
+
+/* Large-browser proportions: let the live phone use the extra stage width,
+   while the document column expands instead of leaving a dead right strip. */
+@media (min-width: 1400px) {
+  html:not(.embedded) body #sandboxLeft .phone {
+    width: 430px !important;
+    max-width: none !important;
+    height: 960px !important;
+    aspect-ratio: 430 / 960 !important;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1399px) {
+  html:not(.embedded) body #sandboxLeft .phone {
+    width: 390px !important;
+    max-width: none !important;
+    height: 870px !important;
+    aspect-ratio: 390 / 870 !important;
+  }
+}
+
+/* The status area belongs to the phone surface. In Light Sense it follows
+   the day/night phone background rather than becoming a detached taskbar. */
+body.light-sense.light-sense-light .status-bar {
+  background: color-mix(in srgb, var(--bg) 92%, #fff 8%) !important;
+  color: var(--ink) !important;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.05) !important;
+}
+body.light-sense.light-sense-dark .status-bar,
+body.dark.light-sense .status-bar {
+  background: color-mix(in srgb, var(--bg) 88%, #000 12%) !important;
+  color: var(--ink) !important;
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,.07) !important;
+}
+
+/* Keep the document side editorial: remove the old full-pane grid/glow and
+   let hierarchy come from typography, spacing, and the single accent rule. */
+html:not(.embedded) body #sandboxRight::before,
+html:not(.embedded) body #sandboxRight::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+html:not(.embedded) body:not(.light-sense) #sandboxRight {
+  background: var(--bg) !important;
+}
+#docBody .doc-preview-actions,
+#docBody .doc-story-intro,
+#docBody .doc-logic-callout {
+  box-shadow: none !important;
+}

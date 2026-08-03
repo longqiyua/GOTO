@@ -3,7 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <!--
+        GOTO 是本地应用搜索与启动器，需要读取用户已安装应用集合来完成
+        Engine 的索引、Prethink 候选与真实启动；发布到 Google Play 时需按
+        应用搜索/启动器用途申报此权限。
+    -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
@@ -23,12 +30,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppIndex">
+        android:theme="@style/Theme.AppIndex"
+        android:hardwareAccelerated="true">
 
-        <!-- 欢迎页 -->
+        <!-- ═══ 主前端入口（WebView 加载 GOTO Page） ═══ -->
+        <!-- 原 Kotlin UI（UIUX 目录）已归档至 archive/ui-legacy/，保留作纪念 -->
         <activity
-            android:name=".UIUX.WelcomeActivity"
+            android:name=".webapp.GotoWebActivity"
             android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode"
             android:theme="@style/Theme.AppIndex.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,42 +46,9 @@
             </intent-filter>
         </activity>
 
-        <!-- 主搜索页 -->
-        <activity
-            android:name=".UIUX.SearchActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:stateNotNeeded="true"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.AppIndex.SearchOverlay" />
-
-        <!-- 激活页面 -->
-        <activity
-            android:name=".ui.ActivationActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppIndex" />
-
-        <!-- 设置页面 -->
-        <activity
-            android:name=".ui.SettingsActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppIndex" />
-
-        <!-- 应用启动排名页面 -->
-        <activity
-            android:name=".ui.RankingActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppIndex" />
-
-        <!-- 手势录制页面 -->
-        <activity
-            android:name=".ui.GestureRecordActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppIndex" />
-
         <!-- 桌面悬浮条搜索 Service（免费功能） -->
         <service
-            android:name=".overlay.OverlaySearchService"
+            android:name=".QuickActionsAndFloatingWindow.OverlaySearchService"
             android:exported="false"
             android:foregroundServiceType="specialUse" />
 
@@ -85,6 +62,17 @@
         <receiver
             android:name=".where.WhereFeedbackReceiver"
             android:exported="false" />
+
+        <!-- V2.1: 应用变更监听（静态注册，常驻不依赖 ViewModel） -->
+        <receiver android:name="com.appindex.AppRegistry.PackageReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_CHANGED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

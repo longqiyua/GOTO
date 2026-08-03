@@ -1,0 +1,60 @@
+/*!
+ * Dynamic Cursor — Monkeytype 风格连续跟随光标
+ * v1.0.0 · MIT
+ *
+ * 用法：在页面中引入本 CSS，并配合 dynamic-cursor.js 初始化。
+ * 视觉：1.8px 固定低饱和强调色细条，高度随字体行高，transform 平移（GPU 加速）。
+ * 动画：120ms ease 缓动 → 感知不到等待但能感知连续；静止 600ms 后 1.06s 闪烁。
+ *
+ * 依赖的 DOM 结构（由调用方提供）：
+ *   <div class="dc-input-row">
+ *     <input id="myInput" />
+ *     <div class="dc-caret" id="myCaret"></div>
+ *   </div>
+ *
+ * 若沿用既有 .sc-caret / .sc-input-row 命名，本文件同样适用（见底部兼容别名）。
+ */
+
+/* ── 核心光标样式 ── */
+.dc-caret{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:1.8px;
+  height:1.45em;
+  margin-top:-0.725em;
+  background:#9A6E62;            /* 固定：强调色色系低一级色，低饱和（HSL 12° 22% 49%） */
+  border-radius:1px;
+  pointer-events:none;
+  opacity:0;
+  transform:translateX(0);
+  transition:
+    transform 120ms cubic-bezier(0.25,0.46,0.45,0.94),
+    opacity 180ms ease;
+  z-index:6;
+  box-shadow:0 0 4px rgba(154,110,98,0.42); /* 固定泛光：低饱和同色系 */
+  will-change:transform,opacity;
+}
+.dc-caret.is-visible{opacity:1;}
+/* 光标闪烁（仅在静态时） */
+.dc-caret.is-blinking{
+  animation:dcCaretBlink 1.06s steps(2,start) infinite;
+}
+@keyframes dcCaretBlink{
+  0%,49%{opacity:1;}
+  50%,100%{opacity:0.16;}
+}
+/* 输入框失焦时光标完全隐藏 */
+.dc-input-row:not(:focus-within) .dc-caret{opacity:0 !important;}
+
+/* 隐藏原生 caret，由 .dc-caret 接管视觉（应用到目标 input） */
+.dc-input-row input{
+  caret-color:transparent;
+}
+
+/* ── 兼容别名：沿用既有 .sc-caret / .sc-input-row 命名 ── */
+.sc-caret{ position:absolute; top:50%; left:0; width:1.8px; height:1.45em; margin-top:-0.725em; background:#9A6E62; border-radius:1px; pointer-events:none; opacity:0; transform:translateX(0); transition:transform 120ms cubic-bezier(0.25,0.46,0.45,0.94), opacity 180ms ease; z-index:6; box-shadow:0 0 4px rgba(154,110,98,0.42); will-change:transform,opacity; }
+.sc-caret.is-visible{opacity:1;}
+.sc-caret.is-blinking{ animation:scCaretBlink 1.06s steps(2,start) infinite; }
+@keyframes scCaretBlink{ 0%,49%{opacity:1;} 50%,100%{opacity:0.16;} }
+.sc-input-row:not(:focus-within) .sc-caret{opacity:0 !important;}

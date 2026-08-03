@@ -1,0 +1,31 @@
+/* note-to-show presentation contract.
+   Keep the source/renderer module independent from the page's visual theme. */
+.note-to-show-root {
+  --note-accent: var(--accent, #ff5a00);
+  --note-ink: var(--doc-ink, var(--ink, #191a1f));
+  --note-muted: var(--doc-muted, var(--muted, #8a8e96));
+  --note-line: var(--doc-line, var(--line, rgba(25,26,31,.12)));
+  contain: layout style;
+}
+
+.note-to-show-root[data-note-style="archive"] > h1:first-child::before {
+  content: 'NOTE / LIVE';
+  display: block;
+  margin-bottom: 8px;
+  color: var(--note-accent);
+  font: 700 9px/1.2 var(--font-mono, monospace);
+  letter-spacing: .16em;
+  opacity: .72;
+}
+
+.note-to-show-root[data-note-live="1"] {
+  transition: opacity 180ms ease;
+}
+
+.note-to-show-root[data-note-live="1"].note-to-show-refreshing {
+  opacity: .72;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note-to-show-root { transition: none; }
+}

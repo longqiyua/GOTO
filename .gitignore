@@ -1,5 +1,7 @@
 *.iml
 .gradle/
+.gradle-cache/
+archive/
 local.properties
 .idea/
 .DS_Store

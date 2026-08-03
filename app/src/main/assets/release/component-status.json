@@ -1,0 +1,280 @@
+﻿{
+  "schemaVersion": "1.0.0",
+  "updatedAt": "2026-07-30T00:00:00.000Z",
+  "overall": "partial-degraded",
+  "components": {
+    "engine": {
+      "name": "GOTO Engine",
+      "status": "available",
+      "version": "frozen",
+      "summary": "搜索、匹配与纠错",
+      "tests": {
+        "passed": 18,
+        "failed": 0,
+        "note": "SHA256 baseline 18/18 unchanged"
+      },
+      "capabilities": ["search", "match", "fuzzy-correct", "rank"],
+      "implemented": true,
+      "tested": true,
+      "deviceValidated": false,
+      "browserSha256": "ed5d70afe93f06c048b73e365a7c79e9715845096b80231311db6c21a4c5b261",
+      "knownLimitations": []
+    },
+    "base": {
+      "name": "GOTO Base",
+      "status": "available",
+      "version": "v2.1.0",
+      "summary": "唯一持久状态层 — 三层架构（公共层 + 个人层 + 设备层），只装数据不含代码",
+      "tests": {
+        "passed": 38,
+        "failed": 0,
+        "note": "JS runtime tests + schema validation + data quality + where-base-e2e + rag-whitebox"
+      },
+      "capabilities": [
+        "three-layer-architecture",
+        "global-layer-readonly",
+        "personal-layer-readwrite",
+        "device-layer-readwrite",
+        "rag-vector-store",
+        "bge-embedding-model",
+        "mece-classification",
+        "synonym-clusters-multilabel",
+        "model-decoupling-layer",
+        "personal-learning",
+        "query-app-affinity",
+        "personal-alias",
+        "where-pattern-storage",
+        "reminder-preference",
+        "reminder-feedback",
+        "device-sensors-schema",
+        "file-index-schema",
+        "file-vectors-isolated",
+        "profile-isolation",
+        "export-import",
+        "memory-management-three-layer",
+        "degradation"
+      ],
+      "implemented": true,
+      "tested": true,
+      "deviceValidated": false,
+      "browserSha256": "10bb44bff5d7fa964cb7ea27f2df4af4f69e3da450a122e6075e0bea294205ef",
+      "knownLimitations": [
+        "Cloud sync not supported (Phase 5+)",
+        "文件向量库构建器待精细化（FileVectorIndexBuilder 已就位，端到端闭环待补）"
+      ]
+    },
+    "where": {
+      "name": "GOTO Where",
+      "displayName": "GOTO Where 智能提醒",
+      "status": "available",
+      "version": "2.1.0",
+      "summary": "主动决策层 — 三语言统一版本（Kotlin/JavaScript/Rust）+ 三层联动架构",
+      "tests": {
+        "passed": 36,
+        "failed": 0,
+        "note": "JavaScript core tests + Kotlin unit tests + Rust core tests"
+      },
+      "capabilities": [
+        "timing-pattern",
+        "app-transition-pattern",
+        "goto-internal-pattern",
+        "user-created-pattern",
+        "smart-ranking-hints",
+        "three-layer-context-enricher",
+        "device-sensor-fusion",
+        "feedback-chain-hitrate",
+        "category-factor-adjustment",
+        "quiet-hours",
+        "cooldown",
+        "consecutive-ignore-penalty",
+        "disable-rule",
+        "sensor-aware-interruption",
+        "driving-mode-suppression",
+        "critical-battery-suppression",
+        "screen-off-suppression",
+        "feedback-processor-weight-adjustment",
+        "multi-language-runtimes",
+        "degradation"
+      ],
+      "implemented": true,
+      "tested": true,
+      "deviceValidated": false,
+      "browserSha256": "4371a21f917aaff421ed8b1a3a270d01b40b23f1155e4619b537c2163f1b612f",
+      "knownLimitations": [
+        "Notification reading not implemented",
+        "Location/calendar signals not implemented",
+        "Exact alarm not supported",
+        "FeedbackChainRecorder.analyzeHitRate 待精细化到应用维度"
+      ]
+    },
+    "whereAndroid": {
+      "name": "GOTO Where Android Runtime",
+      "status": "available",
+      "version": "2.1.0",
+      "summary": "Android 权限、调度与通知投递（含三层联动适配器）",
+      "tests": {
+        "passed": 123,
+        "failed": 0,
+        "note": "Kotlin unit tests (where-contracts + where-core-kotlin + base-pattern-kotlin + where-android-adapters)"
+      },
+      "capabilities": [
+        "permission-gateway",
+        "usage-signal-provider",
+        "work-scheduler-adapter",
+        "notification-delivery-adapter",
+        "base-reader-adapter",
+        "base-writer-adapter",
+        "device-sensor-port",
+        "smart-ranking-hints-adapter",
+        "feedback-chain-hitrate-adapter"
+      ],
+      "artifacts": [
+        {
+          "name": "goto-base-kotlin.aar",
+          "path": "goto-base/runtimes/kotlin/build/outputs/aar/base-pattern-kotlin-release.aar",
+          "sizeBytes": 120505,
+          "sha256": "47CAC747DDA8BF17D90EA12463ADD7807FEA15BE5B83F47C8F26A8346D66F360",
+          "contains": "PatternStore, TimingPatternBuilder, AppTransitionPatternBuilder, GotoInternalPatternBuilder, ReminderPreference, ReminderFeedback"
+        },
+        {
+          "name": "goto-where-contracts.jar",
+          "path": "goto-where/runtimes/kotlin/contracts/build/libs/where-contracts.jar",
+          "sizeBytes": 63100,
+          "sha256": "6781F86EF0491F9895F64ED33DA8F2FEF77921D73BFC9983B778249862C3A534",
+          "contains": "Where contracts and typealias re-exports"
+        },
+        {
+          "name": "goto-where-core-kotlin.jar",
+          "path": "goto-where/runtimes/kotlin/core/build/libs/where-core-kotlin.jar",
+          "sizeBytes": 101590,
+          "sha256": "B334750929966B21BEC0A35869708A2157C5F45C32B034803E5A4691A6BC8265",
+          "contains": "WhereRuntime, ReminderDecisionEngine, CandidateGenerator, ReminderScorer, ContextEnricher"
+        },
+        {
+          "name": "goto-where-android-adapters.aar",
+          "path": "goto-where/adapters/android/build/outputs/aar/where-android-adapters-release.aar",
+          "sizeBytes": 82776,
+          "sha256": "0F53D8427868405BC0E0C6D1EAA4DE7F5814F84BB217DEB4CE4DED87A4EB0AA8",
+          "contains": "PermissionGateway, UsageSignalProvider, WorkSchedulerAdapter, NotificationDeliveryAdapter, WhereCompositionRoot, AndroidBaseReaderAdapter, AndroidBaseWriterAdapter"
+        },
+        {
+          "name": "goto-base-contracts.jar",
+          "path": "goto-base/runtimes/kotlin/contracts/build/libs/base-contracts.jar",
+          "sizeBytes": 31367,
+          "sha256": "931A29A92DDC0D876D16F045A0BD3389384C85093730C035D5D39C8867602243",
+          "contains": "Base contracts (Pattern types, ReminderPreference, ReminderFeedback, SmartRankingHint, FeedbackChainHitRate)"
+        }
+      ],
+      "dependencyGraph": {
+        "goto-where-android-adapters.aar": ["goto-where-core-kotlin.jar", "goto-where-contracts.jar", "goto-base-kotlin.aar"],
+        "goto-where-core-kotlin.jar": ["goto-where-contracts.jar", "goto-base-contracts.jar"],
+        "goto-where-contracts.jar": ["goto-base-contracts.jar"],
+        "goto-base-kotlin.aar": ["goto-base-contracts.jar"],
+        "goto-base-contracts.jar": []
+      },
+      "implemented": true,
+      "tested": true,
+      "deviceValidated": false,
+      "knownLimitations": [
+        "Real device notification delivery NOT RUN (no device/emulator)",
+        "Real Usage Access NOT RUN (no device/emulator)",
+        "GOTO HOST integration BLOCKED (6 preexisting HOST compile errors)"
+      ]
+    },
+    "music": {
+      "name": "GOTO Music",
+      "status": "available",
+      "version": "0.1.0",
+      "summary": "独立音乐播放器模块（播放器、播放列表、状态、音频/UI 适配器）",
+      "tests": {
+        "passed": 44,
+        "failed": 0,
+        "note": "基础测试 18 项 + 质量通过测试 26 项（多语言、降级、性能、兼容性）"
+      },
+      "capabilities": [
+        "play",
+        "pause",
+        "toggle",
+        "next",
+        "previous",
+        "setVolume",
+        "getState",
+        "subscribe",
+        "destroy",
+        "healthCheck"
+      ],
+      "implemented": true,
+      "tested": true,
+      "deviceValidated": false,
+      "browserValidated": false,
+      "performanceValidated": true,
+      "locales": ["zh-CN", "en-US"],
+      "browserSha256": "981c667cefcbf11e33f87e863b4de73a9f56c11ca48b2ceeb1afaf9a7a2c9d72",
+      "bundleSize": 2829,
+      "knownLimitations": [
+        "音频资源为空（assets/audio/.gitkeep），需 HOST 注入",
+        "封面资源为空（assets/covers/.gitkeep），需 HOST 注入",
+        "Core 不直接查询 DOM，通过 Adapter 注入",
+        "浏览器兼容性仅测试 Chromium（Firefox/WebKit/WebView 标记 NOT RUN）"
+      ]
+    },
+    "pages": {
+      "name": "GOTO Pages",
+      "status": "available",
+      "version": "0.1.0",
+      "summary": "纯 HOST 模块加载器与 UI（ModuleLoader、CompositionRoot、ComponentRegistry）",
+      "tests": {
+        "passed": 55,
+        "failed": 0,
+        "note": "全模块加载 1 项 + 降级测试 54 项（12 场景）+ 搬迁测试 19 项"
+      },
+      "capabilities": [
+        "module-loader",
+        "composition-root",
+        "component-registry",
+        "capability-validator",
+        "noop-fallback",
+        "degradation"
+      ],
+      "implemented": true,
+      "tested": true,
+      "deviceValidated": false,
+      "knownLimitations": [
+        "尚未切换为权威 Pages 入口（GithubPages 仍为旧权威源，待 Checkpoint 9 切换）",
+        "preview.html 由脚本从新权威源生成"
+      ]
+    }
+  },
+  "knownLimitations": [
+    "No real device or emulator validation performed",
+    "GOTO HOST has 6 preexisting compile errors unrelated to Where",
+    "Cloud sync not supported (Phase 5+)",
+    "GOTO Pages 权威入口尚未切换（Checkpoint 9 待执行）",
+    "FeedbackChainRecorder.analyzeHitRate 待精细化到应用维度"
+  ],
+  "deviceValidation": {
+    "status": "not-run",
+    "reason": "No available device or emulator",
+    "scenarios": [
+      "Usage Access real authorization",
+      "POST_NOTIFICATIONS real authorization",
+      "Notification delivery",
+      "Click notification to open app",
+      "Ignore/Snooze/Disable rule",
+      "Restart persistence"
+    ]
+  },
+  "hostIntegration": {
+    "status": "blocked",
+    "reason": "GOTO has 6 preexisting compile errors",
+    "whereRuntimeReady": true,
+    "aarReady": true,
+    "minimalIntegrationSteps": [
+      "Import AAR or Gradle Module",
+      "Manifest permission and component merge",
+      "Single Composition Root initialization",
+      "Settings page toggle and permission entry",
+      "Feature Flags wiring"
+    ]
+  }
+}

@@ -48,8 +48,8 @@ class NotificationDeliveryAdapter(
      */
     data class Config(
         val channelId: String = "goto_where_reminders",
-        val channelName: String = "GOTO Where 提醒",
-        val channelDescription: String = "基于使用习惯的智能应用提醒",
+        val channelName: String = "GOTO Where 智能提醒",
+        val channelDescription: String = "由 GOTO Where 根据时间、应用使用模式和个人偏好提供的提醒",
         val notificationSmallIcon: Int = android.R.drawable.ic_dialog_info
     )
 
@@ -76,7 +76,7 @@ class NotificationDeliveryAdapter(
         val ruleId = decision.optString("ruleId", "")
         val candidateId = decision.optString("candidateId", "")
         val packageName = decision.optString("packageName", "")
-        val title = decision.optString("title", "GOTO 提醒")
+        val title = decision.optString("title", "GOTO Where 智能提醒")
         val body = decision.optString("body", "")
 
         // 检查通知权限
@@ -194,7 +194,7 @@ class NotificationDeliveryAdapter(
         } else {
             // 找不到应用 → 打开 GOTO 内部提醒卡片
             Intent().apply {
-                setClassName(context, "com.appindex.UIUX.SearchActivity")
+                setClassName(context, "com.appindex.webapp.GotoWebActivity")
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 putExtra(EXTRA_RULE_ID, ruleId)
                 putExtra(EXTRA_CANDIDATE_ID, candidateId)

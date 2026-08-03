@@ -1,0 +1,872 @@
+<!-- 赞助与联系页面 — community_page.html（文档片段，嵌入 docPreview） -->
+<style>
+.community-page-wrap{
+  font-family:var(--font-cn,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif);
+  color:var(--ink,#202126);
+  padding:8px 4px 24px;
+}
+.community-page-head{
+  margin-bottom:24px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line,rgba(32,33,38,0.08));
+}
+.community-page-head h1{
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  margin-bottom:4px;
+}
+.community-page-head p{
+  font-size:12px;
+  color:var(--muted,#8e8f96);
+}
+.community-cards-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:18px;
+}
+@media(max-width:680px){
+  .community-cards-grid{grid-template-columns:1fr;}
+}
+.comm-card{
+  background:var(--card-bg,#fff);
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--line,rgba(32,33,38,0.08));
+  display:flex;
+  flex-direction:column;
+}
+.comm-card-head{
+  padding:16px 18px 12px;
+  border-bottom:1px solid var(--line,rgba(32,33,38,0.08));
+}
+.comm-card-num{
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:0.14em;
+  color:var(--accent,#C45A26);
+  text-transform:uppercase;
+  margin-bottom:4px;
+  display:block;
+}
+.comm-card-head h2{
+  font-size:16px;
+  font-weight:700;
+  letter-spacing:-0.01em;
+}
+.comm-card-body{
+  padding:14px 18px 16px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.comm-section-label{
+  font-size:10px;
+  font-weight:600;
+  color:var(--muted,#8e8f96);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.comm-qr-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.comm-qr-item{text-align:center;}
+.comm-qr-frame{
+  width:100%;
+  aspect-ratio:1;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid var(--line,rgba(32,33,38,0.08));
+  background:#fafafa;
+  margin-bottom:4px;
+}
+.comm-qr-frame img{width:100%;height:100%;object-fit:cover;}
+.comm-qr-caption{font-size:10px;color:var(--ink-soft,#5a5b62);}
+.comm-kofi-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid var(--line,rgba(32,33,38,0.08));
+  text-decoration:none;
+  color:var(--ink,#202126);
+  font-size:12px;
+  font-weight:600;
+  transition:border-color 0.25s,background 0.25s;
+}
+.comm-kofi-link:hover{
+  border-color:var(--accent,#C45A26);
+  background:rgba(198,93,33,0.08);
+}
+.comm-kofi-link i{color:var(--accent,#C45A26);font-style:normal;}
+.comm-locked-wrap{position:relative;border-radius:8px;overflow:hidden;}
+.comm-locked-overlay{
+  position:absolute;inset:0;
+  background:rgba(248,247,244,0.82);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+  z-index:2;
+}
+.comm-locked-text{
+  font-size:11px;
+  font-weight:600;
+  color:var(--muted,#8e8f96);
+  letter-spacing:0.1em;
+  padding:5px 12px;
+  border:1px solid var(--line,rgba(32,33,38,0.08));
+  border-radius:18px;
+  background:rgba(255,255,255,0.7);
+}
+.comm-badge-btn{
+  width:100%;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid color-mix(in srgb,var(--accent,#C45A26) 28%,transparent);
+  background:linear-gradient(135deg,
+    color-mix(in srgb,var(--accent,#C45A26) 8%,transparent) 0%,
+    color-mix(in srgb,var(--accent,#C45A26) 3%,transparent) 100%);
+  color:var(--accent,#C45A26);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  font-family:'Poppins','Helvetica Neue',Arial,sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all 0.28s var(--ease-smooth,cubic-bezier(0.4,0,0.2,1));
+  position:relative;
+  overflow:hidden;
+}
+.comm-badge-btn::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 0%,
+    color-mix(in srgb,var(--accent,#C45A26) 22%,transparent) 0%,
+    transparent 60%);
+  opacity:0.7;pointer-events:none;
+  transition:opacity 0.28s var(--ease-smooth,cubic-bezier(0.4,0,0.2,1));
+}
+.comm-badge-btn:hover{
+  border-color:color-mix(in srgb,var(--accent,#C45A26) 48%,transparent);
+  background:linear-gradient(135deg,
+    color-mix(in srgb,var(--accent,#C45A26) 14%,transparent) 0%,
+    color-mix(in srgb,var(--accent,#C45A26) 6%,transparent) 100%);
+  transform:translateY(-1px);
+  box-shadow:0 6px 18px color-mix(in srgb,var(--accent,#C45A26) 22%,transparent);
+}
+.comm-badge-btn:hover::before{opacity:1;}
+.comm-badge-btn .cb-logo{
+  font-weight:700;font-size:13px;letter-spacing:-0.3px;
+  position:relative;z-index:1;
+}
+.comm-badge-btn .cb-text{
+  font-weight:600;font-size:12px;letter-spacing:0.02em;
+  position:relative;z-index:1;
+}
+.comm-badge-btn .cb-arrow{
+  font-size:14px;font-weight:300;
+  margin-left:auto;
+  transition:transform 0.28s var(--ease-smooth,cubic-bezier(0.4,0,0.2,1));
+  position:relative;z-index:1;
+}
+.comm-badge-btn:hover .cb-arrow{transform:translateX(3px);}
+.comm-purpose{
+  font-size:9.5px;
+  color:var(--muted,#8e8f96);
+  line-height:1.5;
+  text-align:center;
+  margin-top:auto;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  letter-spacing:0.005em;
+  opacity:0.92;
+}
+.comm-purpose .cp-emoji{
+  font-size:10px;
+  margin-right:3px;
+  vertical-align:baseline;
+  -webkit-text-fill-color:initial;
+}
+.comm-intro{
+  font-size:11px;
+  color:var(--ink-soft,#5a5b62);
+  line-height:1.6;
+}
+.comm-field{display:flex;flex-direction:column;gap:4px;}
+.comm-field-label{
+  font-size:10px;
+  font-weight:600;
+  color:var(--ink-soft,#5a5b62);
+}
+.comm-field-input{
+  width:100%;
+  padding:7px 10px;
+  border:1px solid var(--line,rgba(32,33,38,0.08));
+  border-radius:7px;
+  font-size:12px;
+  font-family:inherit;
+  color:var(--ink,#202126);
+  background:#fafafa;
+  transition:border-color 0.25s;
+}
+.comm-field-input:focus{
+  outline:none;
+  border-color:var(--accent,#C45A26);
+  background:#fff;
+}
+.comm-id-actions{display:flex;gap:7px;}
+.comm-id-actions button{
+  flex:1;
+  padding:7px;
+  border-radius:7px;
+  border:1px solid var(--line,rgba(32,33,38,0.08));
+  background:transparent;
+  color:var(--ink-soft,#5a5b62);
+  font-size:10px;
+  font-weight:600;
+  cursor:pointer;
+  font-family:inherit;
+  transition:all 0.25s;
+}
+.comm-id-actions button:hover{
+  border-color:var(--accent,#C45A26);
+  color:var(--accent,#C45A26);
+}
+.comm-id-actions button#fillCommentPage{
+  border-color:color-mix(in srgb,var(--accent,#C45A26) 30%,transparent);
+  background:color-mix(in srgb,var(--accent,#C45A26) 8%,transparent);
+  color:var(--accent,#C45A26);
+}
+.comm-id-actions button#fillCommentPage:hover{
+  background:color-mix(in srgb,var(--accent,#C45A26) 14%,transparent);
+}
+.comm-privacy{
+  font-size:9px;
+  color:var(--muted,#8e8f96);
+  line-height:1.5;
+}
+.comm-giscus-host{
+  margin-top:4px;
+  border-top:1px solid var(--line,rgba(32,33,38,0.08));
+  padding-top:12px;
+}
+.comm-giscus-note{
+  font-size:10px;
+  color:var(--muted,#8e8f96);
+  text-align:center;
+  padding:12px;
+}
+</style>
+
+<div class="community-page-wrap">
+  <div class="community-page-head">
+    <h1 data-i18n="communityPageTitle">赞助与联系</h1>
+    <p data-i18n="communityPageSub">支持 GOTO 的持续开发，或留下你的想法</p>
+  </div>
+
+  <div class="community-cards-grid">
+
+    <!-- Sponsor 卡片 -->
+    <div class="comm-card sponsor-card">
+      <div class="comm-card-head">
+        <span class="comm-card-num">01 / SUPPORT</span>
+        <h2 data-i18n="sponsorTitle">Sponsor</h2>
+      </div>
+      <div class="comm-card-body">
+        <div class="comm-locked-wrap">
+          <div class="comm-section-label" data-i18n="paymentLabel">收款码</div>
+          <div class="comm-qr-grid">
+            <div class="comm-qr-item">
+              <div class="comm-qr-frame"><img src="../payment-qr/wechat.jpg" alt="微信收款码" loading="lazy"></div>
+              <div class="comm-qr-caption" data-i18n="wechatPay">微信支付</div>
+            </div>
+            <div class="comm-qr-item">
+              <div class="comm-qr-frame"><img src="../payment-qr/alipay.jpg" alt="支付宝收款码" loading="lazy"></div>
+              <div class="comm-qr-caption" data-i18n="alipay">支付宝</div>
+            </div>
+          </div>
+          <div class="comm-section-label" style="margin-top:12px;" data-i18n="kofiLabel">Ko-fi</div>
+          <a class="comm-kofi-link" href="https://ko-fi.com/longqiyua" target="_blank" rel="noopener noreferrer">
+            <span>Ko-fi</span>
+            <b data-i18n="buyMeCoffee">Buy me a coffee</b>
+            <i>↗</i>
+          </a>
+          <div class="comm-locked-overlay">
+            <span class="comm-locked-text" data-i18n="comingSoon">暂未开放</span>
+          </div>
+        </div>
+        <button class="comm-badge-btn" id="downloadGotoBadgePage" aria-label="GOTO Badge">
+          <span class="cb-logo">GOTO</span>
+          <span class="cb-text" data-i18n="gotoBadge">徽章</span>
+          <span class="cb-arrow" aria-hidden="true">›</span>
+        </button>
+        <p class="comm-purpose" data-i18n="sponsorPurpose">赞助仅用于支持个人开发者持续维护和改进 GOTO 项目</p>
+      </div>
+    </div>
+
+    <!-- Say Hello 卡片 -->
+    <div class="comm-card hello-card">
+      <div class="comm-card-head">
+        <span class="comm-card-num">02 / COMMUNITY</span>
+        <h2 data-i18n="helloTitle">Say Hello</h2>
+      </div>
+      <div class="comm-card-body">
+        <p class="comm-intro" data-i18n="helloIntro">留言由 giscus 保存到 GitHub Discussions；登录 GitHub 后即可发布与回复。</p>
+        <div class="comm-field">
+          <div class="comm-field-label" data-i18n="nameLabel">我们如何称呼您？</div>
+          <input class="comm-field-input" id="helloNameInputPage" type="text" maxlength="60" autocomplete="name" placeholder="称呼">
+        </div>
+        <div class="comm-field">
+          <div class="comm-field-label" data-i18n="contactLabel">我们如何联系您？（可选填写）</div>
+          <input class="comm-field-input" id="helloContactInputPage" type="text" maxlength="120" autocomplete="email" placeholder="联系方式">
+        </div>
+        <div class="comm-id-actions">
+          <button id="saveHelloIdentityPage" data-i18n="saveLocal">保存到本机</button>
+          <button id="copyHelloIdentityPage" data-i18n="copyCard">复制联系卡</button>
+          <button id="fillCommentPage" data-i18n="fillComment">填入评论</button>
+        </div>
+        <p class="comm-privacy" data-i18n="privacyNote">称呼与联系方式默认只保存在当前设备；仅当你主动粘贴进留言时才会公开。</p>
+        <div class="comm-giscus-host" id="giscusHostPage">
+          <div class="comm-giscus-note" data-i18n="giscusNote">评论区加载中…（需登录 GitHub）</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+/* ════ 英文模式排版优化 ════ */
+body.lang-en .community-page-wrap,
+html.lang-en .community-page-wrap{
+  font-family:var(--font-en,-apple-system,'Inter','Segoe UI',sans-serif);
+  letter-spacing:-0.005em;
+}
+body.lang-en .community-page-head h1,
+html.lang-en .community-page-head h1{
+  letter-spacing:-0.025em;
+  font-weight:700;
+}
+body.lang-en .comm-card-num,
+html.lang-en .comm-card-num{
+  letter-spacing:0.12em;
+  font-weight:700;
+}
+body.lang-en .comm-purpose,
+html.lang-en .comm-purpose{
+  font-style:italic;
+  line-height:1.5;
+}
+body.lang-en .comm-field-label,
+html.lang-en .comm-field-label{
+  letter-spacing:0.01em;
+}
+body.lang-en .comm-privacy,
+html.lang-en .comm-privacy{
+  line-height:1.55;
+}
+</style>
+
+<script>
+(function(){
+  var KEY='goto_hello_identity';
+  function read(){try{return JSON.parse(localStorage.getItem(KEY)||'{}');}catch(_){return{};}}
+  function write(v){try{localStorage.setItem(KEY,JSON.stringify(v));}catch(_){}}
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  var nameInput=document.getElementById('helloNameInputPage');
+  var contactInput=document.getElementById('helloContactInputPage');
+  var saveBtn=document.getElementById('saveHelloIdentityPage');
+  var copyBtn=document.getElementById('copyHelloIdentityPage');
+
+  var saved=read();
+  if(saved.name)nameInput.value=saved.name;
+  if(saved.contact)contactInput.value=saved.contact;
+
+  if(saveBtn)saveBtn.addEventListener('click',function(){
+    write({name:nameInput.value||'',contact:contactInput.value||''});
+    var orig=saveBtn.textContent;
+    saveBtn.textContent='✓';
+    setTimeout(function(){saveBtn.textContent=orig;},1200);
+  });
+
+  if(copyBtn)copyBtn.addEventListener('click',function(){
+    var name=nameInput.value||'匿名';
+    var contact=contactInput.value||'';
+    var card='GOTO 联系卡\n称呼：'+esc(name)+(contact?('\n联系方式：'+esc(contact)):'');
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(card).then(function(){
+        var orig=copyBtn.textContent;copyBtn.textContent='✓';setTimeout(function(){copyBtn.textContent=orig;},1200);
+      });
+    }else{
+      var ta=document.createElement('textarea');ta.value=card;document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');var orig=copyBtn.textContent;copyBtn.textContent='✓';setTimeout(function(){copyBtn.textContent=orig;},1200);}catch(_){}
+      document.body.removeChild(ta);
+    }
+  });
+
+  // 填入评论：将联系卡内容复制到剪贴板并滚动到评论区，提示用户粘贴
+  var fillBtn=document.getElementById('fillCommentPage');
+  if(fillBtn)fillBtn.addEventListener('click',function(){
+    var name=nameInput.value||'';
+    var contact=contactInput.value||'';
+    var isEn=window._lang==='en'||(window.parent&&window.parent._lang==='en');
+    // 检查是否有称呼
+    if(!name){
+      var hint=nameInput;
+      hint.style.borderColor='var(--accent,#C45A26)';
+      hint.focus();
+      setTimeout(function(){hint.style.borderColor='';},1500);
+      return;
+    }
+    // 组合评论文本
+    var text=(isEn?'Hello, I am ':'你好，我是 ')+name;
+    if(contact)text+=(isEn?'\nContact: ':'\n联系方式：')+contact;
+    text+='\n— via GOTO';
+    // 复制到剪贴板
+    var copied=false;
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){copied=true;});
+    }else{
+      var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');copied=true;}catch(_){}
+      document.body.removeChild(ta);
+    }
+    // 滚动到评论区
+    var host=document.getElementById('giscusHostPage');
+    if(host)host.scrollIntoView({behavior:'smooth',block:'center'});
+    // 显示浮动提示
+    var tip=document.createElement('div');
+    tip.style.cssText='position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:rgba(20,20,22,0.92);color:#fff;padding:10px 18px;border-radius:10px;font-size:12px;font-weight:600;z-index:10000;backdrop-filter:blur(12px);box-shadow:0 6px 20px rgba(0,0,0,0.3);transition:opacity 0.4s;max-width:90vw;text-align:center;line-height:1.5;';
+    tip.innerHTML=copied
+      ?(isEn?'✓ Copied! Paste in comment box (Ctrl+V)':'✓ 已复制！请在评论框中粘贴 (Ctrl+V)')
+      :(isEn?'Please paste in comment box (Ctrl+V)':'请在评论框中粘贴 (Ctrl+V)');
+    document.body.appendChild(tip);
+    // 按钮反馈
+    var orig=fillBtn.textContent;
+    fillBtn.textContent='✓';
+    fillBtn.style.color='var(--accent,#C45A26)';
+    fillBtn.style.borderColor='var(--accent,#C45A26)';
+    setTimeout(function(){
+      fillBtn.textContent=orig;
+      fillBtn.style.color='';
+      fillBtn.style.borderColor='';
+    },2000);
+    // 3秒后淡出提示
+    setTimeout(function(){tip.style.opacity='0';setTimeout(function(){if(tip.parentNode)tip.parentNode.removeChild(tip);},400);},3000);
+  });
+
+  var badgeBtn=document.getElementById('downloadGotoBadgePage');
+  if(badgeBtn)badgeBtn.addEventListener('click',function(){
+    _openGotoBadgeOverlay();
+  });
+
+  // ═══ GOTO 徽章全屏展示（含泛光光晕 + PNG/HTML 下载） ═══
+  // 设计意图：精致克制的徽章视觉，强调色泛光，无浮夸装饰
+  function _openGotoBadgeOverlay(){
+    // 移除已有遮罩
+    var exist=document.getElementById('gotoBadgeOverlay');
+    if(exist) exist.remove();
+
+    var isEn=window._lang==='en'||(window.parent&&window.parent._lang==='en')||document.body.classList.contains('lang-en');
+    var accent='#FF5A00';
+
+    // GOTO Archive Badge：黑 / 暖白 / GOTO 橙三色，不继承用户强调色，
+    // 避免黄色或彩虹色破坏品牌一致性。PNG 与 HTML 下载格式保持不变。
+    var badgeSVG = [
+      '<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480">',
+        '<defs>',
+          '<pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">',
+            '<path d="M24 0H0V24" fill="none" stroke="#F3EFE6" stroke-opacity=".055" stroke-width="1"/>',
+          '</pattern>',
+          '<pattern id="micro" width="5" height="5" patternUnits="userSpaceOnUse">',
+            '<circle cx="1" cy="1" r=".45" fill="#F3EFE6" fill-opacity=".12"/>',
+          '</pattern>',
+          '<clipPath id="badgeClip"><rect x="24" y="24" width="432" height="432" rx="26"/></clipPath>',
+        '</defs>',
+        '<rect width="480" height="480" fill="#0F100E"/>',
+        '<g clip-path="url(#badgeClip)">',
+          '<rect x="24" y="24" width="432" height="432" fill="#11110F"/>',
+          '<rect x="24" y="24" width="432" height="432" fill="url(#grid)"/>',
+          '<rect x="24" y="24" width="432" height="432" fill="url(#micro)" opacity=".55"/>',
+          '<path d="M24 24H456V162L286 456H24Z" fill="#F3EFE6"/>',
+          '<g fill="none" stroke="#11110F" stroke-opacity=".13" stroke-width="1">',
+            '<ellipse cx="126" cy="331" rx="104" ry="54"/>',
+            '<ellipse cx="126" cy="331" rx="82" ry="42"/>',
+            '<ellipse cx="126" cy="331" rx="60" ry="30"/>',
+            '<ellipse cx="126" cy="331" rx="38" ry="18"/>',
+          '</g>',
+          '<path d="M70 336L190 278L285 346L382 205" fill="none" stroke="'+accent+'" stroke-width="2"/>',
+          '<g fill="#F3EFE6" stroke="'+accent+'" stroke-width="3">',
+            '<circle cx="70" cy="336" r="6"/><circle cx="190" cy="278" r="6"/><circle cx="285" cy="346" r="6"/><circle cx="382" cy="205" r="6"/>',
+          '</g>',
+          '<path d="M334 24H456V146Z" fill="'+accent+'"/>',
+          '<path d="M456 334V456H334Z" fill="#090A09"/>',
+        '</g>',
+        '<rect x="24.5" y="24.5" width="431" height="431" rx="25.5" fill="none" stroke="#F3EFE6" stroke-opacity=".30"/>',
+        '<text x="58" y="80" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="'+accent+'" letter-spacing="2.8">LOCAL SEARCH LAUNCHER</text>',
+        '<text x="58" y="178" font-family="Arial,Helvetica,sans-serif" font-size="78" font-weight="300" fill="#11110F" letter-spacing="-7">go to</text>',
+        '<text x="58" y="246" font-family="Arial,Helvetica,sans-serif" font-size="82" font-weight="800" fill="'+accent+'" letter-spacing="-5">GOTO</text>',
+        '<text x="58" y="376" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#11110F" letter-spacing="1.5">ONE STEP · LOCAL INTELLIGENCE</text>',
+        '<text x="58" y="406" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="700" fill="#11110F" fill-opacity=".52" letter-spacing="1.8">ENGINE / BASE / WHERE</text>',
+        '<text x="422" y="424" transform="rotate(-90 422 424)" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="700" fill="#F3EFE6" fill-opacity=".72" letter-spacing="2.2">LOSON PRESENTS · V1.0</text>',
+      '</svg>'
+    ].join('');
+
+    var overlay=document.createElement('div');
+    overlay.id='gotoBadgeOverlay';
+    overlay.style.cssText=[
+      'position:fixed','inset:0','z-index:99999',
+      'display:flex','flex-direction:column','align-items:center','justify-content:center',
+      'background:linear-gradient(145deg,#20211e 0%,#0f100e 72%)',
+      'backdrop-filter:blur(12px)','-webkit-backdrop-filter:blur(12px)',
+      'opacity:0','transition:opacity 0.32s cubic-bezier(0.4,0,0.2,1)',
+      'padding:24px','box-sizing:border-box'
+    ].join(';');
+
+    var closeBtn=document.createElement('button');
+    closeBtn.innerHTML='×';
+    closeBtn.style.cssText=[
+      'position:absolute','top:20px','right:20px',
+      'width:38px','height:38px','border-radius:8px',
+      'border:1px solid rgba(255,255,255,0.18)','background:rgba(255,255,255,0.06)',
+      'color:#fff','font-size:22px','font-weight:300','line-height:1',
+      'cursor:pointer','transition:all 0.22s ease',
+      'backdrop-filter:blur(8px)','-webkit-backdrop-filter:blur(8px)'
+    ].join(';');
+    closeBtn.onmouseover=function(){this.style.background='rgba(255,255,255,0.14)';this.style.transform='scale(1.06)';};
+    closeBtn.onmouseout=function(){this.style.background='rgba(255,255,255,0.06)';this.style.transform='scale(1)';};
+    closeBtn.onclick=_closeGotoBadgeOverlay;
+    overlay.appendChild(closeBtn);
+
+    // 徽章展示卡片
+    var badgeWrap=document.createElement('div');
+    badgeWrap.style.cssText=[
+      'position:relative',
+      'width:min(72vw, 380px)','height:min(72vw, 380px)',
+      'margin-bottom:32px'
+    ].join(';');
+    // 中性承托层：不使用黄色泛光
+    var glowLayer=document.createElement('div');
+    glowLayer.style.cssText=[
+      'position:absolute','inset:-32px',
+      'background:radial-gradient(circle at 50% 45%, rgba(243,239,230,.10) 0%, rgba(243,239,230,.025) 42%, transparent 70%)',
+      'border-radius:28px','filter:blur(18px)',
+      'pointer-events:none'
+    ].join(';');
+    badgeWrap.appendChild(glowLayer);
+    // SVG 徽章
+    var badgeImg=document.createElement('div');
+    badgeImg.innerHTML=badgeSVG;
+    badgeImg.firstChild.style.cssText='width:100%;height:100%;display:block;position:relative;z-index:1;filter:drop-shadow(0 18px 42px rgba(0,0,0,0.48));';
+    badgeWrap.appendChild(badgeImg.firstChild);
+    overlay.appendChild(badgeWrap);
+
+    // 标题文案
+    var title=document.createElement('div');
+    title.textContent=isEn?'GOTO Badge':'GOTO 徽章';
+    title.style.cssText=[
+      'color:#fff','font-family:"Poppins","Helvetica Neue",Arial,sans-serif',
+      'font-size:18px','font-weight:600','letter-spacing:-0.01em',
+      'margin-bottom:6px'
+    ].join(';');
+    overlay.appendChild(title);
+
+    var subtitle=document.createElement('div');
+    subtitle.textContent=isEn?'Click download to save as PNG or HTML file':'点击下方按钮，保存为 PNG 或 HTML 文件';
+    subtitle.style.cssText=[
+      'color:rgba(255,255,255,0.5)','font-size:12px','font-weight:400',
+      'margin-bottom:24px','letter-spacing:0.005em'
+    ].join(';');
+    overlay.appendChild(subtitle);
+
+    // 下载按钮组
+    var btnRow=document.createElement('div');
+    btnRow.style.cssText='display:flex;gap:12px;flex-wrap:wrap;justify-content:center;';
+    function _mkBtn(label,onClick,primary){
+      var b=document.createElement('button');
+      b.textContent=label;
+      b.style.cssText=[
+        'padding:10px 20px','border-radius:7px','cursor:pointer',
+        'font-family:"Poppins","Helvetica Neue",Arial,sans-serif',
+        'font-size:13px','font-weight:600','letter-spacing:0.01em',
+        'transition:all 0.22s cubic-bezier(0.4,0,0.2,1)',
+        'border:1px solid '+(primary?accent:'rgba(255,255,255,0.18)'),
+        'background:'+(primary?accent:'rgba(255,255,255,0.04)'),
+        'color:'+(primary?'#fff':'rgba(255,255,255,0.86)'),
+        'box-shadow:none'
+      ].join(';');
+      b.onmouseover=function(){
+        if(primary){b.style.filter='brightness(1.1)';}
+        else{b.style.background='rgba(255,255,255,0.10)';b.style.borderColor='rgba(255,255,255,0.32)';}
+      };
+      b.onmouseout=function(){
+        if(primary){b.style.filter='brightness(1)';}
+        else{b.style.background='rgba(255,255,255,0.04)';b.style.borderColor='rgba(255,255,255,0.18)';}
+      };
+      b.onclick=onClick;
+      return b;
+    }
+    btnRow.appendChild(_mkBtn(isEn?'Download PNG':'下载 PNG', function(){
+      _downloadBadgePNG(badgeSVG);
+    }, true));
+    btnRow.appendChild(_mkBtn(isEn?'Download HTML':'下载 HTML', function(){
+      _downloadBadgeHTML(badgeSVG);
+    }, false));
+    overlay.appendChild(btnRow);
+
+    // ESC 关闭
+    function _onKey(e){ if(e.key==='Escape') _closeGotoBadgeOverlay(); }
+    document.addEventListener('keydown',_onKey,true);
+    overlay._onKey=_onKey;
+
+    // 点击空白关闭
+    overlay.addEventListener('click',function(e){
+      if(e.target===overlay) _closeGotoBadgeOverlay();
+    });
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(function(){ overlay.style.opacity='1'; });
+
+    function _closeGotoBadgeOverlay(){
+      var ov=document.getElementById('gotoBadgeOverlay');
+      if(!ov) return;
+      if(ov._onKey){ document.removeEventListener('keydown',ov._onKey,true); }
+      ov.style.opacity='0';
+      setTimeout(function(){ if(ov.parentNode) ov.parentNode.removeChild(ov); }, 320);
+    }
+    window._closeGotoBadgeOverlay=_closeGotoBadgeOverlay;
+  }
+
+  function _openGotoBadgeOverlay(){
+    var old=document.getElementById('gotoBadgeOverlay');
+    if(old) old.remove();
+    var isEn=window._lang==='en'||(window.parent&&window.parent._lang==='en')||document.body.classList.contains('lang-en');
+    var accent='#FF5A00';
+    var badgeSVG=[
+      '<svg xmlns="http://www.w3.org/2000/svg" width="840" height="530" viewBox="0 0 840 530">',
+      '<defs>',
+        '<pattern id="cardGrid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#F3EFE6" stroke-opacity=".055" stroke-width="1"/></pattern>',
+        '<pattern id="cardMicro" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".45" fill="#F3EFE6" fill-opacity=".12"/></pattern>',
+        '<clipPath id="cardClip"><rect x="18" y="18" width="804" height="494" rx="26"/></clipPath>',
+      '</defs>',
+      '<rect width="840" height="530" fill="#0F100E"/>',
+      '<g clip-path="url(#cardClip)">',
+        '<rect x="18" y="18" width="804" height="494" fill="#11110F"/>',
+        '<rect x="18" y="18" width="804" height="494" fill="url(#cardGrid)"/>',
+        '<rect x="18" y="18" width="804" height="494" fill="url(#cardMicro)" opacity=".55"/>',
+        '<path d="M18 18H566L760 512H18Z" fill="#F3EFE6"/>',
+        '<g fill="none" stroke="#11110F" stroke-opacity=".13" stroke-width="1">',
+          '<ellipse cx="612" cy="370" rx="172" ry="90"/><ellipse cx="612" cy="370" rx="136" ry="70"/>',
+          '<ellipse cx="612" cy="370" rx="98" ry="50"/><ellipse cx="612" cy="370" rx="60" ry="30"/>',
+        '</g>',
+        '<path d="M118 390L306 270L470 362L676 170" fill="none" stroke="'+accent+'" stroke-width="2"/>',
+        '<g fill="#F3EFE6" stroke="'+accent+'" stroke-width="3"><circle cx="118" cy="390" r="7"/><circle cx="306" cy="270" r="7"/><circle cx="470" cy="362" r="7"/><circle cx="676" cy="170" r="7"/></g>',
+        '<path d="M696 18H822V144Z" fill="'+accent+'"/><path d="M822 386V512H696Z" fill="#090A09"/>',
+      '</g>',
+      '<rect x="18.5" y="18.5" width="803" height="493" rx="25.5" fill="none" stroke="#F3EFE6" stroke-opacity=".30"/>',
+      '<text x="58" y="78" font-family="Poppins,Arial,sans-serif" font-size="11" font-weight="600" fill="'+accent+'" letter-spacing="2.4">LOCAL SEARCH LAUNCHER</text>',
+      '<text x="58" y="214" font-family="Poppins,Arial,sans-serif" font-size="22" font-weight="400" fill="#11110F" letter-spacing="-.6">GO TO</text>',
+      '<text x="54" y="304" font-family="Poppins,Arial,sans-serif" font-size="94" font-weight="700" fill="'+accent+'" letter-spacing="-5">GOTO</text>',
+      '<text x="58" y="390" font-family="Poppins,Arial,sans-serif" font-size="11" font-weight="500" fill="#11110F" letter-spacing="1.5">ONE STEP · LOCAL INTELLIGENCE</text>',
+      '<text x="58" y="426" font-family="Poppins,Arial,sans-serif" font-size="9" font-weight="600" fill="#11110F" fill-opacity=".52" letter-spacing="1.8">ENGINE / BASE / WHERE</text>',
+      '<text x="770" y="464" transform="rotate(-90 770 464)" font-family="Poppins,Arial,sans-serif" font-size="9" font-weight="600" fill="#F3EFE6" fill-opacity=".72" letter-spacing="2.2">LOSON PRESENTS · V1.0</text>',
+      '</svg>'
+    ].join('');
+    var overlay=document.createElement('div');
+    overlay.id='gotoBadgeOverlay';
+    overlay.style.cssText='position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#20211e 0%,#0f100e 72%);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;transition:opacity .32s cubic-bezier(.4,0,.2,1);padding:24px;box-sizing:border-box;';
+    var closeBtn=document.createElement('button');
+    closeBtn.textContent='×';
+    closeBtn.setAttribute('aria-label',isEn?'Close':'关闭');
+    closeBtn.style.cssText='position:absolute;top:20px;right:20px;width:38px;height:38px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-size:22px;font-weight:300;line-height:1;cursor:pointer;';
+    overlay.appendChild(closeBtn);
+    var badgeWrap=document.createElement('div');
+    badgeWrap.style.cssText='position:relative;width:min(82vw,720px);aspect-ratio:840/530;height:auto;margin-bottom:30px;';
+    var glow=document.createElement('div');
+    glow.style.cssText='position:absolute;inset:-28px;background:radial-gradient(ellipse at 50% 50%,rgba(243,239,230,.10),rgba(243,239,230,.025) 45%,transparent 72%);filter:blur(18px);pointer-events:none;';
+    badgeWrap.appendChild(glow);
+    var badgeNode=document.createElement('div');
+    badgeNode.innerHTML=badgeSVG;
+    var svg=badgeNode.firstChild;
+    svg.style.cssText='width:100%;height:100%;display:block;position:relative;z-index:1;filter:drop-shadow(0 18px 42px rgba(0,0,0,.48));';
+    badgeWrap.appendChild(svg);
+    overlay.appendChild(badgeWrap);
+    var title=document.createElement('div');
+    title.textContent=isEn?'GOTO Badge':'GOTO 徽章';
+    title.style.cssText='color:#fff;font-family:Poppins,"Helvetica Neue",Arial,sans-serif;font-size:18px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px;';
+    overlay.appendChild(title);
+    var subtitle=document.createElement('div');
+    subtitle.textContent=isEn?'Click download to save as PNG or HTML file':'点击下方按钮，保存为 PNG 或 HTML 文件';
+    subtitle.style.cssText='color:rgba(255,255,255,.5);font-size:12px;font-weight:400;margin-bottom:24px;';
+    overlay.appendChild(subtitle);
+    var btnRow=document.createElement('div');
+    btnRow.style.cssText='display:flex;gap:12px;flex-wrap:wrap;justify-content:center;';
+    function mkBtn(label,handler,primary){
+      var b=document.createElement('button'); b.textContent=label; b.onclick=handler;
+      b.style.cssText='padding:10px 20px;border-radius:7px;cursor:pointer;font-family:Poppins,"Helvetica Neue",Arial,sans-serif;font-size:13px;font-weight:600;border:1px solid '+(primary?accent:'rgba(255,255,255,.18)')+';background:'+(primary?accent:'rgba(255,255,255,.04)')+';color:'+(primary?'#fff':'rgba(255,255,255,.86)')+';';
+      return b;
+    }
+    btnRow.appendChild(mkBtn(isEn?'Download PNG':'下载 PNG',function(){_downloadBadgePNG(badgeSVG);},true));
+    btnRow.appendChild(mkBtn(isEn?'Download HTML':'下载 HTML',function(){_downloadBadgeHTML(badgeSVG);},false));
+    overlay.appendChild(btnRow);
+    function close(){
+      document.removeEventListener('keydown',onKey,true);
+      var el=document.getElementById('gotoBadgeOverlay');
+      if(el)el.remove();
+    }
+    function onKey(e){if(e.key==='Escape')close();}
+    closeBtn.onclick=close;
+    overlay.addEventListener('click',function(e){if(e.target===overlay)close();});
+    document.addEventListener('keydown',onKey,true);
+    document.body.appendChild(overlay);
+    requestAnimationFrame(function(){overlay.style.opacity='1';});
+    window._closeGotoBadgeOverlay=close;
+  }
+
+  // 下载 PNG：将 SVG 绘制到 canvas 后导出
+  function _downloadBadgePNG(svgStr){
+    try{
+      var blob=new Blob([svgStr],{type:'image/svg+xml;charset=utf-8'});
+      var url=URL.createObjectURL(blob);
+      var img=new Image();
+      img.onload=function(){
+        try{
+          var canvas=document.createElement('canvas');
+          canvas.width=1680;canvas.height=1060;
+          var ctx=canvas.getContext('2d');
+          ctx.fillStyle='#0a0a0c';
+          ctx.fillRect(0,0,1680,1060);
+          ctx.drawImage(img,0,0,1680,1060);
+          canvas.toBlob(function(b){
+            if(!b){ alert('PNG 导出失败'); return; }
+            var u=URL.createObjectURL(b);
+            var a=document.createElement('a');a.href=u;a.download='goto-badge.png';a.click();
+            setTimeout(function(){URL.revokeObjectURL(u);},1000);
+          },'image/png');
+          URL.revokeObjectURL(url);
+        }catch(e){ console.error('PNG 导出失败:',e); alert('PNG 导出失败: '+e.message); }
+      };
+      img.onerror=function(){
+        URL.revokeObjectURL(url);
+        alert('SVG 加载失败，无法转 PNG');
+      };
+      img.src=url;
+    }catch(e){ alert('PNG 导出失败: '+e.message); }
+  }
+
+  // 下载 HTML：自包含的单文件徽章展示页
+  function _downloadBadgeHTML(svgStr){
+    try{
+      var html=[
+        '<!DOCTYPE html>',
+        '<html lang="zh-CN">',
+        '<head>',
+        '<meta charset="UTF-8">',
+        '<meta name="viewport" content="width=device-width,initial-scale=1.0">',
+        '<title>GOTO Badge · Loson Presents</title>',
+        '<style>',
+        '*{margin:0;padding:0;box-sizing:border-box;}',
+        'body{min-height:100vh;display:flex;align-items:center;justify-content:center;',
+        '  background:linear-gradient(145deg,#20211e 0%,#0f100e 72%);',
+        '  font-family:"Poppins","Helvetica Neue",Arial,sans-serif;',
+        '  padding:24px;overflow:hidden;}',
+        '.badge-wrap{position:relative;width:min(82vw,720px);aspect-ratio:840/530;height:auto;}',
+        '.badge-glow{position:absolute;inset:-32px;',
+        '  background:radial-gradient(circle at 50% 45%,rgba(243,239,230,.10) 0%,rgba(243,239,230,.025) 42%,transparent 70%);',
+        '  border-radius:28px;filter:blur(18px);pointer-events:none;}',
+        '.badge-svg{width:100%;height:100%;position:relative;z-index:1;',
+        '  filter:drop-shadow(0 18px 42px rgba(0,0,0,0.48));}',
+        '</style>',
+        '</head>',
+        '<body>',
+        '<div class="badge-wrap">',
+        '  <div class="badge-glow"></div>',
+        '  <div class="badge-svg">'+svgStr+'</div>',
+        '</div>',
+        '</body>',
+        '</html>'
+      ].join('\n');
+      var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');a.href=url;a.download='goto-badge.html';a.click();
+      setTimeout(function(){URL.revokeObjectURL(url);},1000);
+    }catch(e){ alert('HTML 导出失败: '+e.message); }
+  }
+
+  var giscusHost=document.getElementById('giscusHostPage');
+  if(giscusHost){
+    // 从全局配置读取（由 community-config.js 设置）
+    var cfg = window.GOTO_GISCUS_CONFIG || {};
+    var hasConfig = cfg.repo && cfg.repoId && cfg.category && cfg.categoryId;
+    if(!hasConfig){
+      // 配置不完整：显示安装引导提示
+      var en = (window._lang==='en'||(window.parent&&window.parent._lang==='en'));
+      giscusHost.innerHTML='<div class="comm-giscus-note" style="padding:18px;color:var(--ink-soft,#888);font-size:12px;line-height:1.7;">'+
+        '<b style="color:var(--accent,#C45A26);">'+(en?'giscus App not installed':'giscus App 未安装')+'</b><br>'+
+        (en?'The giscus GitHub App has not been installed on this repository yet.':'giscus GitHub App 尚未安装到此仓库。')+'<br>'+
+        (en?'Steps: ':'步骤：')+
+        '<ol style="margin:8px 0 0 18px;padding:0;line-height:1.8;">'+
+        '<li>'+(en?'Visit ':'访问 ')+'<a href="https://github.com/apps/giscus" target="_blank" rel="noopener" style="color:var(--accent,#C45A26);">github.com/apps/giscus</a>'+(en?' and install':' 安装到仓库')+'</li>'+
+        '<li>'+(en?'Go to ':'前往 ')+'<a href="https://giscus.app/zh-CN" target="_blank" rel="noopener" style="color:var(--accent,#C45A26);">giscus.app</a>'+(en?' to get categoryId':' 获取 categoryId')+'</li>'+
+        '<li>'+(en?'Fill categoryId in ':'将 categoryId 填入 ')+'<code style="background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px;font-size:11px;">community-config.js</code></li>'+
+        '</ol></div>';
+    } else {
+      // 配置完整：加载 giscus
+      var giscusLang=(window._lang==='en'||(window.parent&&window.parent._lang==='en'))?'en':'zh-CN';
+      var script=document.createElement('script');
+      script.src='https://giscus.app/client.js';
+      script.setAttribute('data-repo',cfg.repo);
+      script.setAttribute('data-repo-id',cfg.repoId);
+      script.setAttribute('data-category',cfg.category);
+      script.setAttribute('data-category-id',cfg.categoryId);
+      script.setAttribute('data-mapping',cfg.mapping||'specific');
+      script.setAttribute('data-term',cfg.term||'GOTO Community / Say Hello');
+      script.setAttribute('data-strict','1');
+      script.setAttribute('data-reactions-enabled','1');
+      script.setAttribute('data-emit-metadata','0');
+      script.setAttribute('data-input-position','top');
+      script.setAttribute('data-theme','light');
+      script.setAttribute('data-lang',giscusLang);
+      script.setAttribute('data-loading','lazy');
+      script.crossOrigin='anonymous';
+      script.async=true;
+      script.onerror=function(){
+        giscusHost.innerHTML='<div class="comm-giscus-note" data-i18n="giscusLoadFail" style="padding:18px;color:var(--ink-soft,#888);font-size:12px;line-height:1.6;">评论区加载失败（仓库未启用 giscus 或网络异常），可前往 GitHub Discussions 直接留言。</div>';
+      };
+      giscusHost.innerHTML='';
+      giscusHost.appendChild(script);
+    }
+  }
+  // 监听 giscus iframe 内部的错误消息（giscus 加载成功但仓库未安装 app 时会通过 postMessage 报错）
+  window.addEventListener('message', function(ev){
+    if(ev && ev.origin && ev.origin.indexOf('giscus.app')>=0){
+      try{
+        var data = ev.data;
+        if(data && data.giscus && data.giscus.error){
+          var giscusError=String(data.giscus.error||'');
+          // A specific mapping has no Discussion until the first visitor posts.
+          // giscus reports this bootstrap state as an error even though the
+          // iframe and composer are functioning normally.
+          if(/discussion not found/i.test(giscusError)) return;
+          var host = document.getElementById('giscusHostPage');
+          if(host && host.querySelector('iframe.giscus-frame') && !host.getAttribute('data-err-shown')){
+            host.setAttribute('data-err-shown','1');
+            // 保留 iframe，但在上方插入提示
+            var note = document.createElement('div');
+            note.className = 'comm-giscus-note';
+            note.style.cssText = 'padding:10px 12px;margin-bottom:8px;border:1px dashed rgba(150,150,150,0.3);border-radius:8px;font-size:11px;color:#999;background:rgba(150,150,150,0.05);';
+            note.textContent = '评论区暂不可用：'+(giscusError||'giscus 加载失败');
+            host.insertBefore(note, host.firstChild);
+          }
+        }
+      }catch(_){}
+    }
+  });
+})();
+</script>

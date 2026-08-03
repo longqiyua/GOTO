@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 应用图标前景层（矢量 drawable） -->
+<!-- 设计：GOTO 字体标志，浅色模式白字（黑底），深色模式通过 drawable-night 切换为黑字（白底） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- "GOTO" 文字（path 近似绘制，居中） -->
+    <!-- G 字母：圆环 + 右侧缺口 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M28,44 C28,36 34,30 42,30 C50,30 56,36 56,44 C56,52 50,58 42,58 C38,58 35,57 33,55 L33,52 L42,52 L42,48 L29,48 L29,44 Z M42,34 C38,34 35,37 35,41 L35,47 L42,47 C46,47 49,44 49,41 C49,37 46,34 42,34 Z" />
+
+    <!-- O 字母：圆环 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,44 C60,36 66,30 74,30 C82,30 88,36 88,44 C88,52 82,58 74,58 C66,58 60,52 60,44 Z M74,34 C70,34 67,37 67,41 C67,45 70,48 74,48 C78,48 81,45 81,41 C81,37 78,34 74,34 Z" />
+
+    <!-- T 字母：横杠 + 竖线 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M28,64 L56,64 L56,68 L46,68 L46,82 L38,82 L38,68 L28,68 Z" />
+
+    <!-- O 字母（第二个）：圆环 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,64 C60,56 66,50 74,50 C82,50 88,56 88,64 C88,72 82,78 74,78 C66,78 60,72 60,64 Z M74,54 C70,54 67,57 67,61 C67,65 70,68 74,68 C78,68 81,65 81,61 C81,57 78,54 74,54 Z" />
+
+</vector>

@@ -1,0 +1,10 @@
+const assert=require('assert');
+const api=require('./goto-engine-component.js');
+const events=[];
+const mock={version:'test',sanitizeQuery:q=>String(q).trim(),runSearchPipeline:(q,apps)=>({query:q,list:apps.map((app,i)=>({app,score:100-i,source:'test'})),intentLabel:'app',intentCategory:'launch',dt:3}),recordSelection:()=>{}};
+const component=api.create({engine:mock,dataset:[{id:'wps',name:'WPS',cat:'office'},{id:'mail',name:'Mail',cat:'office'}],storage:{getItem:()=>null,setItem:()=>{}}});
+component.on('query',result=>events.push(result));
+const result=component.query(' wps ',{limit:1,requestId:'test-1'});
+assert.equal(result.ok,true);assert.equal(result.request.query,'wps');assert.equal(result.data.items.length,1);assert.equal(result.data.total,2);assert.equal(result.meta.localOnly,true);assert.equal(events.length,1);assert.match(component.format(result,'compact'),/WPS/);assert.equal(component.status().ready,true);
+const invalid=component.query('   ');assert.equal(invalid.ok,false);assert.equal(invalid.error.code,'INVALID_QUERY');
+console.log('component-api: passed');

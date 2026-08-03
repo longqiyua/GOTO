@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shared mobile geometry mirrored by AppIndex/Preview/preview-final.css. -->
+    <dimen name="goto_screen_edge">10dp</dimen>
+    <dimen name="goto_card_gap">8dp</dimen>
+    <dimen name="goto_card_radius">10dp</dimen>
+    <dimen name="goto_control_height">40dp</dimen>
+    <dimen name="goto_action_capsule_width">44dp</dimen>
+    <dimen name="goto_action_capsule_height">26dp</dimen>
+</resources>

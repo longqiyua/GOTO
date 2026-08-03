@@ -24,8 +24,8 @@ class NotificationDeliveryAdapterContractTest {
         val config = NotificationDeliveryAdapter.Config()
 
         assertEquals("goto_where_reminders", config.channelId)
-        assertEquals("GOTO Where 提醒", config.channelName)
-        assertEquals("基于使用习惯的智能应用提醒", config.channelDescription)
+        assertEquals("GOTO Where 智能提醒", config.channelName)
+        assertEquals("由 GOTO Where 根据时间、应用使用模式和个人偏好提供的提醒", config.channelDescription)
     }
 
     @Test

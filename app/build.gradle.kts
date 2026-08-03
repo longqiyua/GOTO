@@ -16,7 +16,7 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "V1.0 official"
     }
 
     buildTypes {
@@ -63,6 +63,11 @@ dependencies {
 
     // GOTO Where Phase 3: WorkManager（延迟/周期性任务调度）
     implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // v2.1: 嵌入 GOTO Engine Kotlin 模块（四层架构）
+    // L1 自适应刷新 / L2 模糊匹配 / L3 模拟智能 / L4 梳理层（PersonalReranker）
+    // 通过 settings.gradle.kts include(":goto-engine") 引入
+    implementation(project(":goto-engine"))
 
     // 单元测试
     testImplementation("junit:junit:4.13.2")

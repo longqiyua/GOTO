@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 字体占位：Poppins Bold -->
+<!-- 实际字体文件需放置在 assets/fonts/Poppins-Bold.ttf -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fontStyle="normal"
+    android:fontWeight="700">
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="700"
+        android:font="@font/poppins_bold" />
+</font-family>

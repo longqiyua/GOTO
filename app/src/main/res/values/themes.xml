@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 强调色：与 GOTO Page 预览页保持一致（温柔暗砖红 #C1715C） -->
+    <color name="accent">#C1715C</color>
+    <color name="accent_variant">#A55A48</color>
+    <color name="accent_light">#D68B78</color>
+    <color name="accent_ripple">#1AC1715C</color>
+
+    <!-- 黑白灰体系 -->
+    <color name="bg_primary">#FAFAFA</color>        <!-- 奶白背景 -->
+    <color name="bg_secondary">#F5F5F5</color>      <!-- 暖白次级背景 -->
+    <color name="bg_tertiary">#EEEEEE</color>       <!-- 浅灰 -->
+    <color name="bg_dark">#1A1A1A</color>           <!-- 深色模式背景 -->
+    <color name="bg_dark_secondary">#2A2A2A</color> <!-- 深色模式次级 -->
+
+    <color name="text_primary">#1A1A1A</color>      <!-- 主文字 -->
+    <color name="text_secondary">#666666</color>    <!-- 次级文字 -->
+    <color name="text_tertiary">#999999</color>     <!-- 辅助文字 -->
+    <color name="text_on_dark">#FFFFFF</color>      <!-- 深色背景文字 -->
+    <color name="text_on_accent">#FFFFFF</color>    <!-- 强调色上文字 -->
+
+    <color name="divider">#E8E8E8</color>           <!-- 分割线 -->
+    <color name="card_bg">#FFFFFF</color>            <!-- 卡片背景 -->
+    <color name="card_bg_dark">#2D2D2D</color>      <!-- 深色卡片 -->
+    <color name="search_bg">#F0F0F0</color>         <!-- 搜索框背景 -->
+    <color name="tag_bg">#E8E8E8</color>            <!-- 标签背景 -->
+    <color name="surface_default">#FFFFFF</color>   <!-- 芯片默认底色 / chip default background -->
+
+    <!-- 阴影色 -->
+    <color name="shadow_light">#0D000000</color>
+    <color name="shadow_medium">#1A000000</color>
+
+    <!-- 会员金色 -->
+    <color name="gold">#C8A84E</color>
+    <color name="gold_light">#FFF8E1</color>
+    <color name="gold_dark">#A08030</color>
+    <color name="gold_accent">#C8A84E</color>
+    <color name="gold_accent_variant">#A08030</color>
+    <color name="gold_accent_light">#E0C878</color>
+
+    <!-- 追加搜索：当前意图高亮色 -->
+    <color name="current_intent_bg">#FFF8E1</color>
+    <color name="current_intent_text">#B8860B</color>
+
+    <!-- 主主题（浅色 - 奶白） -->
+    <style name="Theme.AppIndex" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryVariant">@color/accent_variant</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="android:statusBarColor">@color/accent</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <!-- 圆角 -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Large</item>
+    </style>
+
+    <!-- 深色主题 -->
+    <style name="Theme.AppIndex.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent_light</item>
+        <item name="colorPrimaryVariant">@color/accent</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:windowBackground">@color/bg_dark</item>
+        <item name="android:textColorPrimary">@color/text_on_dark</item>
+        <item name="android:textColorSecondary">#AAAAAA</item>
+    </style>
+
+    <!-- 圆角定义 -->
+    <style name="ShapeAppearance.Small" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Medium" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Large" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- 无 ActionBar 主题（欢迎页等） -->
+    <style name="Theme.AppIndex.NoActionBar" parent="Theme.AppIndex" />
+
+    <!-- 搜索覆盖层主题 -->
+    <style name="Theme.AppIndex.SearchOverlay" parent="Theme.AppIndex">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:statusBarColor">@color/accent</item>
+        <!-- 禁用窗口动画，加速启动 -->
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+</resources>

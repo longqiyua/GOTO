@@ -1,0 +1,250 @@
+{
+  "schema": "goto-open-source-notices/v1",
+  "generatedAt": "2026-07-22T18:33:31.974Z",
+  "repository": "https://github.com/longqiyua/goto",
+  "projectLicense": "AGPL-3.0-only",
+  "spdxSpec": "SPDX-3.0.1",
+  "reuseSpec": "REUSE-3.3",
+  "coverage": {
+    "androidDirectDependencies": true,
+    "androidTransitiveInventory": "Document/generated/android-dependencies.html (generated during Pages deployment)",
+    "pagesRuntime": true,
+    "buildTools": true,
+    "externalServices": true
+  },
+  "components": [
+    {
+      "id": "androidx.core:core-ktx",
+      "name": "AndroidX Core KTX",
+      "version": "1.12.0",
+      "license": "Apache-2.0",
+      "copyright": "The Android Open Source Project contributors",
+      "source": "https://developer.android.com/jetpack/androidx/releases/core",
+      "scope": "Android runtime",
+      "delivery": "Bundled in the APK/AAB",
+      "obligations": "Retain copyright, license text, and any upstream NOTICE content.",
+      "verification": "Source declaration plus deployment-time generated inventory"
+    },
+    {
+      "id": "androidx.appcompat:appcompat",
+      "name": "AndroidX AppCompat",
+      "version": "1.6.1",
+      "license": "Apache-2.0",
+      "copyright": "The Android Open Source Project contributors",
+      "source": "https://developer.android.com/jetpack/androidx/releases/appcompat",
+      "scope": "Android runtime",
+      "delivery": "Bundled in the APK/AAB",
+      "obligations": "Retain copyright, license text, and any upstream NOTICE content.",
+      "verification": "Source declaration plus deployment-time generated inventory"
+    },
+    {
+      "id": "androidx.activity:activity-ktx",
+      "name": "AndroidX Activity KTX",
+      "version": "1.8.2",
+      "license": "Apache-2.0",
+      "copyright": "The Android Open Source Project contributors",
+      "source": "https://developer.android.com/jetpack/androidx/releases/activity",
+      "scope": "Android runtime",
+      "delivery": "Bundled in the APK/AAB",
+      "obligations": "Retain copyright, license text, and any upstream NOTICE content.",
+      "verification": "Source declaration plus deployment-time generated inventory"
+    },
+    {
+      "id": "com.google.android.material:material",
+      "name": "Material Components for Android",
+      "version": "1.11.0",
+      "license": "Apache-2.0",
+      "copyright": "Google LLC and Material Components contributors",
+      "source": "https://github.com/material-components/material-components-android",
+      "scope": "Android runtime",
+      "delivery": "Bundled in the APK/AAB",
+      "obligations": "Retain copyright, license text, and any upstream NOTICE content.",
+      "verification": "Source declaration plus deployment-time generated inventory"
+    },
+    {
+      "id": "androidx.lifecycle:lifecycle-viewmodel-ktx",
+      "name": "AndroidX Lifecycle ViewModel KTX",
+      "version": "2.7.0",
+      "license": "Apache-2.0",
+      "copyright": "The Android Open Source Project contributors",
+      "source": "https://developer.android.com/jetpack/androidx/releases/lifecycle",
+      "scope": "Android runtime",
+      "delivery": "Bundled in the APK/AAB",
+      "obligations": "Retain copyright, license text, and any upstream NOTICE content.",
+      "verification": "Source declaration plus deployment-time generated inventory"
+    },
+    {
+      "id": "androidx.lifecycle:lifecycle-runtime-ktx",
+      "name": "AndroidX Lifecycle Runtime KTX",
+      "version": "2.7.0",
+      "license": "Apache-2.0",
+      "copyright": "The Android Open Source Project contributors",
+      "source": "https://developer.android.com/jetpack/androidx/releases/lifecycle",
+      "scope": "Android runtime",
+      "delivery": "Bundled in the APK/AAB",
+      "obligations": "Retain copyright, license text, and any upstream NOTICE content.",
+      "verification": "Source declaration plus deployment-time generated inventory"
+    },
+    {
+      "id": "androidx.recyclerview:recyclerview",
+      "name": "AndroidX RecyclerView",
+      "version": "1.3.2",
+      "license": "Apache-2.0",
+      "copyright": "The Android Open Source Project contributors",
+      "source": "https://developer.android.com/jetpack/androidx/releases/recyclerview",
+      "scope": "Android runtime",
+      "delivery": "Bundled in the APK/AAB",
+      "obligations": "Retain copyright, license text, and any upstream NOTICE content.",
+      "verification": "Source declaration plus deployment-time generated inventory"
+    },
+    {
+      "id": "org.jetbrains.kotlinx:kotlinx-coroutines-android",
+      "name": "Kotlinx Coroutines Android",
+      "version": "1.7.3",
+      "license": "Apache-2.0",
+      "copyright": "JetBrains s.r.o. and Kotlin contributors",
+      "source": "https://github.com/Kotlin/kotlinx.coroutines",
+      "scope": "Android runtime",
+      "delivery": "Bundled in the APK/AAB",
+      "obligations": "Retain copyright, license text, and any upstream NOTICE content.",
+      "verification": "Source declaration plus deployment-time generated inventory"
+    },
+    {
+      "id": "org.jetbrains.kotlin.android",
+      "name": "Kotlin Gradle Plugin",
+      "copyright": "JetBrains s.r.o. and Kotlin contributors",
+      "version": "1.9.22",
+      "license": "Apache-2.0",
+      "source": "https://github.com/JetBrains/kotlin",
+      "scope": "Build tool",
+      "delivery": "Not shipped as an application component",
+      "obligations": "Retain notices when redistributing the tool; record version for reproducibility."
+    },
+    {
+      "id": "com.android.application",
+      "name": "Android Gradle Plugin",
+      "copyright": "The Android Open Source Project contributors",
+      "version": "8.2.0",
+      "license": "Apache-2.0",
+      "source": "https://android.googlesource.com/platform/tools/base/",
+      "scope": "Build tool",
+      "delivery": "Not shipped as an application component",
+      "obligations": "Retain notices when redistributing the tool; Android SDK terms are separate and are not represented as an open-source license."
+    },
+    {
+      "id": "com.github.jk1.dependency-license-report",
+      "name": "Gradle License Report",
+      "copyright": "Evgeny Naumenko and contributors",
+      "version": "3.1.4",
+      "license": "Apache-2.0",
+      "source": "https://github.com/jk1/Gradle-License-Report",
+      "scope": "Compliance build tool",
+      "delivery": "Runs during CI; not shipped to end users",
+      "obligations": "Retain notices if redistributed; review Unknown entries in every generated report."
+    },
+    {
+      "id": "markdown-it",
+      "name": "markdown-it",
+      "copyright": "Vitaly Puzrin, Alex Kocharin, and contributors",
+      "version": "13.0.2",
+      "license": "MIT",
+      "source": "https://github.com/markdown-it/markdown-it",
+      "scope": "GitHub Pages runtime",
+      "delivery": "Loaded from jsDelivr with an exact version",
+      "obligations": "Retain the MIT copyright and permission notice in distributions."
+    },
+    {
+      "id": "giscus",
+      "name": "giscus client",
+      "copyright": "giscus contributors",
+      "version": "service-managed / unpinned",
+      "license": "MIT",
+      "source": "https://github.com/giscus/giscus",
+      "scope": "Optional GitHub Pages runtime",
+      "delivery": "Loaded only after Say Hello is opened and valid public IDs are available",
+      "obligations": "Record the unpinned delivery risk; GitHub authentication, Discussions visibility, and giscus/GitHub privacy terms apply."
+    },
+    {
+      "id": "google-fonts",
+      "name": "Google Fonts families",
+      "copyright": "Inter — Rasmus Andersson; JetBrains Mono — JetBrains; Noto Sans SC — Google; Nunito — Vernon Adams; Poppins — Indian Type Foundry; Geist — Vercel contributors",
+      "version": "Inter; JetBrains Mono; Noto Sans SC; Nunito; Poppins; Geist",
+      "license": "OFL-1.1",
+      "source": "https://fonts.google.com/",
+      "scope": "GitHub Pages typography",
+      "delivery": "Fetched from Google Fonts CSS/API; Poppins is also bundled locally in Android resources",
+      "obligations": "Preserve each font license and copyright notice; do not sell fonts by themselves; renamed modified versions may be required by OFL Reserved Font Name terms."
+    },
+    {
+      "id": "sqlite",
+      "name": "SQLite",
+      "copyright": "No copyright claimed by the SQLite authors",
+      "version": "Android platform supplied",
+      "license": "blessing",
+      "source": "https://www.sqlite.org/copyright.html",
+      "scope": "Platform capability",
+      "delivery": "Provided by Android; not vendored as a separate GOTO binary",
+      "obligations": "No attribution required by SQLite, but platform terms still apply."
+    },
+    {
+      "id": "hit-cilin",
+      "name": "HIT Synonym Cilin (Extended)",
+      "copyright": "Harbin Institute of Technology rightsholders",
+      "version": "not distributed",
+      "license": "LicenseRef-HIT-Research-Only-Unverified",
+      "source": "https://ir.hit.edu.cn/",
+      "scope": "Optional user-imported data source",
+      "delivery": "The full corpus is not distributed by GOTO",
+      "obligations": "Research-only or unclear commercial terms must be verified with the rightsholder before any redistribution or commercial use."
+    },
+    {
+      "id": "tencent-ai-word-vectors",
+      "name": "Tencent AI Lab Chinese Word Vectors",
+      "copyright": "Tencent AI Lab rightsholders",
+      "version": "not distributed",
+      "license": "LicenseRef-Tencent-AILab-Data-Terms",
+      "source": "https://ai.tencent.com/ailab/nlp/en/embedding.html",
+      "scope": "Optional user-imported data source",
+      "delivery": "No vector corpus is distributed by GOTO",
+      "obligations": "Users must review the dataset terms before download, import, publication, or commercial use."
+    }
+  ],
+  "services": [
+    {
+      "name": "GitHub Pages",
+      "purpose": "Static site hosting and deployment",
+      "terms": "GitHub Terms and Privacy Statement",
+      "data": "Network metadata is processed by GitHub when the site is visited."
+    },
+    {
+      "name": "GitHub Discussions + giscus",
+      "purpose": "Public Say Hello messages and reactions",
+      "terms": "GitHub and giscus terms/privacy",
+      "data": "Public messages, GitHub identity, reactions, and request metadata are processed only after the visitor opens/uses the feature."
+    },
+    {
+      "name": "Google Fonts",
+      "purpose": "Web font delivery",
+      "terms": "Google API terms and Privacy Policy",
+      "data": "The browser may send IP address, user agent, referrer, and request metadata when font CSS/files are requested."
+    },
+    {
+      "name": "jsDelivr",
+      "purpose": "Pinned markdown-it delivery",
+      "terms": "jsDelivr terms/privacy",
+      "data": "The browser sends ordinary CDN request metadata."
+    },
+    {
+      "name": "Ko-fi",
+      "purpose": "Optional sponsorship link",
+      "terms": "Ko-fi terms/privacy",
+      "data": "No data is sent until the visitor opens the external link."
+    }
+  ],
+  "limitations": [
+    "Automated metadata is evidence, not a substitute for review of upstream LICENSE and NOTICE files.",
+    "The Gradle report depends on Maven POM metadata and may contain Unknown or incomplete entries.",
+    "Remote service-managed assets such as giscus can change between deployments; the checked-in declaration records that risk.",
+    "This notice is compliance documentation, not legal advice."
+  ]
+}

@@ -1533,6 +1533,33 @@ body.dark.light-sense #docBody .doc-content-wrap::after {
   border-radius: inherit;
   object-fit: cover;
 }
+.sc-ready-pred-icon .app-picker-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+.sr-pred-app-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 18px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--pred-color, var(--accent)) 16%, var(--surface));
+}
+.sr-pred-app-icon .app-picker-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+.sr-pred-app-icon .app-icon-null {
+  width: 100%;
+  height: 100%;
+}
 .gss-item-icon .app-icon-placeholder {
   width: 42%;
   height: 42%;
@@ -2266,5 +2293,194 @@ html:not(.embedded) body:not(.light-sense) #sandboxRight {
 #docBody .doc-preview-actions,
 #docBody .doc-story-intro,
 #docBody .doc-logic-callout {
+  box-shadow: none !important;
+}
+
+/* Android host mode: the WebView is the app surface; do not render a second
+   fixed-size phone mock inside it. Keep only the responsive content viewport
+   and let the system safe area determine the top inset. */
+html.embedded,
+html.embedded body {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+html.embedded #sandboxLeft {
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-width: 0 !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  flex: 1 1 auto !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: var(--bg) !important;
+}
+html.embedded #phoneBody,
+html.embedded #sandboxLeft .phone {
+  width: 100% !important;
+  max-width: none !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-width: 0 !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding-top: max(28px, env(safe-area-inset-top, 0px)) !important;
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: var(--bg) !important;
+  overflow: hidden !important;
+}
+html.embedded #phoneBody::before,
+html.embedded #phoneBody::after,
+html.embedded .phone-frame-hit,
+html.embedded #phoneVersionMark,
+html.embedded #phoneSideLabels,
+html.embedded #bgCoordGrid,
+html.embedded .bg-sphere,
+html.embedded .page-corner-glow {
+  display: none !important;
+  content: none !important;
+}
+html.embedded .status-bar {
+  height: max(28px, env(safe-area-inset-top, 0px)) !important;
+  min-height: max(28px, env(safe-area-inset-top, 0px)) !important;
+  padding-top: env(safe-area-inset-top, 0px) !important;
+  box-sizing: border-box !important;
+}
+html.embedded #gestureCaptureLayer {
+  top: max(28px, env(safe-area-inset-top, 0px)) !important;
+}
+
+/* Android embedded mode: keep the search surface inside equal physical
+   screen gutters. The desktop preview may use a full-bleed phone stage, but
+   the real GOTO app must never let the card touch only one screen edge. */
+html.embedded #sandboxLeft,
+html.embedded #phoneBody,
+html.embedded #homeCluster,
+html.embedded #searchView {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+html.embedded #searchZone {
+  --goto-embedded-gutter: clamp(16px, 2vw, 22px);
+  width: calc(100% - 48px) !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  align-self: center !important;
+  position: relative !important;
+  left: 8px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+html.embedded #searchCard {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+html.embedded #searchCard .sc-input-row {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Final layout contract: the phone preview and Android host share the same
+   inner UI, but each surface owns its own horizontal geometry. */
+html:not(.embedded) #searchZone {
+  width: calc(100% - 24px) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  align-self: center !important;
+  box-sizing: border-box !important;
+}
+html:not(.embedded) #searchCard {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+html.embedded #searchZone {
+  width: calc(100% - 48px) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  align-self: center !important;
+  box-sizing: border-box !important;
+}
+html.embedded #searchCard {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+/* Settings cards use the same centered content rail; prevent legacy motion
+   offsets from making the card appear skewed after a page transition. */
+#quickOpsCard,
+#pioneerCard,
+#bpPanelSettings > .section-card {
+  width: calc(100% - 24px) !important;
+  max-width: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+#quickOpsCard .sec-content,
+#pioneerCard .sec-content,
+#bpPanelSettings > .section-card .sec-content {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Editorial restraint: the document remains structured, but decorative
+   contour/radar layers are removed from the reading column. */
+#sandboxRight::before,
+#sandboxRight::after,
+#docBody .doc-content-wrap::before,
+#docBody .doc-content-wrap::after,
+#docBody .doc-content h1::before,
+#docBody .doc-content h1::after,
+#docBody .doc-content h2::before,
+#docBody .doc-content h3::before,
+#docBody .comm-card::before {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+#docBody .doc-content-wrap {
+  padding: 36px 32px 56px !important;
+  background: var(--doc-paper) !important;
+  box-shadow: none !important;
+}
+#docBody .doc-content h1 {
+  padding: 0 0 18px !important;
+  margin-bottom: 28px !important;
+  border-bottom: 2px solid var(--doc-orange) !important;
+}
+#docBody .doc-content h2 {
+  padding: 14px 0 0 !important;
+  margin-top: 44px !important;
+}
+#docBody .comm-card {
   box-shadow: none !important;
 }

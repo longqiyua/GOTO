@@ -27,10 +27,14 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.appindex.EngineInitializer
 import com.appindex.EngineComponentInjector
 import com.appindex.R
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
 
 /**
@@ -66,6 +70,17 @@ class GotoWebActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Page 运行在 Android WebView 时，由 Activity 负责启动 Engine 注入与本地应用扫描。
+        // 不改动 Engine 内部实现，只补齐宿主层初始化入口。
+        EngineInitializer.initialize(applicationContext)
+
+        @Suppress("DEPRECATION")
+        window.decorView.systemUiVisibility = (
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        )
+
         // 全屏沉浸式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)
@@ -78,9 +93,25 @@ class GotoWebActivity : AppCompatActivity() {
             )
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.navigationBarColor = Color.TRANSPARENT
+            window.isNavigationBarContrastEnforced = false
+        }
+
         rootView = FrameLayout(this).apply {
             setBackgroundColor(0xFFF2F2F0.toInt())
         }
+
+        // GOTO owns the complete edge-to-edge surface. If the system applies
+        // gesture/navigation insets to the child hierarchy, WebView becomes
+        // narrower than the physical display and leaves a false right gutter.
+        // Consume the insets at the host boundary; the embedded Page handles
+        // its own safe-area spacing in CSS.
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, _ ->
+            view.setPadding(0, 0, 0, 0)
+            WindowInsetsCompat.CONSUMED
+        }
+        ViewCompat.requestApplyInsets(rootView)
 
         webView = WebView(this).apply {
             setBackgroundColor(0xFFF2F2F0.toInt())
@@ -94,8 +125,10 @@ class GotoWebActivity : AppCompatActivity() {
                 allowUniversalAccessFromFileURLs = true
                 cacheMode = WebSettings.LOAD_NO_CACHE
                 mediaPlaybackRequiresUserGesture = false
-                loadWithOverviewMode = true
-                useWideViewPort = true
+                // Page 已提供 viewport=device-width。关闭桌面页的 overview/wide viewport，
+                // 避免 WebView 在嵌入模式下按内容宽度保留一条不可见的右侧布局带。
+                loadWithOverviewMode = false
+                useWideViewPort = false
                 setSupportZoom(false)
                 builtInZoomControls = false
                 displayZoomControls = false
@@ -111,6 +144,13 @@ class GotoWebActivity : AppCompatActivity() {
 
             webViewClient = GotoWebViewClient()
             webChromeClient = WebChromeClient()
+
+            // Page 的 embedded 模式自己管理内部滚动；关闭 WebView 根滚动条，
+            // 避免 Android 预留滚动条宽度造成左右边距不一致和手势抢占。
+            isVerticalScrollBarEnabled = false
+            isHorizontalScrollBarEnabled = false
+            scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+            overScrollMode = View.OVER_SCROLL_NEVER
 
             // 加载本地前端页面
             loadUrl("file:///android_asset/goto_page/index.html")
@@ -286,6 +326,16 @@ class GotoWebActivity : AppCompatActivity() {
         if (attempt > 8) return
         if (!EngineComponentInjector.isInitialized()) {
             webView.postDelayed({ injectAppsRetry(attempt + 1) }, 800)
+            return
+        }
+        if (attempt == 0) {
+            Thread {
+                try {
+                    runBlocking { EngineComponentInjector.appIndexEngine.indexAllApps() }
+                } finally {
+                    webView.post { injectAppsRetry(1) }
+                }
+            }.start()
             return
         }
         val apps = try {

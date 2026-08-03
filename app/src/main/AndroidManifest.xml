@@ -31,14 +31,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppIndex"
-        android:hardwareAccelerated="true">
+        android:hardwareAccelerated="true"
+        android:resizeableActivity="true">
 
         <!-- ═══ 主前端入口（WebView 加载 GOTO Page） ═══ -->
         <!-- 原 Kotlin UI（UIUX 目录）已归档至 archive/ui-legacy/，保留作纪念 -->
         <activity
             android:name=".webapp.GotoWebActivity"
             android:exported="true"
-            android:configChanges="orientation|screenSize|keyboardHidden|uiMode"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden|uiMode"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppIndex.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">极速应用搜索</string>
+    <string name="app_name">GOTO</string>
 
     <!-- ═══ 模糊匹配引擎 / Fuzzy Match Engine ═══ -->
     <string name="fuzzy_engine_title">模糊匹配引擎</string>

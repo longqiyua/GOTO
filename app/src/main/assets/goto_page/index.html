@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <title>goto</title>
 <!-- GOTO 应用图标库（独立模块 / 可单独引用） -->
 <script src="app-icons.js"></script>
@@ -4369,6 +4369,31 @@ body.dark.neumorphic-mode #bpPanelStats .section-card{
 @media(max-height:740px){
   .phone{height:100vh;border-radius:0;}
   body{padding:0;}
+}
+/* Android WebView 嵌入边界：根层不滚动，手机预览独占可用视口。
+   桌面端仍保留原三栏布局；这里只覆盖 embedded 模式，避免外层滚动条
+   产生左右宽度差，并把滑动交给手机内部页面容器。 */
+html.embedded,html.embedded body{
+  width:100%!important;height:100%!important;
+  min-width:0!important;min-height:0!important;
+  overflow:hidden!important;
+}
+html.embedded #sandboxLeft{
+  position:relative!important;inset:auto!important;
+  width:calc(100% + var(--goto-viewport-width-gap,0px))!important;
+  height:100%!important;
+  min-width:0!important;min-height:100%!important;
+  align-items:stretch!important;overflow:hidden!important;
+}
+html.embedded #phoneBody{
+  width:100%!important;height:100%!important;
+  min-width:0!important;min-height:0!important;
+  flex:1 1 auto!important;align-self:stretch!important;
+  margin:0!important;padding-top:28px!important;
+  border-radius:0!important;box-shadow:none!important;
+}
+html.embedded #gestureCaptureLayer{
+  top:28px!important;right:0!important;bottom:0!important;left:0!important;
 }
 @media(pointer:coarse){
   .bp-close-btn,.sk-del,.tc-bloom-btn,.tb-back{min-width:36px;min-height:36px;}
@@ -11289,6 +11314,25 @@ body.dark .search-card,body.dark .slot-card,body.dark .section-card,body.dark .s
 .doc-content h2{font-size:22px!important;margin-top:30px!important;margin-bottom:12px!important;}
 .doc-content h3{font-size:18px!important;margin-top:24px!important;}
 .doc-content p,.doc-content li{font-size:16px!important;}
+/* 搜索行最后对齐：按钮不再用负外边距把整行向右推。 */
+html.embedded #searchCard .sc-input-row{
+  width:100%!important;margin-left:0!important;margin-right:0!important;
+}
+html.embedded #searchCard .sc-acts{margin-right:0!important;}
+/* 嵌入式 Android WebView 的内容视口会扣除一条不可见的布局带；
+   仅将手机预览按视口比例补齐，不对搜索框写死像素偏移。 */
+html.embedded #sandboxLeft{
+  width:100%!important;
+}
+html.embedded #homeCluster{
+  width:100%!important;margin:0!important;
+}
+html.embedded #searchZone{
+  width:100%!important;
+}
+html.embedded #searchCard{
+  margin-left:auto!important;margin-right:auto!important;
+}
 </style>
 <!-- 最终维护层：新视觉与功能收口只写入独立文件，避免继续扩大单文件级联。 -->
 <link rel="stylesheet" href="preview-authority.css">
@@ -15684,10 +15728,16 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       window._appDataset=apps.map(function(a){
         return Object.assign({name:a.label||a.name||a.appName||'',en:a.label||a.name||a.appName||'',py:'',abbr:'',icon:'',tags:[],cat:'应用'},a,{iconURI:a.iconURI||a.iconBase64||''});
       }).filter(function(a){return !!a.name;});
+      window._appDataset=window._appDataset.map(function(a){
+        if(!a.id)a.id=a.packageName||a.name||a.label||a.appName||'';
+        return a;
+      });
       if(window.GOTOPrethink&&typeof window.GOTOPrethink.observeApps==='function')window.GOTOPrethink.observeApps(window._appDataset);
       if(window.GOTOEngine&&typeof window.GOTOEngine.watchAppDataset==='function')window.GOTOEngine.watchAppDataset(window._appDataset);
       if(typeof _watchAppDataset==='function')_watchAppDataset();
       if(typeof renderHomeCards==='function')renderHomeCards();
+      if(typeof _updateReadyReminder==='function')_updateReadyReminder();
+      if(typeof fillSmartPredictions==='function')fillSmartPredictions();
       return true;
     }catch(e){console.error('Android app bridge:',e);return false;}
   };
@@ -19857,14 +19907,17 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
                 }
               }catch(_){}
               var color = _appCardColor(appObj,'hsl(215 8% 76%)');
-              var iconChar = appObj ? _pickIconChar(appObj) : (item.target.charAt(0).toUpperCase());
+              var iconUri = appObj && typeof _appIconURI === 'function' ? _appIconURI(appObj) : '';
+              var iconMarkup = iconUri
+                ? '<img class="app-picker-icon" src="' + iconUri + '" alt="" loading="lazy" onerror="window._renderNullIcon&&window._renderNullIcon(this.parentElement)">'
+                : '<span class="app-icon-null"><span class="app-icon-placeholder" aria-label="icon unavailable"></span></span>';
               var btn = document.createElement('button');
               btn.className = 'sc-ready-pred-item';
               btn.type = 'button';
               btn.dataset.appId = item.target;
               btn.setAttribute('onclick', '_handlePredictionClick(this,event)');
               btn.style.setProperty('--pred-color', color);
-              btn.innerHTML = '<span class="sc-ready-pred-icon" aria-hidden="true"><span class="sc-ready-pred-icon-text">' + _escapeHtml(iconChar) + '</span></span><span class="sc-ready-pred-name">' + _escapeHtml(item.target) + '</span>';
+              btn.innerHTML = '<span class="sc-ready-pred-icon" aria-hidden="true">' + iconMarkup + '</span><span class="sc-ready-pred-name">' + _escapeHtml(item.target) + '</span>';
               predBox.appendChild(btn);
             });
             predBox.style.display = 'flex';
@@ -26979,10 +27032,10 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       if(window._appDataset&&Array.isArray(window._appDataset)){
         return window._appDataset.map(function(a,i){
           const iconURI=a.iconURI||a.iconBase64||(typeof a.icon==='string'&&a.icon.indexOf('data:image')===0?a.icon:'');
-          return {
-            id:a.id||('a'+i),
-            name:a.name,
-            en:a.en||a.name,
+          return Object.assign({},a,{
+            id:a.id||a.packageName||('a'+i),
+            name:a.name||a.label||a.appName||'',
+            en:a.en||a.name||a.label||a.appName||'',
             py:a.py||'',
             // Native/app metadata is authoritative; do not invent a brand colour
             // when the host did not provide one.
@@ -26990,7 +27043,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
             iconURI:iconURI,
             icon:'',
             cat:a.cat||''
-          };
+          });
         });
       }
       return [];
@@ -29247,24 +29300,39 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       // 从最近使用列表取前2个作为预测
       var recent=[];
       try{ recent=JSON.parse(localStorage.getItem('goto_recent_apps')||'[]'); }catch(_){}
+      var allApps=typeof _getAllApps==='function'?_getAllApps():(window._appDataset||[]);
       var shown=0;
       for(var i=0;i<recent.length&&shown<2;i++){
         var name=recent[i];
         if(!name)continue;
-        var dot=document.createElement('span');
-        dot.className='sr-pred-app-dot';
+        var appData=null;
+        for(var ai=0;ai<allApps.length;ai++){
+          if(allApps[ai]&&(allApps[ai].name===name||allApps[ai].en===name||allApps[ai].id===name)){appData=allApps[ai];break;}
+        }
+        var iconUri=appData&&typeof _appIconURI==='function'?_appIconURI(appData):'';
+        var icon=document.createElement('span');
+        icon.className='sr-pred-app-icon';
+        if(iconUri){
+          var image=document.createElement('img');
+          image.className='app-picker-icon';image.src=iconUri;image.alt='';image.loading='lazy';
+          image.onerror=function(){if(typeof _renderNullIcon==='function')_renderNullIcon(this.parentElement);};
+          icon.appendChild(image);
+        }else if(typeof _renderNullIcon==='function'){
+          _renderNullIcon(icon);
+        }
         var label=document.createElement('span');
         label.textContent=name;
         var app=document.createElement('div');
         app.className='sr-pred-app';
-        app.appendChild(dot);
+        app.appendChild(icon);
         app.appendChild(label);
         // 点击打开应用
-        (function(n){
+        (function(n,appRef){
           app.onclick=function(){
-            if(typeof _onResultClick==='function')_onResultClick(n);
+            if(appRef&&typeof _openPredictedApp==='function')_openPredictedApp(appRef);
+            else if(typeof _onResultClick==='function')_onResultClick(n);
           };
-        })(name);
+        })(name,appData);
         container.appendChild(app);
         shown++;
       }
@@ -29275,6 +29343,8 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
         hint.textContent='使用后自动推荐';
         container.appendChild(hint);
       }
+      var readyPred=document.getElementById('scReadyPred');
+      if(readyPred&&typeof _updateReadyReminder==='function')_updateReadyReminder();
     }catch(e){console.error('fillSmartPredictions:',e);}
   }
 
@@ -30625,7 +30695,16 @@ try{
     window._appDataset=apps.map(function(a){
       return Object.assign({name:a.label||a.name||a.appName||'',en:a.label||a.name||a.appName||'',py:'',abbr:'',icon:'',tags:[],cat:'应用'},a,{iconURI:a.iconURI||a.iconBase64||''});
     }).filter(function(a){return !!a.name;});
+    window._appDataset=window._appDataset.map(function(a){
+      if(!a.id)a.id=a.packageName||a.name||a.label||a.appName||'';
+      return a;
+    });
+    try{if(window.GOTOPrethink&&typeof window.GOTOPrethink.observeApps==='function')window.GOTOPrethink.observeApps(window._appDataset);}catch(_){ }
     try{if(window.GOTOEngine&&typeof window.GOTOEngine.watchAppDataset==='function')window.GOTOEngine.watchAppDataset(window._appDataset);}catch(_){ }
+    try{if(typeof _watchAppDataset==='function')_watchAppDataset();}catch(_){ }
+    try{if(typeof renderHomeCards==='function')renderHomeCards();}catch(_){ }
+    try{if(typeof _updateReadyReminder==='function')_updateReadyReminder();}catch(_){ }
+    try{if(typeof fillSmartPredictions==='function')fillSmartPredictions();}catch(_){ }
     try{if(typeof window._onSearch==='function')window._onSearch('');}catch(_){ }
     return true;
   };
@@ -30818,6 +30897,6 @@ try{
 })();
 </script>
 
-<link rel="stylesheet" href="ceramic-finish.css?rev=phone-layout-42-1">
+<link rel="stylesheet" href="ceramic-finish.css?rev=phone-layout-44-1">
 </body>
 </html>

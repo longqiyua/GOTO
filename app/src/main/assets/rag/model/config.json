@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "description": "模型解耦层配置。支持多模型共存，切换模型时用户数据保留。",
+  "activeModel": "bge-small-zh-v1.5",
+  "models": {
+    "bge-small-zh-v1.5": {
+      "type": "onnx",
+      "dimension": 512,
+      "maxSeqLength": 512,
+      "modelPath": "models/bge-small-zh-v1.5.onnx",
+      "tokenizerPath": "models/tokenizer.json",
+      "license": "MIT",
+      "sourceUrl": "https://huggingface.co/BAAI/bge-small-zh-v1.5",
+      "citation": "BGE:朝向中文通用语义表示, Xiao et al., 2023"
+    }
+  },
+  "cloud": {
+    "enabled": false,
+    "type": "openai-compatible",
+    "apiBase": "",
+    "apiKey": "",
+    "model": "",
+    "endpoints": {
+      "embedding": "/v1/embeddings",
+      "chat": "/v1/chat/completions"
+    }
+  },
+  "fallback": {
+    "strategy": "local-first-then-cloud-then-hash",
+    "description": "近义词匹配 → 本地RAG(当前模型) → 云端API(如启用) → 哈希占位 → 返回空"
+  },
+  "migration": {
+    "supported": true,
+    "preserveUserData": true,
+    "description": "切换模型时，documentText 保留，vectors 重新生成，用户数据不受影响"
+  },
+  "featureFlags": {
+    "ragEnabled": true,
+    "cloudFallbackEnabled": false,
+    "promptBasedMatchingEnabled": false,
+    "fileVectorEnabled": false
+  }
+}

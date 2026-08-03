@@ -1,0 +1,4316 @@
+{
+  "version": "1.0.0",
+  "dimension": 512,
+  "vectorGenerator": "bge-small-zh-v1.5-onnx",
+  "embeddingModel": "bge-small-zh-v1.5",
+  "totalVectors": 330,
+  "byPackage": {
+    "cm.lijun.kugou": {
+      "idx": 0,
+      "appName": "Kuwo Music",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "cmb.pb": {
+      "idx": 1,
+      "appName": "招商银行",
+      "category": "金融理财",
+      "subcategory": "银行服务"
+    },
+    "cn.com.spdb.mobilebank.per": {
+      "idx": 2,
+      "appName": "SPDB",
+      "category": "金融理财",
+      "subcategory": "银行服务"
+    },
+    "cn.kuaipan": {
+      "idx": 3,
+      "appName": "SF Express",
+      "category": "生活服务",
+      "subcategory": "快递物流"
+    },
+    "cn.wps.moffice_eng": {
+      "idx": 4,
+      "appName": "WPS Office",
+      "category": "办公协作",
+      "subcategory": "文档办公"
+    },
+    "com.MobileTicket": {
+      "idx": 5,
+      "appName": "铁路12306",
+      "category": "出行导航",
+      "subcategory": "火车票务"
+    },
+    "com.Qunar": {
+      "idx": 6,
+      "appName": "去哪儿旅行",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.achievo.vipshop": {
+      "idx": 7,
+      "appName": "唯品会",
+      "category": "购物消费",
+      "subcategory": "特卖优选"
+    },
+    "com.adobe.reader": {
+      "idx": 8,
+      "appName": "Adobe Acrobat Reader",
+      "category": "工具",
+      "subcategory": "PDF工具"
+    },
+    "com.airbnb.android": {
+      "idx": 9,
+      "appName": "Airbnb",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.alibaba.aliexpresshd": {
+      "idx": 10,
+      "appName": "AliExpress",
+      "category": "购物消费",
+      "subcategory": "海淘跨境"
+    },
+    "com.alibaba.android.rimet": {
+      "idx": 11,
+      "appName": "钉钉",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.alibaba.android.rimet.lite": {
+      "idx": 12,
+      "appName": "DingTalk Lite",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.alibaba.intl.android.apps.positiveselection": {
+      "idx": 13,
+      "appName": "Alibaba.com",
+      "category": "购物消费",
+      "subcategory": "海淘跨境"
+    },
+    "com.aliexpress.mobiledl": {
+      "idx": 14,
+      "appName": "AliExpress",
+      "category": "购物消费",
+      "subcategory": "海淘跨境"
+    },
+    "com.alipay.android.payee.module.koubei.travel.flgihts.mini": {
+      "idx": 15,
+      "appName": "Alipay Mini",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.alipay.mobile.payee.module.koubei.travel.flgihts": {
+      "idx": 16,
+      "appName": "飞猪旅行",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.aljazeera.americacordova": {
+      "idx": 17,
+      "appName": "Al Jazeera English",
+      "category": "资讯新闻",
+      "subcategory": "新闻资讯"
+    },
+    "com.amaze.filemanager": {
+      "idx": 18,
+      "appName": "Amaze File Manager",
+      "category": "工具",
+      "subcategory": "文件管理"
+    },
+    "com.amazon.avod.thirdpartyclient": {
+      "idx": 19,
+      "appName": "Prime Video",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.amazon.kindle": {
+      "idx": 20,
+      "appName": "Kindle",
+      "category": "教育学习",
+      "subcategory": "阅读电子书"
+    },
+    "com.amazon.mShop.android.shopping": {
+      "idx": 21,
+      "appName": "Amazon Shopping",
+      "category": "购物消费",
+      "subcategory": "海淘跨境"
+    },
+    "com.amazon.mp3": {
+      "idx": 22,
+      "appName": "Amazon Music",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.android.chrome": {
+      "idx": 23,
+      "appName": "Chrome",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.anjuke.app": {
+      "idx": 24,
+      "appName": "Anjuke",
+      "category": "生活服务",
+      "subcategory": "家政房产"
+    },
+    "com.ankidroid": {
+      "idx": 25,
+      "appName": "AnkiDroid",
+      "category": "教育学习",
+      "subcategory": "语言学习"
+    },
+    "com.anydo": {
+      "idx": 26,
+      "appName": "Any.do",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.apple.android.music": {
+      "idx": 27,
+      "appName": "Apple Music",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.apple.maps": {
+      "idx": 28,
+      "appName": "Apple Maps",
+      "category": "出行导航",
+      "subcategory": "地图导航"
+    },
+    "com.asana.app": {
+      "idx": 29,
+      "appName": "Asana",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.atlassian.android.jira": {
+      "idx": 30,
+      "appName": "Jira",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.autonavi.minimap": {
+      "idx": 31,
+      "appName": "高德地图",
+      "category": "出行导航",
+      "subcategory": "地图导航"
+    },
+    "com.avast.android.security": {
+      "idx": 32,
+      "appName": "Avast",
+      "category": "系统安全",
+      "subcategory": "安全防护"
+    },
+    "com.babbel.mobile.android.en": {
+      "idx": 33,
+      "appName": "Babbel",
+      "category": "教育学习",
+      "subcategory": "语言学习"
+    },
+    "com.baicizhan.kids": {
+      "idx": 34,
+      "appName": "Baicizhan Kids",
+      "category": "教育学习",
+      "subcategory": "育儿启蒙"
+    },
+    "com.baidu.baidumap": {
+      "idx": 35,
+      "appName": "百度地图",
+      "category": "出行导航",
+      "subcategory": "地图导航"
+    },
+    "com.baidu.baidutranslate": {
+      "idx": 36,
+      "appName": "百度翻译",
+      "category": "工具",
+      "subcategory": "翻译词典"
+    },
+    "com.baidu.homework": {
+      "idx": 37,
+      "appName": "作业帮",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "com.baidu.input": {
+      "idx": 38,
+      "appName": "Baidu Input",
+      "category": "工具",
+      "subcategory": "输入法"
+    },
+    "com.baidu.netdisk": {
+      "idx": 39,
+      "appName": "百度网盘",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.baidu.netdisk.lite": {
+      "idx": 40,
+      "appName": "Baidu Netdisk Lite",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.baidu.post": {
+      "idx": 41,
+      "appName": "China Post",
+      "category": "生活服务",
+      "subcategory": "快递物流"
+    },
+    "com.bankcomm.Bankcomm": {
+      "idx": 42,
+      "appName": "Bank of Communications",
+      "category": "金融理财",
+      "subcategory": "银行服务"
+    },
+    "com.basecamp.android": {
+      "idx": 43,
+      "appName": "Basecamp",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.bbc.news": {
+      "idx": 44,
+      "appName": "BBC News",
+      "category": "资讯新闻",
+      "subcategory": "新闻资讯"
+    },
+    "com.belkin.wemo.android": {
+      "idx": 45,
+      "appName": "WeMo",
+      "category": "智能硬件",
+      "subcategory": "智能家居"
+    },
+    "com.bitdefender.security": {
+      "idx": 46,
+      "appName": "Bitdefender",
+      "category": "系统安全",
+      "subcategory": "安全防护"
+    },
+    "com.boohee.one": {
+      "idx": 47,
+      "appName": "薄荷健康",
+      "category": "健康医疗",
+      "subcategory": "健康管理"
+    },
+    "com.booking": {
+      "idx": 48,
+      "appName": "Booking.com",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.box.android": {
+      "idx": 49,
+      "appName": "Box",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.brave.browser": {
+      "idx": 50,
+      "appName": "Brave",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.carousell": {
+      "idx": 51,
+      "appName": "Carousell",
+      "category": "购物消费",
+      "subcategory": "二手交易"
+    },
+    "com.changdu": {
+      "idx": 52,
+      "appName": "WeChat Read",
+      "category": "教育学习",
+      "subcategory": "阅读电子书"
+    },
+    "com.chinamworld.bocmbci": {
+      "idx": 53,
+      "appName": "Bank of China",
+      "category": "金融理财",
+      "subcategory": "银行服务"
+    },
+    "com.chinamworld.main": {
+      "idx": 54,
+      "appName": "China Construction Bank",
+      "category": "金融理财",
+      "subcategory": "银行服务"
+    },
+    "com.codoon.gps": {
+      "idx": 55,
+      "appName": "咕咚",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.deezer.android.media": {
+      "idx": 56,
+      "appName": "Deezer",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.dianping.v1": {
+      "idx": 57,
+      "appName": "大众点评",
+      "category": "生活服务",
+      "subcategory": "外卖美食"
+    },
+    "com.didapassageenger": {
+      "idx": 58,
+      "appName": "DiDi",
+      "category": "出行导航",
+      "subcategory": "打车出行"
+    },
+    "com.dido.weather": {
+      "idx": 59,
+      "appName": "Dido Weather",
+      "category": "生活服务",
+      "subcategory": "天气服务"
+    },
+    "com.discord": {
+      "idx": 60,
+      "appName": "Discord",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "com.disney.disneyplus": {
+      "idx": 61,
+      "appName": "Disney+",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.dongyi.rosets": {
+      "idx": 62,
+      "appName": "Rosetta Stone",
+      "category": "教育学习",
+      "subcategory": "语言学习"
+    },
+    "com.dragon.read": {
+      "idx": 63,
+      "appName": "Fanqie Novel",
+      "category": "影视娱乐",
+      "subcategory": "听书播客"
+    },
+    "com.dropbox.android": {
+      "idx": 64,
+      "appName": "Dropbox",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.duckduckgo.mobile.android": {
+      "idx": 65,
+      "appName": "DuckDuckGo",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.duolingo": {
+      "idx": 66,
+      "appName": "Duolingo",
+      "category": "教育学习",
+      "subcategory": "语言学习"
+    },
+    "com.ea.gp.fifamobile": {
+      "idx": 67,
+      "appName": "EA Sports FC Mobile",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.eastmoney.android.berlin": {
+      "idx": 68,
+      "appName": "Eastmoney",
+      "category": "金融理财",
+      "subcategory": "股票基金"
+    },
+    "com.ebay.mobile": {
+      "idx": 69,
+      "appName": "eBay",
+      "category": "购物消费",
+      "subcategory": "海淘跨境"
+    },
+    "com.edx": {
+      "idx": 70,
+      "appName": "edX",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "com.eg.android.AlipayGphone": {
+      "idx": 71,
+      "appName": "支付宝",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.eg.android.AlipayGphone.wallet": {
+      "idx": 72,
+      "appName": "支付宝钱包",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.eg.android.AlipayGphone.wallet.mini": {
+      "idx": 73,
+      "appName": "Alipay Wallet Mini",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.eg.android.AlipayGphoneMini": {
+      "idx": 74,
+      "appName": "支付宝小程序版",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.etsy.android": {
+      "idx": 75,
+      "appName": "Etsy",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.evernote": {
+      "idx": 76,
+      "appName": "Evernote",
+      "category": "办公协作",
+      "subcategory": "笔记知识"
+    },
+    "com.expedia.bookings": {
+      "idx": 77,
+      "appName": "Expedia",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.facebook.katana": {
+      "idx": 78,
+      "appName": "Facebook",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "com.fenbi.android.solar": {
+      "idx": 79,
+      "appName": "小猿搜题",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "com.fitbit.FitbitMobile": {
+      "idx": 80,
+      "appName": "Fitbit",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.fliggy.mobile": {
+      "idx": 81,
+      "appName": "Fliggy",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.flightnetwork.app": {
+      "idx": 82,
+      "appName": "Skyscanner",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.fsck.k9": {
+      "idx": 83,
+      "appName": "K-9 Mail",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "com.garena.game.codm": {
+      "idx": 84,
+      "appName": "COD Mobile",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.garmin.android.apps.connectmobile": {
+      "idx": 85,
+      "appName": "Garmin Connect",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.gemd.iting": {
+      "idx": 86,
+      "appName": "喜马拉雅",
+      "category": "影视娱乐",
+      "subcategory": "听书播客"
+    },
+    "com.ghisler.android.TotalCommander": {
+      "idx": 87,
+      "appName": "Total Commander",
+      "category": "工具",
+      "subcategory": "文件管理"
+    },
+    "com.github.shadowsocks": {
+      "idx": 88,
+      "appName": "Shadowsocks",
+      "category": "工具",
+      "subcategory": "网络代理"
+    },
+    "com.github.yeriomin.yihome": {
+      "idx": 89,
+      "appName": "Yi Home",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "com.google.android.apps.chromecast.app": {
+      "idx": 90,
+      "appName": "Google Home",
+      "category": "智能硬件",
+      "subcategory": "智能家居"
+    },
+    "com.google.android.apps.docs": {
+      "idx": 91,
+      "appName": "Google Drive",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.google.android.apps.docs.editors.docs": {
+      "idx": 92,
+      "appName": "Google Docs",
+      "category": "办公协作",
+      "subcategory": "文档办公"
+    },
+    "com.google.android.apps.docs.editors.sheets": {
+      "idx": 93,
+      "appName": "Google Sheets",
+      "category": "办公协作",
+      "subcategory": "文档办公"
+    },
+    "com.google.android.apps.docs.editors.slides": {
+      "idx": 94,
+      "appName": "Google Slides",
+      "category": "办公协作",
+      "subcategory": "文档办公"
+    },
+    "com.google.android.apps.maps": {
+      "idx": 95,
+      "appName": "Google Maps",
+      "category": "出行导航",
+      "subcategory": "地图导航"
+    },
+    "com.google.android.apps.meetings": {
+      "idx": 96,
+      "appName": "Google Meet",
+      "category": "办公协作",
+      "subcategory": "视频会议"
+    },
+    "com.google.android.apps.recorder": {
+      "idx": 97,
+      "appName": "Google Recorder",
+      "category": "工具",
+      "subcategory": "录音转写"
+    },
+    "com.google.android.apps.translate": {
+      "idx": 98,
+      "appName": "Google Translate",
+      "category": "工具",
+      "subcategory": "翻译词典"
+    },
+    "com.google.android.apps.weather": {
+      "idx": 99,
+      "appName": "Google Weather",
+      "category": "生活服务",
+      "subcategory": "天气服务"
+    },
+    "com.google.android.calculator": {
+      "idx": 100,
+      "appName": "Google Calculator",
+      "category": "工具",
+      "subcategory": "计算换算"
+    },
+    "com.google.android.deskclock": {
+      "idx": 101,
+      "appName": "Google Clock",
+      "category": "工具",
+      "subcategory": "时钟闹钟"
+    },
+    "com.google.android.inputmethod.latin": {
+      "idx": 102,
+      "appName": "Gboard",
+      "category": "工具",
+      "subcategory": "输入法"
+    },
+    "com.google.android.youtube": {
+      "idx": 103,
+      "appName": "YouTube",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.goto.keep": {
+      "idx": 104,
+      "appName": "Keep",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.goto.webex": {
+      "idx": 105,
+      "appName": "GoTo",
+      "category": "办公协作",
+      "subcategory": "视频会议"
+    },
+    "com.guardian": {
+      "idx": 106,
+      "appName": "The Guardian",
+      "category": "资讯新闻",
+      "subcategory": "新闻资讯"
+    },
+    "com.habitica": {
+      "idx": 107,
+      "appName": "Habitica",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.hbo.hbonow": {
+      "idx": 108,
+      "appName": "HBO Max",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.here.app.maps": {
+      "idx": 109,
+      "appName": "HERE WeGo",
+      "category": "出行导航",
+      "subcategory": "地图导航"
+    },
+    "com.heytap.browser": {
+      "idx": 110,
+      "appName": "OPPO浏览器",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.huami.watch.hmwatchmanager": {
+      "idx": 111,
+      "appName": "Zepp",
+      "category": "智能硬件",
+      "subcategory": "智能穿戴"
+    },
+    "com.huawei.browser": {
+      "idx": 112,
+      "appName": "华为浏览器",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.hujiang.cctalk": {
+      "idx": 113,
+      "appName": "CCtalk",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "com.hunantv.imgo.activity": {
+      "idx": 114,
+      "appName": "芒果TV",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.ibkr.android": {
+      "idx": 115,
+      "appName": "IBKR Mobile",
+      "category": "金融理财",
+      "subcategory": "股票基金"
+    },
+    "com.icbc": {
+      "idx": 116,
+      "appName": "工商银行",
+      "category": "金融理财",
+      "subcategory": "银行服务"
+    },
+    "com.iciba.pronunciation": {
+      "idx": 117,
+      "appName": "Kingsoft PowerWord",
+      "category": "工具",
+      "subcategory": "翻译词典"
+    },
+    "com.iflytek.inputmethod": {
+      "idx": 118,
+      "appName": "讯飞输入法",
+      "category": "工具",
+      "subcategory": "输入法"
+    },
+    "com.iflytek.reader": {
+      "idx": 119,
+      "appName": "iFlytek Reader",
+      "category": "教育学习",
+      "subcategory": "阅读电子书"
+    },
+    "com.instagram.android": {
+      "idx": 120,
+      "appName": "Instagram",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "com.intsig.camscanner": {
+      "idx": 121,
+      "appName": "CamScanner",
+      "category": "工具",
+      "subcategory": "扫描识别"
+    },
+    "com.jd.jrapp": {
+      "idx": 122,
+      "appName": "京东金融",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.jiangyang.io.nc": {
+      "idx": 123,
+      "appName": "坚果云",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.jianshu.haruki": {
+      "idx": 124,
+      "appName": "简书",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "com.jingdong.app.mall": {
+      "idx": 125,
+      "appName": "京东",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.joplin": {
+      "idx": 126,
+      "appName": "Joplin",
+      "category": "办公协作",
+      "subcategory": "笔记知识"
+    },
+    "com.jztw.jztw": {
+      "idx": 127,
+      "appName": "Jianzhi Tongwang",
+      "category": "教育学习",
+      "subcategory": "育儿启蒙"
+    },
+    "com.khanacademy.android.sat": {
+      "idx": 128,
+      "appName": "Khan Academy SAT",
+      "category": "教育学习",
+      "subcategory": "考试备考"
+    },
+    "com.kiloo.subwaysurf": {
+      "idx": 129,
+      "appName": "Subway Surfers",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.king.candycrushsaga": {
+      "idx": 130,
+      "appName": "Candy Crush Saga",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.kiwibrowser.browser": {
+      "idx": 131,
+      "appName": "Kiwi Browser",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.kms.free": {
+      "idx": 132,
+      "appName": "Kaspersky",
+      "category": "系统安全",
+      "subcategory": "安全防护"
+    },
+    "com.kobobooks.android": {
+      "idx": 133,
+      "appName": "Kobo Books",
+      "category": "教育学习",
+      "subcategory": "阅读电子书"
+    },
+    "com.kugou.android": {
+      "idx": 134,
+      "appName": "酷狗音乐",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.kwai.video": {
+      "idx": 135,
+      "appName": "Kwai",
+      "category": "影视娱乐",
+      "subcategory": "短视频"
+    },
+    "com.laurencedawson.reddit_sync": {
+      "idx": 136,
+      "appName": "Sync for Reddit",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "com.lianjia.beike": {
+      "idx": 137,
+      "appName": "Beike",
+      "category": "生活服务",
+      "subcategory": "家政房产"
+    },
+    "com.lifesum.android": {
+      "idx": 138,
+      "appName": "Lifesum",
+      "category": "健康医疗",
+      "subcategory": "健康管理"
+    },
+    "com.linkedin.android": {
+      "idx": 139,
+      "appName": "LinkedIn",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "com.logseq.app": {
+      "idx": 140,
+      "appName": "Logseq",
+      "category": "办公协作",
+      "subcategory": "笔记知识"
+    },
+    "com.luojilab.player": {
+      "idx": 141,
+      "appName": "得到",
+      "category": "教育学习",
+      "subcategory": "知识付费"
+    },
+    "com.luojiyong.hk": {
+      "idx": 142,
+      "appName": "Dedao",
+      "category": "教育学习",
+      "subcategory": "知识付费"
+    },
+    "com.lyft.android": {
+      "idx": 143,
+      "appName": "Lyft",
+      "category": "出行导航",
+      "subcategory": "打车出行"
+    },
+    "com.maibanli.zhan": {
+      "idx": 144,
+      "appName": "Xiaozhan",
+      "category": "教育学习",
+      "subcategory": "考试备考"
+    },
+    "com.mapmyfitness.android2": {
+      "idx": 145,
+      "appName": "MapMyRun",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.mastodon.android": {
+      "idx": 146,
+      "appName": "Mastodon",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "com.maxthon.maxthon5": {
+      "idx": 147,
+      "appName": "Maxthon",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.mcdonalds.app": {
+      "idx": 148,
+      "appName": "McDonald's",
+      "category": "生活服务",
+      "subcategory": "外卖美食"
+    },
+    "com.meituan": {
+      "idx": 149,
+      "appName": "美团",
+      "category": "生活服务",
+      "subcategory": "外卖美食"
+    },
+    "com.memrise.android.memrisecompanion": {
+      "idx": 150,
+      "appName": "Memrise",
+      "category": "教育学习",
+      "subcategory": "语言学习"
+    },
+    "com.metaversal.parakeet": {
+      "idx": 151,
+      "appName": "Moon+ Reader",
+      "category": "工具",
+      "subcategory": "PDF工具"
+    },
+    "com.mgtv.tv": {
+      "idx": 152,
+      "appName": "MGTV",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.mi.global.browser": {
+      "idx": 153,
+      "appName": "小米浏览器",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.miHoYo.GenshinImpact": {
+      "idx": 154,
+      "appName": "原神",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.miHoYo.HoYoLab": {
+      "idx": 155,
+      "appName": "HoYoLAB",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.miHoYo.YuanShen": {
+      "idx": 156,
+      "appName": "Genshin Impact",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.microsoft.emmx": {
+      "idx": 157,
+      "appName": "Microsoft Edge",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.microsoft.math": {
+      "idx": 158,
+      "appName": "Microsoft Math Solver",
+      "category": "工具",
+      "subcategory": "扫描识别"
+    },
+    "com.microsoft.office.officehubrow": {
+      "idx": 159,
+      "appName": "Microsoft Office",
+      "category": "办公协作",
+      "subcategory": "文档办公"
+    },
+    "com.microsoft.office.officehubrow.lite": {
+      "idx": 160,
+      "appName": "Microsoft Office Lite",
+      "category": "办公协作",
+      "subcategory": "文档办公"
+    },
+    "com.microsoft.office.onenote": {
+      "idx": 161,
+      "appName": "Microsoft OneNote",
+      "category": "办公协作",
+      "subcategory": "文档办公"
+    },
+    "com.microsoft.office.outlook": {
+      "idx": 162,
+      "appName": "Microsoft Outlook",
+      "category": "办公协作",
+      "subcategory": "文档办公"
+    },
+    "com.microsoft.rdx.android.finger": {
+      "idx": 163,
+      "appName": "Microsoft SwiftKey",
+      "category": "工具",
+      "subcategory": "输入法"
+    },
+    "com.microsoft.skydrive": {
+      "idx": 164,
+      "appName": "OneDrive",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.microsoft.teams": {
+      "idx": 165,
+      "appName": "Microsoft Teams",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.microsoft.todos": {
+      "idx": 166,
+      "appName": "Microsoft To Do",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.microsoft.todos.lite": {
+      "idx": 167,
+      "appName": "Microsoft To Do Lite",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.microsoft.translator": {
+      "idx": 168,
+      "appName": "Microsoft Translator",
+      "category": "工具",
+      "subcategory": "翻译词典"
+    },
+    "com.microsoft.windowsdefender": {
+      "idx": 169,
+      "appName": "Microsoft Defender",
+      "category": "系统安全",
+      "subcategory": "安全防护"
+    },
+    "com.mojang.minecraftpe": {
+      "idx": 170,
+      "appName": "Minecraft",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.myfitnesspal.android": {
+      "idx": 171,
+      "appName": "MyFitnessPal",
+      "category": "健康医疗",
+      "subcategory": "健康管理"
+    },
+    "com.netease.cc": {
+      "idx": 172,
+      "appName": "NetEase Finance",
+      "category": "金融理财",
+      "subcategory": "股票基金"
+    },
+    "com.netease.cloudmusic": {
+      "idx": 173,
+      "appName": "网易云音乐",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.netease.cloudmusic.lite": {
+      "idx": 174,
+      "appName": "NetEase Music Lite",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.netease.dwrg": {
+      "idx": 175,
+      "appName": "Identity V",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.netease.mrzh": {
+      "idx": 176,
+      "appName": "Onmyoji",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.netease.news": {
+      "idx": 177,
+      "appName": "网易新闻",
+      "category": "资讯新闻",
+      "subcategory": "新闻资讯"
+    },
+    "com.netflix.mediaclient": {
+      "idx": 178,
+      "appName": "Netflix",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.nike.plusgps": {
+      "idx": 179,
+      "appName": "Nike Run Club",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.notion.id": {
+      "idx": 180,
+      "appName": "Notion",
+      "category": "办公协作",
+      "subcategory": "笔记知识"
+    },
+    "com.nytimes.android": {
+      "idx": 181,
+      "appName": "NYTimes",
+      "category": "资讯新闻",
+      "subcategory": "新闻资讯"
+    },
+    "com.opentable": {
+      "idx": 182,
+      "appName": "OpenTable",
+      "category": "生活服务",
+      "subcategory": "外卖美食"
+    },
+    "com.opera.browser": {
+      "idx": 183,
+      "appName": "Opera",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.opera.mini.native": {
+      "idx": 184,
+      "appName": "Opera Mini",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.ormai.todoist": {
+      "idx": 185,
+      "appName": "Todoist Lite",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.paypal.android.p2pmobile": {
+      "idx": 186,
+      "appName": "PayPal",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.paypal.android.p2pmobile.lite": {
+      "idx": 187,
+      "appName": "PayPal Lite",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.pingan.clife": {
+      "idx": 188,
+      "appName": "Ping An Life",
+      "category": "金融理财",
+      "subcategory": "保险服务"
+    },
+    "com.pingan.dr": {
+      "idx": 189,
+      "appName": "Ping An Good Doctor",
+      "category": "健康医疗",
+      "subcategory": "在线医疗"
+    },
+    "com.pingan.life": {
+      "idx": 190,
+      "appName": "平安好医生",
+      "category": "健康医疗",
+      "subcategory": "在线医疗"
+    },
+    "com.pinterest": {
+      "idx": 191,
+      "appName": "Pinterest",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "com.qianyan.battery": {
+      "idx": 192,
+      "appName": "有道词典",
+      "category": "工具",
+      "subcategory": "翻译词典"
+    },
+    "com.qihoo.cleartab": {
+      "idx": 193,
+      "appName": "360 Clean Master",
+      "category": "工具",
+      "subcategory": "清理加速"
+    },
+    "com.qihoo360.mobilesafe": {
+      "idx": 194,
+      "appName": "360安全卫士",
+      "category": "系统安全",
+      "subcategory": "安全防护"
+    },
+    "com.qiyi.video": {
+      "idx": 195,
+      "appName": "爱奇艺",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.qiyukf.learnsanguo": {
+      "idx": 196,
+      "appName": "Yuanfudao",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "com.reddit.frontpage": {
+      "idx": 197,
+      "appName": "Reddit",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "com.rhmsoft.code": {
+      "idx": 198,
+      "appName": "Solid Explorer",
+      "category": "工具",
+      "subcategory": "文件管理"
+    },
+    "com.robinhood.android": {
+      "idx": 199,
+      "appName": "Robinhood",
+      "category": "金融理财",
+      "subcategory": "股票基金"
+    },
+    "com.roblox.client": {
+      "idx": 200,
+      "appName": "Roblox",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.samsung.android.app.clockpackage": {
+      "idx": 201,
+      "appName": "Samsung Clock",
+      "category": "工具",
+      "subcategory": "时钟闹钟"
+    },
+    "com.samsung.android.oneconnect": {
+      "idx": 202,
+      "appName": "SmartThings",
+      "category": "智能硬件",
+      "subcategory": "智能家居"
+    },
+    "com.sankuai.meituan": {
+      "idx": 203,
+      "appName": "美团外卖",
+      "category": "生活服务",
+      "subcategory": "外卖美食"
+    },
+    "com.sdu.didi.psnger": {
+      "idx": 204,
+      "appName": "滴滴出行",
+      "category": "出行导航",
+      "subcategory": "打车出行"
+    },
+    "com.sdu.didi.psnger.guide": {
+      "idx": 205,
+      "appName": "嘀嗒出行",
+      "category": "出行导航",
+      "subcategory": "打车出行"
+    },
+    "com.sec.android.app.sbrowser": {
+      "idx": 206,
+      "appName": "Samsung Internet",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.shopify.mobile": {
+      "idx": 207,
+      "appName": "Shopify",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.simplemobiletools.calculator": {
+      "idx": 208,
+      "appName": "Simple Calculator",
+      "category": "工具",
+      "subcategory": "计算换算"
+    },
+    "com.simplemobiletools.filemanager": {
+      "idx": 209,
+      "appName": "Simple File Manager",
+      "category": "工具",
+      "subcategory": "文件管理"
+    },
+    "com.simplemobiletools.sms.messaging": {
+      "idx": 210,
+      "appName": "Simple SMS Messenger",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "com.simplemobiletools.voicerecorder": {
+      "idx": 211,
+      "appName": "Simple Voice Recorder",
+      "category": "工具",
+      "subcategory": "录音转写"
+    },
+    "com.sina.weibo": {
+      "idx": 212,
+      "appName": "微博",
+      "category": "资讯新闻",
+      "subcategory": "微博客"
+    },
+    "com.sina.weiboclient": {
+      "idx": 213,
+      "appName": "Weibo",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "com.slack": {
+      "idx": 214,
+      "appName": "Slack",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.sleepcycle": {
+      "idx": 215,
+      "appName": "Sleep Cycle",
+      "category": "健康医疗",
+      "subcategory": "健康管理"
+    },
+    "com.smile.gifmaker": {
+      "idx": 216,
+      "appName": "Kuaishou",
+      "category": "影视娱乐",
+      "subcategory": "短视频"
+    },
+    "com.snapchat.android": {
+      "idx": 217,
+      "appName": "Snapchat",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "com.sohu.inputmethod.sogou": {
+      "idx": 218,
+      "appName": "搜狗输入法",
+      "category": "工具",
+      "subcategory": "输入法"
+    },
+    "com.sohu.sohunews": {
+      "idx": 219,
+      "appName": "Sohu News",
+      "category": "资讯新闻",
+      "subcategory": "新闻资讯"
+    },
+    "com.soundcloud.android": {
+      "idx": 220,
+      "appName": "SoundCloud",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.spotify.music": {
+      "idx": 221,
+      "appName": "Spotify",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.square_enix.android_googleplay.FFBE_NV": {
+      "idx": 222,
+      "appName": "FF Brave Exvius",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.squareup.cash": {
+      "idx": 223,
+      "appName": "Cash App",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.ss.android.article.news": {
+      "idx": 224,
+      "appName": "今日头条",
+      "category": "资讯新闻",
+      "subcategory": "新闻资讯"
+    },
+    "com.ss.android.lark": {
+      "idx": 225,
+      "appName": "飞书",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.ss.android.lark.lite": {
+      "idx": 226,
+      "appName": "Lark Lite",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.ss.android.ugc.aweme": {
+      "idx": 227,
+      "appName": "抖音",
+      "category": "影视娱乐",
+      "subcategory": "短视频"
+    },
+    "com.standardnotes": {
+      "idx": 228,
+      "appName": "Standard Notes",
+      "category": "办公协作",
+      "subcategory": "笔记知识"
+    },
+    "com.starbucks.mobilecard": {
+      "idx": 229,
+      "appName": "Starbucks",
+      "category": "生活服务",
+      "subcategory": "外卖美食"
+    },
+    "com.strava": {
+      "idx": 230,
+      "appName": "Strava",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.suning.mobile.ebuy": {
+      "idx": 231,
+      "appName": "苏宁易购",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.supercell.brawlstars": {
+      "idx": 232,
+      "appName": "Brawl Stars",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.supercell.clashofclans": {
+      "idx": 233,
+      "appName": "Clash of Clans",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.supercell.clashroyale": {
+      "idx": 234,
+      "appName": "Clash Royale",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.sygic.aura": {
+      "idx": 235,
+      "appName": "Sygic",
+      "category": "出行导航",
+      "subcategory": "地图导航"
+    },
+    "com.syncthing.android": {
+      "idx": 236,
+      "appName": "Syncthing",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.taobao.idlefish": {
+      "idx": 237,
+      "appName": "闲鱼",
+      "category": "购物消费",
+      "subcategory": "二手交易"
+    },
+    "com.taobao.taobao": {
+      "idx": 238,
+      "appName": "淘宝",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.target.ui": {
+      "idx": 239,
+      "appName": "Target",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.tencent.kugou": {
+      "idx": 240,
+      "appName": "Kugou Music",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.tencent.lolm": {
+      "idx": 241,
+      "appName": "英雄联盟手游",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.tencent.mm": {
+      "idx": 242,
+      "appName": "微信",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "com.tencent.mobileqq": {
+      "idx": 243,
+      "appName": "QQ",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "com.tencent.news": {
+      "idx": 244,
+      "appName": "腾讯新闻",
+      "category": "资讯新闻",
+      "subcategory": "新闻资讯"
+    },
+    "com.tencent.qcloud.scf.cosclient": {
+      "idx": 245,
+      "appName": "腾讯微云",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.tencent.qqlive": {
+      "idx": 246,
+      "appName": "腾讯视频",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.tencent.qqmusic": {
+      "idx": 247,
+      "appName": "QQ音乐",
+      "category": "影视娱乐",
+      "subcategory": "音乐"
+    },
+    "com.tencent.qqpimsecure": {
+      "idx": 248,
+      "appName": "腾讯手机管家",
+      "category": "系统安全",
+      "subcategory": "安全防护"
+    },
+    "com.tencent.tmgp.cf": {
+      "idx": 249,
+      "appName": "CrossFire Mobile",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.tencent.tmgp.pubgmhd": {
+      "idx": 250,
+      "appName": "和平精英",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.tencent.tmgp.sgame": {
+      "idx": 251,
+      "appName": "王者荣耀",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.tencent.weiyun": {
+      "idx": 252,
+      "appName": "微众银行",
+      "category": "金融理财",
+      "subcategory": "银行服务"
+    },
+    "com.tencent.weiyun.lite": {
+      "idx": 253,
+      "appName": "Weiyun Lite",
+      "category": "办公协作",
+      "subcategory": "网盘存储"
+    },
+    "com.tencent.wework": {
+      "idx": 254,
+      "appName": "企业微信",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.tencent.wework.lite": {
+      "idx": 255,
+      "appName": "WeCom Lite",
+      "category": "办公协作",
+      "subcategory": "办公通讯"
+    },
+    "com.thejoyrun.app": {
+      "idx": 256,
+      "appName": "悦跑圈",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.therealreal.celebrity": {
+      "idx": 257,
+      "appName": "The RealReal",
+      "category": "购物消费",
+      "subcategory": "二手交易"
+    },
+    "com.ticktick.task": {
+      "idx": 258,
+      "appName": "TickTick",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.tmall.wireless": {
+      "idx": 259,
+      "appName": "天猫",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.todoist": {
+      "idx": 260,
+      "appName": "Todoist",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.trello": {
+      "idx": 261,
+      "appName": "Trello",
+      "category": "办公协作",
+      "subcategory": "任务待办"
+    },
+    "com.trimslip.screenrecorder": {
+      "idx": 262,
+      "appName": "Screen Recorder",
+      "category": "工具",
+      "subcategory": "截图标注"
+    },
+    "com.tripadvisor.tripadvisor": {
+      "idx": 263,
+      "appName": "Tripadvisor",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.tripcase.android": {
+      "idx": 264,
+      "appName": "Trip.com",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "com.tubitv.android": {
+      "idx": 265,
+      "appName": "Tubi",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.tumblr": {
+      "idx": 266,
+      "appName": "Tumblr",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "com.tuya.smartlife": {
+      "idx": 267,
+      "appName": "Tuya Smart",
+      "category": "智能硬件",
+      "subcategory": "智能家居"
+    },
+    "com.twitter.android": {
+      "idx": 268,
+      "appName": "X",
+      "category": "资讯新闻",
+      "subcategory": "微博客"
+    },
+    "com.ubercab": {
+      "idx": 269,
+      "appName": "Uber",
+      "category": "出行导航",
+      "subcategory": "打车出行"
+    },
+    "com.udemy.android": {
+      "idx": 270,
+      "appName": "Udemy",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "com.unionpay": {
+      "idx": 271,
+      "appName": "云闪付",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.valvesoftware.android.steam.community": {
+      "idx": 272,
+      "appName": "Steam",
+      "category": "影视娱乐",
+      "subcategory": "游戏"
+    },
+    "com.venmo": {
+      "idx": 273,
+      "appName": "Venmo",
+      "category": "金融理财",
+      "subcategory": "支付钱包"
+    },
+    "com.vivaldi.browser": {
+      "idx": 274,
+      "appName": "Vivaldi",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "com.walmart.android": {
+      "idx": 275,
+      "appName": "Walmart",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.waterdrinkreminder": {
+      "idx": 276,
+      "appName": "Water Drink Reminder",
+      "category": "健康医疗",
+      "subcategory": "健康管理"
+    },
+    "com.wayfair": {
+      "idx": 277,
+      "appName": "Wayfair",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.webex.meetings": {
+      "idx": 278,
+      "appName": "Webex",
+      "category": "办公协作",
+      "subcategory": "视频会议"
+    },
+    "com.weiwo.jkjd": {
+      "idx": 279,
+      "appName": "JD Health",
+      "category": "健康医疗",
+      "subcategory": "在线医疗"
+    },
+    "com.weliao.dxy": {
+      "idx": 280,
+      "appName": "DXY",
+      "category": "健康医疗",
+      "subcategory": "在线医疗"
+    },
+    "com.whatsapp": {
+      "idx": 281,
+      "appName": "WhatsApp",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "com.wireguard.android": {
+      "idx": 282,
+      "appName": "WireGuard",
+      "category": "工具",
+      "subcategory": "网络代理"
+    },
+    "com.wt.ap": {
+      "idx": 283,
+      "appName": "Weather Underground",
+      "category": "生活服务",
+      "subcategory": "天气服务"
+    },
+    "com.xiaomi.hm.health": {
+      "idx": 284,
+      "appName": "Mi Fitness",
+      "category": "智能硬件",
+      "subcategory": "智能穿戴"
+    },
+    "com.xiaomi.smarthome": {
+      "idx": 285,
+      "appName": "Mi Home",
+      "category": "智能硬件",
+      "subcategory": "智能家居"
+    },
+    "com.ximalaya.ting.android": {
+      "idx": 286,
+      "appName": "Ximalaya",
+      "category": "影视娱乐",
+      "subcategory": "听书播客"
+    },
+    "com.ximalaya.ting.knowledge": {
+      "idx": 287,
+      "appName": "Ximalaya Knowledge",
+      "category": "教育学习",
+      "subcategory": "知识付费"
+    },
+    "com.xingin.xhs": {
+      "idx": 288,
+      "appName": "小红书",
+      "category": "购物消费",
+      "subcategory": "内容电商"
+    },
+    "com.xodo.pdf.reader": {
+      "idx": 289,
+      "appName": "Xodo PDF Reader",
+      "category": "工具",
+      "subcategory": "PDF工具"
+    },
+    "com.xueersi.spatio": {
+      "idx": 290,
+      "appName": "学而思",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "com.xunmeng.pinduoduo": {
+      "idx": 291,
+      "appName": "拼多多",
+      "category": "购物消费",
+      "subcategory": "综合电商"
+    },
+    "com.yelp.android": {
+      "idx": 292,
+      "appName": "Yelp",
+      "category": "生活服务",
+      "subcategory": "外卖美食"
+    },
+    "com.yitong": {
+      "idx": 293,
+      "appName": "China Merchants Bank",
+      "category": "金融理财",
+      "subcategory": "银行服务"
+    },
+    "com.youdao.dict": {
+      "idx": 294,
+      "appName": "Youdao Dictionary",
+      "category": "工具",
+      "subcategory": "翻译词典"
+    },
+    "com.youku.phone": {
+      "idx": 295,
+      "appName": "优酷",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "com.yuetrip.yuepao": {
+      "idx": 296,
+      "appName": "Yuepaoquan",
+      "category": "健康医疗",
+      "subcategory": "运动健身"
+    },
+    "com.zhihu.android": {
+      "idx": 297,
+      "appName": "知乎",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "com.zhiliaoapp.musically": {
+      "idx": 298,
+      "appName": "TikTok",
+      "category": "影视娱乐",
+      "subcategory": "短视频"
+    },
+    "com.zhiliaoapp.musically.go": {
+      "idx": 299,
+      "appName": "TikTok Lite",
+      "category": "影视娱乐",
+      "subcategory": "短视频"
+    },
+    "ctrip.android.view": {
+      "idx": 300,
+      "appName": "携程旅行",
+      "category": "出行导航",
+      "subcategory": "机酒旅游"
+    },
+    "fm.player.audiobook": {
+      "idx": 301,
+      "appName": "Smart Audiobook Player",
+      "category": "影视娱乐",
+      "subcategory": "听书播客"
+    },
+    "free.reddit.news": {
+      "idx": 302,
+      "appName": "Relay for Reddit",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "im.fluffy.app": {
+      "idx": 303,
+      "appName": "FluffyChat",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "im.molly": {
+      "idx": 304,
+      "appName": "Molly",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "io.github.hk1223.catfriend": {
+      "idx": 305,
+      "appName": "CatFriend",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "md.obsidian": {
+      "idx": 306,
+      "appName": "Obsidian",
+      "category": "办公协作",
+      "subcategory": "笔记知识"
+    },
+    "me.ccrama.redditslide": {
+      "idx": 307,
+      "appName": "Slide for Reddit",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "me.ele.android.app": {
+      "idx": 308,
+      "appName": "饿了么",
+      "category": "生活服务",
+      "subcategory": "外卖美食"
+    },
+    "me.zhanghai.android.files": {
+      "idx": 309,
+      "appName": "Material Files",
+      "category": "工具",
+      "subcategory": "文件管理"
+    },
+    "ml.docilealligator.sentencedispensary": {
+      "idx": 310,
+      "appName": "Hackerweb",
+      "category": "资讯新闻",
+      "subcategory": "社区论坛"
+    },
+    "net.osmand.plus": {
+      "idx": 311,
+      "appName": "OsmAnd+",
+      "category": "出行导航",
+      "subcategory": "地图导航"
+    },
+    "network.loki.messenger": {
+      "idx": 312,
+      "appName": "Session",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "org.bromite.bromite": {
+      "idx": 313,
+      "appName": "Bromite",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "org.codeberg.android": {
+      "idx": 314,
+      "appName": "AntennaPod",
+      "category": "影视娱乐",
+      "subcategory": "听书播客"
+    },
+    "org.coursera.android": {
+      "idx": 315,
+      "appName": "Coursera",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "org.joinmastodon.android.mastodon": {
+      "idx": 316,
+      "appName": "Mastodon (Official)",
+      "category": "社交通讯",
+      "subcategory": "社交网络"
+    },
+    "org.khanacademy.android": {
+      "idx": 317,
+      "appName": "Khan Academy",
+      "category": "教育学习",
+      "subcategory": "在线课程"
+    },
+    "org.mozilla.fennec_fdroid": {
+      "idx": 318,
+      "appName": "Fennec F-Droid",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "org.mozilla.firefox": {
+      "idx": 319,
+      "appName": "Firefox",
+      "category": "工具",
+      "subcategory": "浏览器"
+    },
+    "org.osmdroid.app": {
+      "idx": 320,
+      "appName": "OSMDroid",
+      "category": "出行导航",
+      "subcategory": "地图导航"
+    },
+    "org.qosp.notes": {
+      "idx": 321,
+      "appName": "Quillpad",
+      "category": "办公协作",
+      "subcategory": "笔记知识"
+    },
+    "org.readera.android": {
+      "idx": 322,
+      "appName": "ReadEra",
+      "category": "教育学习",
+      "subcategory": "阅读电子书"
+    },
+    "org.telegram.messenger": {
+      "idx": 323,
+      "appName": "Telegram",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "org.thoughtcrime.securesms": {
+      "idx": 324,
+      "appName": "Signal",
+      "category": "社交通讯",
+      "subcategory": "即时通讯"
+    },
+    "org.torproject.torproject": {
+      "idx": 325,
+      "appName": "Tor Browser",
+      "category": "工具",
+      "subcategory": "网络代理"
+    },
+    "tv.danmaku.bili": {
+      "idx": 326,
+      "appName": "哔哩哔哩",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "tv.pluto.android": {
+      "idx": 327,
+      "appName": "Pluto TV",
+      "category": "影视娱乐",
+      "subcategory": "在线视频"
+    },
+    "us.zoom.videomeetings": {
+      "idx": 328,
+      "appName": "Zoom",
+      "category": "办公协作",
+      "subcategory": "视频会议"
+    },
+    "us.zoom.videomeetings.lite": {
+      "idx": 329,
+      "appName": "Zoom Lite",
+      "category": "办公协作",
+      "subcategory": "视频会议"
+    }
+  },
+  "byCategory": {
+    "影视娱乐": [
+      0,
+      19,
+      22,
+      27,
+      56,
+      61,
+      63,
+      67,
+      84,
+      86,
+      103,
+      108,
+      114,
+      129,
+      130,
+      134,
+      135,
+      152,
+      154,
+      155,
+      156,
+      170,
+      173,
+      174,
+      175,
+      176,
+      178,
+      195,
+      200,
+      216,
+      220,
+      221,
+      222,
+      227,
+      232,
+      233,
+      234,
+      240,
+      241,
+      246,
+      247,
+      249,
+      250,
+      251,
+      265,
+      272,
+      286,
+      295,
+      298,
+      299,
+      301,
+      314,
+      326,
+      327
+    ],
+    "金融理财": [
+      1,
+      2,
+      15,
+      42,
+      53,
+      54,
+      68,
+      71,
+      72,
+      73,
+      74,
+      115,
+      116,
+      122,
+      172,
+      186,
+      187,
+      188,
+      199,
+      223,
+      252,
+      271,
+      273,
+      293
+    ],
+    "生活服务": [
+      3,
+      24,
+      41,
+      57,
+      59,
+      99,
+      137,
+      148,
+      149,
+      182,
+      203,
+      229,
+      283,
+      292,
+      308
+    ],
+    "办公协作": [
+      4,
+      11,
+      12,
+      26,
+      29,
+      30,
+      39,
+      40,
+      43,
+      49,
+      64,
+      76,
+      91,
+      92,
+      93,
+      94,
+      96,
+      105,
+      107,
+      123,
+      126,
+      140,
+      159,
+      160,
+      161,
+      162,
+      164,
+      165,
+      166,
+      167,
+      180,
+      185,
+      214,
+      225,
+      226,
+      228,
+      236,
+      245,
+      253,
+      254,
+      255,
+      258,
+      260,
+      261,
+      278,
+      306,
+      321,
+      328,
+      329
+    ],
+    "出行导航": [
+      5,
+      6,
+      9,
+      16,
+      28,
+      31,
+      35,
+      48,
+      58,
+      77,
+      81,
+      82,
+      95,
+      109,
+      143,
+      204,
+      205,
+      235,
+      263,
+      264,
+      269,
+      300,
+      311,
+      320
+    ],
+    "购物消费": [
+      7,
+      10,
+      13,
+      14,
+      21,
+      51,
+      69,
+      75,
+      125,
+      207,
+      231,
+      237,
+      238,
+      239,
+      257,
+      259,
+      275,
+      277,
+      288,
+      291
+    ],
+    "工具": [
+      8,
+      18,
+      23,
+      36,
+      38,
+      50,
+      65,
+      87,
+      88,
+      97,
+      98,
+      100,
+      101,
+      102,
+      110,
+      112,
+      117,
+      118,
+      121,
+      131,
+      147,
+      151,
+      153,
+      157,
+      158,
+      163,
+      168,
+      183,
+      184,
+      192,
+      193,
+      198,
+      201,
+      206,
+      208,
+      209,
+      211,
+      218,
+      262,
+      274,
+      282,
+      289,
+      294,
+      309,
+      313,
+      318,
+      319,
+      325
+    ],
+    "资讯新闻": [
+      17,
+      44,
+      89,
+      106,
+      124,
+      136,
+      177,
+      181,
+      197,
+      212,
+      219,
+      224,
+      244,
+      268,
+      297,
+      302,
+      305,
+      307,
+      310
+    ],
+    "教育学习": [
+      20,
+      25,
+      33,
+      34,
+      37,
+      52,
+      62,
+      66,
+      70,
+      79,
+      113,
+      119,
+      127,
+      128,
+      133,
+      141,
+      142,
+      144,
+      150,
+      196,
+      270,
+      287,
+      290,
+      315,
+      317,
+      322
+    ],
+    "系统安全": [
+      32,
+      46,
+      132,
+      169,
+      194,
+      248
+    ],
+    "智能硬件": [
+      45,
+      90,
+      111,
+      202,
+      267,
+      284,
+      285
+    ],
+    "健康医疗": [
+      47,
+      55,
+      80,
+      85,
+      104,
+      138,
+      145,
+      171,
+      179,
+      189,
+      190,
+      215,
+      230,
+      256,
+      276,
+      279,
+      280,
+      296
+    ],
+    "社交通讯": [
+      60,
+      78,
+      83,
+      120,
+      139,
+      146,
+      191,
+      210,
+      213,
+      217,
+      242,
+      243,
+      266,
+      281,
+      303,
+      304,
+      312,
+      316,
+      323,
+      324
+    ]
+  },
+  "byIntentTag": {
+    "listen music": [
+      0,
+      22,
+      27,
+      56,
+      174,
+      240
+    ],
+    "查余额": [
+      1,
+      116
+    ],
+    "转账": [
+      1,
+      71,
+      72,
+      116
+    ],
+    "买理财": [
+      1,
+      71,
+      116,
+      122,
+      252
+    ],
+    "还信用卡": [
+      1,
+      116
+    ],
+    "check balance": [
+      2,
+      42,
+      53,
+      54,
+      293
+    ],
+    "transfer": [
+      2,
+      42,
+      53,
+      54,
+      293
+    ],
+    "track package": [
+      3,
+      41
+    ],
+    "ship package": [
+      3,
+      41
+    ],
+    "编辑Word": [
+      4,
+      159
+    ],
+    "编辑Excel": [
+      4,
+      159
+    ],
+    "编辑PPT": [
+      4,
+      159
+    ],
+    "阅读PDF": [
+      4
+    ],
+    "查看文档": [
+      4,
+      159
+    ],
+    "买火车票": [
+      5
+    ],
+    "查时刻表": [
+      5
+    ],
+    "退改签": [
+      5
+    ],
+    "候补购票": [
+      5
+    ],
+    "订机票": [
+      6,
+      16,
+      300
+    ],
+    "订酒店": [
+      6,
+      16,
+      149,
+      300
+    ],
+    "比价": [
+      6,
+      238
+    ],
+    "订度假": [
+      6,
+      16,
+      300
+    ],
+    "买品牌折扣": [
+      7
+    ],
+    "买服装": [
+      7
+    ],
+    "买美妆": [
+      7
+    ],
+    "read pdf": [
+      8,
+      151,
+      289
+    ],
+    "sign pdf": [
+      8
+    ],
+    "annotate pdf": [
+      8,
+      289
+    ],
+    "book accommodation": [
+      9
+    ],
+    "find vacation rental": [
+      9
+    ],
+    "book experiences": [
+      9
+    ],
+    "host guests": [
+      9
+    ],
+    "buy from China": [
+      10
+    ],
+    "wholesale products": [
+      10
+    ],
+    "find deals": [
+      10,
+      69
+    ],
+    "公司沟通": [
+      11,
+      225,
+      254
+    ],
+    "考勤打卡": [
+      11
+    ],
+    "审批流程": [
+      11,
+      254
+    ],
+    "视频会议": [
+      11,
+      225,
+      254
+    ],
+    "文档协作": [
+      11
+    ],
+    "work chat": [
+      12,
+      226,
+      255
+    ],
+    "clock in": [
+      12
+    ],
+    "source products": [
+      13
+    ],
+    "wholesale buy": [
+      13
+    ],
+    "shop deals": [
+      14
+    ],
+    "cross border shop": [
+      14
+    ],
+    "pay": [
+      15,
+      73,
+      229
+    ],
+    "use mini program": [
+      15
+    ],
+    "买门票": [
+      16,
+      300
+    ],
+    "read news": [
+      17,
+      44,
+      106,
+      181,
+      197,
+      219
+    ],
+    "watch live": [
+      17,
+      44,
+      103,
+      327
+    ],
+    "manage files": [
+      18,
+      87,
+      198,
+      209,
+      309
+    ],
+    "access network drives": [
+      18
+    ],
+    "watch movie": [
+      19,
+      61,
+      108
+    ],
+    "rent movie": [
+      19
+    ],
+    "read ebook": [
+      20,
+      133,
+      151
+    ],
+    "buy book": [
+      20
+    ],
+    "buy products": [
+      21
+    ],
+    "prime delivery": [
+      21
+    ],
+    "read reviews": [
+      21,
+      95,
+      263,
+      292
+    ],
+    "subscribe & save": [
+      21
+    ],
+    "browse web": [
+      23,
+      131,
+      147,
+      157,
+      206,
+      274,
+      319
+    ],
+    "search google": [
+      23
+    ],
+    "open websites": [
+      23
+    ],
+    "sync tabs": [
+      23
+    ],
+    "find house": [
+      24
+    ],
+    "rent": [
+      24
+    ],
+    "review flashcards": [
+      25
+    ],
+    "memorize": [
+      25
+    ],
+    "manage tasks": [
+      26,
+      166,
+      167,
+      185,
+      258,
+      260
+    ],
+    "plan day": [
+      26
+    ],
+    "view lyrics": [
+      27
+    ],
+    "navigate": [
+      28,
+      95,
+      109
+    ],
+    "find place": [
+      28
+    ],
+    "manage projects": [
+      29,
+      261
+    ],
+    "track tasks": [
+      29,
+      261
+    ],
+    "team coordination": [
+      29
+    ],
+    "track issue": [
+      30
+    ],
+    "manage sprint": [
+      30
+    ],
+    "查路线": [
+      31,
+      35
+    ],
+    "导航": [
+      31,
+      35
+    ],
+    "打车": [
+      31,
+      204,
+      205
+    ],
+    "查公交": [
+      31,
+      35
+    ],
+    "看路况": [
+      31
+    ],
+    "scan malware": [
+      32,
+      46,
+      132,
+      169
+    ],
+    "clean junk": [
+      32,
+      193
+    ],
+    "learn language": [
+      33,
+      62,
+      66,
+      113
+    ],
+    "learn english kids": [
+      34
+    ],
+    "找地点": [
+      35
+    ],
+    "翻译文本": [
+      36
+    ],
+    "翻译语音": [
+      36
+    ],
+    "翻译图片": [
+      36
+    ],
+    "搜题": [
+      37,
+      79
+    ],
+    "问作业": [
+      37,
+      79
+    ],
+    "上课": [
+      37,
+      79,
+      290
+    ],
+    "做题": [
+      37,
+      79,
+      290
+    ],
+    "type chinese": [
+      38
+    ],
+    "voice to text": [
+      38
+    ],
+    "备份文件": [
+      39,
+      123,
+      245
+    ],
+    "下载资源": [
+      39
+    ],
+    "分享文件": [
+      39,
+      123,
+      245
+    ],
+    "在线看视频": [
+      39
+    ],
+    "upload file": [
+      40,
+      91,
+      253
+    ],
+    "download file": [
+      40
+    ],
+    "manage project": [
+      43
+    ],
+    "team chat": [
+      43
+    ],
+    "control plug": [
+      45
+    ],
+    "protect device": [
+      46,
+      132
+    ],
+    "记录饮食": [
+      47
+    ],
+    "计算卡路里": [
+      47
+    ],
+    "减肥计划": [
+      47
+    ],
+    "book hotel": [
+      48,
+      77
+    ],
+    "find accommodation": [
+      48
+    ],
+    "share file": [
+      49,
+      91,
+      253
+    ],
+    "esign": [
+      49
+    ],
+    "browse privately": [
+      50,
+      318
+    ],
+    "block ads": [
+      50
+    ],
+    "web search": [
+      50
+    ],
+    "sell secondhand": [
+      51
+    ],
+    "buy used": [
+      51,
+      69
+    ],
+    "read book": [
+      52,
+      119
+    ],
+    "annotate": [
+      52
+    ],
+    "forex": [
+      53
+    ],
+    "记录跑步": [
+      55,
+      256
+    ],
+    "看运动课程": [
+      55
+    ],
+    "运动社交": [
+      55
+    ],
+    "discover flow": [
+      56
+    ],
+    "找美食": [
+      57
+    ],
+    "看点评": [
+      57
+    ],
+    "团购": [
+      57
+    ],
+    "预约餐厅": [
+      57
+    ],
+    "book ride": [
+      58,
+      143
+    ],
+    "carpool": [
+      58
+    ],
+    "check rain": [
+      59
+    ],
+    "see nowcast": [
+      59
+    ],
+    "join gaming community": [
+      60
+    ],
+    "voice chat while gaming": [
+      60
+    ],
+    "community discussion": [
+      60
+    ],
+    "watch series": [
+      61,
+      108
+    ],
+    "practice speech": [
+      62
+    ],
+    "listen novel": [
+      63
+    ],
+    "sync files": [
+      64,
+      164
+    ],
+    "share files": [
+      64,
+      164
+    ],
+    "search privately": [
+      65
+    ],
+    "browse without tracking": [
+      65
+    ],
+    "practice daily": [
+      66
+    ],
+    "play soccer": [
+      67
+    ],
+    "build team": [
+      67
+    ],
+    "trade stock": [
+      68,
+      199
+    ],
+    "buy fund": [
+      68
+    ],
+    "bid on items": [
+      69
+    ],
+    "sell items": [
+      69
+    ],
+    "take course": [
+      70,
+      270,
+      315
+    ],
+    "audit": [
+      70
+    ],
+    "扫码付款": [
+      71,
+      72,
+      74,
+      242,
+      271
+    ],
+    "缴水电费": [
+      71,
+      116
+    ],
+    "查信用": [
+      71
+    ],
+    "收款": [
+      72
+    ],
+    "用小程序": [
+      74
+    ],
+    "shop handmade": [
+      75
+    ],
+    "sell crafts": [
+      75
+    ],
+    "take notes": [
+      76,
+      126,
+      140,
+      161,
+      180,
+      228,
+      274,
+      306,
+      321
+    ],
+    "clip web pages": [
+      76
+    ],
+    "organize notebooks": [
+      76
+    ],
+    "book flight": [
+      77,
+      81,
+      264
+    ],
+    "connect with friends": [
+      78
+    ],
+    "join groups": [
+      78
+    ],
+    "buy/sell items": [
+      78
+    ],
+    "watch videos": [
+      78,
+      103
+    ],
+    "sync tracker": [
+      80
+    ],
+    "track activity": [
+      80,
+      85,
+      111,
+      284
+    ],
+    "book travel": [
+      81
+    ],
+    "find cheap flight": [
+      82
+    ],
+    "compare flights": [
+      82
+    ],
+    "read email": [
+      83,
+      162
+    ],
+    "send email": [
+      83
+    ],
+    "play fps": [
+      84,
+      249
+    ],
+    "battle royale": [
+      84
+    ],
+    "sync watch": [
+      85,
+      111
+    ],
+    "听书": [
+      86,
+      141,
+      247
+    ],
+    "听播客": [
+      86,
+      173
+    ],
+    "听电台": [
+      86
+    ],
+    "听课程": [
+      86,
+      141
+    ],
+    "dual pane browsing": [
+      87
+    ],
+    "proxy traffic": [
+      88
+    ],
+    "bypass censorship": [
+      88
+    ],
+    "browse v2ex": [
+      89
+    ],
+    "control device": [
+      90,
+      202,
+      267,
+      285
+    ],
+    "cast media": [
+      90
+    ],
+    "collab": [
+      91
+    ],
+    "edit doc": [
+      92,
+      160
+    ],
+    "collab edit": [
+      92
+    ],
+    "edit spreadsheet": [
+      93,
+      160
+    ],
+    "edit slides": [
+      94
+    ],
+    "get directions": [
+      95
+    ],
+    "find places": [
+      95
+    ],
+    "join meeting": [
+      96,
+      105,
+      278,
+      329
+    ],
+    "host meeting": [
+      96
+    ],
+    "record meeting": [
+      97
+    ],
+    "transcribe voice": [
+      97
+    ],
+    "translate text": [
+      98,
+      168,
+      294
+    ],
+    "translate conversation": [
+      98,
+      168
+    ],
+    "translate image": [
+      98
+    ],
+    "check weather": [
+      99,
+      283
+    ],
+    "see forecast": [
+      99
+    ],
+    "calculate": [
+      100,
+      208
+    ],
+    "do math": [
+      100
+    ],
+    "set alarm": [
+      101,
+      201
+    ],
+    "time event": [
+      101
+    ],
+    "check world time": [
+      101
+    ],
+    "type fast": [
+      102
+    ],
+    "voice type": [
+      102
+    ],
+    "search emoji": [
+      102
+    ],
+    "subscribe channels": [
+      103,
+      323
+    ],
+    "post shorts": [
+      103
+    ],
+    "健身训练": [
+      104
+    ],
+    "跑步记录": [
+      104
+    ],
+    "看健身课程": [
+      104
+    ],
+    "read opinion": [
+      106
+    ],
+    "build habit": [
+      107
+    ],
+    "gamify tasks": [
+      107
+    ],
+    "use transit": [
+      109
+    ],
+    "浏览网页": [
+      110,
+      112,
+      153
+    ],
+    "搜索": [
+      110,
+      112,
+      153
+    ],
+    "看资讯": [
+      110,
+      112,
+      153
+    ],
+    "take live class": [
+      113,
+      196
+    ],
+    "看综艺": [
+      114,
+      195,
+      246,
+      295
+    ],
+    "看电视剧": [
+      114,
+      195,
+      246,
+      295
+    ],
+    "看电影": [
+      114,
+      195,
+      246,
+      295
+    ],
+    "trade stock globally": [
+      115
+    ],
+    "look up word": [
+      117,
+      294
+    ],
+    "learn english": [
+      117
+    ],
+    "语音打字": [
+      118
+    ],
+    "手写输入": [
+      118,
+      218
+    ],
+    "拼音输入": [
+      118
+    ],
+    "listen book": [
+      119
+    ],
+    "share photos": [
+      120
+    ],
+    "watch reels": [
+      120
+    ],
+    "message friends": [
+      120,
+      281
+    ],
+    "follow influencers": [
+      120
+    ],
+    "scan document": [
+      121
+    ],
+    "ocr text": [
+      121
+    ],
+    "share pdf": [
+      121
+    ],
+    "买基金": [
+      122
+    ],
+    "用白条": [
+      122,
+      125
+    ],
+    "买保险": [
+      122
+    ],
+    "同步文件": [
+      123
+    ],
+    "协作": [
+      123
+    ],
+    "写文章": [
+      124
+    ],
+    "阅读文章": [
+      124
+    ],
+    "关注作者": [
+      124
+    ],
+    "买正品": [
+      125,
+      259
+    ],
+    "快速物流购物": [
+      125
+    ],
+    "逛京东": [
+      125
+    ],
+    "sync to webdav": [
+      126
+    ],
+    "kids learn": [
+      127
+    ],
+    "kids play": [
+      127
+    ],
+    "practice sat": [
+      128
+    ],
+    "prepare exam": [
+      128
+    ],
+    "play runner": [
+      129
+    ],
+    "play puzzle": [
+      130
+    ],
+    "use extensions": [
+      131,
+      319
+    ],
+    "听歌": [
+      134,
+      173,
+      247
+    ],
+    "K歌": [
+      134
+    ],
+    "看直播": [
+      134,
+      224,
+      227,
+      244,
+      259,
+      326
+    ],
+    "watch short video": [
+      135,
+      216,
+      299
+    ],
+    "live stream": [
+      135
+    ],
+    "browse reddit": [
+      136,
+      302,
+      307
+    ],
+    "find apartment": [
+      137
+    ],
+    "rent house": [
+      137
+    ],
+    "track diet": [
+      138
+    ],
+    "follow plan": [
+      138
+    ],
+    "find jobs": [
+      139
+    ],
+    "professional networking": [
+      139
+    ],
+    "post resume": [
+      139
+    ],
+    "read industry news": [
+      139
+    ],
+    "build knowledge graph": [
+      140,
+      306
+    ],
+    "看专栏": [
+      141,
+      297
+    ],
+    "学习知识": [
+      141
+    ],
+    "learn from expert": [
+      142
+    ],
+    "listen course": [
+      142,
+      287
+    ],
+    "find transit": [
+      143
+    ],
+    "prepare toefl": [
+      144
+    ],
+    "prepare ielts": [
+      144
+    ],
+    "track run": [
+      145,
+      179,
+      230,
+      296
+    ],
+    "log workout": [
+      145
+    ],
+    "post toot": [
+      146,
+      316
+    ],
+    "follow people": [
+      146
+    ],
+    "sync across devices": [
+      147
+    ],
+    "order food": [
+      148,
+      269
+    ],
+    "get deals": [
+      148
+    ],
+    "点外卖": [
+      149,
+      203,
+      308
+    ],
+    "买团购券": [
+      149
+    ],
+    "买电影票": [
+      149
+    ],
+    "到店优惠": [
+      149
+    ],
+    "learn vocab": [
+      150
+    ],
+    "review": [
+      150
+    ],
+    "watch show": [
+      152
+    ],
+    "watch variety": [
+      152
+    ],
+    "看视频": [
+      153,
+      177,
+      224,
+      326
+    ],
+    "玩原神": [
+      154
+    ],
+    "探索世界": [
+      154
+    ],
+    "抽卡": [
+      154
+    ],
+    "check in": [
+      155
+    ],
+    "read guide": [
+      155
+    ],
+    "play rpg": [
+      156,
+      176,
+      222
+    ],
+    "explore world": [
+      156
+    ],
+    "use Copilot": [
+      157
+    ],
+    "sync devices": [
+      157
+    ],
+    "collect content": [
+      157
+    ],
+    "solve math": [
+      158
+    ],
+    "scan equation": [
+      158
+    ],
+    "draw notes": [
+      161
+    ],
+    "check calendar": [
+      162
+    ],
+    "type with ai prediction": [
+      163
+    ],
+    "swipe typing": [
+      163
+    ],
+    "开视频会议": [
+      165,
+      328
+    ],
+    "团队协作": [
+      165
+    ],
+    "共享文件": [
+      165
+    ],
+    "企业沟通": [
+      165
+    ],
+    "set reminders": [
+      166,
+      260
+    ],
+    "plan my day": [
+      166
+    ],
+    "build world": [
+      170
+    ],
+    "survive": [
+      170
+    ],
+    "log food": [
+      171
+    ],
+    "track calorie": [
+      171
+    ],
+    "check stock": [
+      172
+    ],
+    "read finance news": [
+      172
+    ],
+    "创建歌单": [
+      173
+    ],
+    "看乐评": [
+      173
+    ],
+    "play horror game": [
+      175
+    ],
+    "collect shikigami": [
+      176
+    ],
+    "看新闻": [
+      177,
+      224,
+      244
+    ],
+    "看跟帖": [
+      177
+    ],
+    "watch movies": [
+      178
+    ],
+    "watch TV shows": [
+      178
+    ],
+    "watch Netflix originals": [
+      178
+    ],
+    "guided run": [
+      179
+    ],
+    "build wiki": [
+      180
+    ],
+    "manage knowledge": [
+      180
+    ],
+    "organize tasks": [
+      180
+    ],
+    "follow politics": [
+      181
+    ],
+    "book restaurant": [
+      182
+    ],
+    "browse with vpn": [
+      183
+    ],
+    "chat side-by-side": [
+      183
+    ],
+    "save data": [
+      184
+    ],
+    "browse on slow network": [
+      184
+    ],
+    "send money": [
+      186,
+      187,
+      223,
+      273
+    ],
+    "receive money": [
+      186
+    ],
+    "pay online": [
+      186
+    ],
+    "international transfer": [
+      186
+    ],
+    "check policy": [
+      188
+    ],
+    "file claim": [
+      188
+    ],
+    "consult doctor": [
+      189,
+      279,
+      280
+    ],
+    "book appointment": [
+      189
+    ],
+    "在线问诊": [
+      190
+    ],
+    "挂号": [
+      190
+    ],
+    "买药": [
+      190,
+      308
+    ],
+    "体检": [
+      190
+    ],
+    "find inspiration": [
+      191
+    ],
+    "save pins": [
+      191
+    ],
+    "查单词": [
+      192
+    ],
+    "翻译": [
+      192
+    ],
+    "背单词": [
+      192
+    ],
+    "boost phone": [
+      193
+    ],
+    "清理手机": [
+      194,
+      248
+    ],
+    "杀毒": [
+      194,
+      248
+    ],
+    "加速手机": [
+      194,
+      248
+    ],
+    "保护隐私": [
+      194,
+      248
+    ],
+    "追剧": [
+      195,
+      246
+    ],
+    "tutor": [
+      196
+    ],
+    "join discussions": [
+      197,
+      268
+    ],
+    "ask questions": [
+      197
+    ],
+    "follow interests": [
+      197
+    ],
+    "encrypt files": [
+      198
+    ],
+    "access cloud": [
+      198
+    ],
+    "buy crypto": [
+      199
+    ],
+    "play user games": [
+      200
+    ],
+    "create game": [
+      200
+    ],
+    "track sleep": [
+      201,
+      215
+    ],
+    "查配送": [
+      203
+    ],
+    "用优惠券": [
+      203,
+      259
+    ],
+    "叫专车": [
+      204
+    ],
+    "叫顺风车": [
+      204,
+      205
+    ],
+    "叫代驾": [
+      204
+    ],
+    "预约出租车": [
+      205
+    ],
+    "watch video": [
+      206
+    ],
+    "shop brands": [
+      207
+    ],
+    "track order": [
+      207
+    ],
+    "organize folders": [
+      209
+    ],
+    "send sms": [
+      210
+    ],
+    "block spam": [
+      210
+    ],
+    "record voice": [
+      211
+    ],
+    "capture lecture": [
+      211
+    ],
+    "看热搜": [
+      212
+    ],
+    "追星": [
+      212
+    ],
+    "发布动态": [
+      212
+    ],
+    "关注时事": [
+      212
+    ],
+    "参与话题讨论": [
+      212
+    ],
+    "post weibo": [
+      213
+    ],
+    "follow trends": [
+      213
+    ],
+    "team communication": [
+      214
+    ],
+    "channel discussion": [
+      214
+    ],
+    "file sharing": [
+      214
+    ],
+    "wake smartly": [
+      215
+    ],
+    "share moments": [
+      217
+    ],
+    "use AR filters": [
+      217
+    ],
+    "watch stories": [
+      217
+    ],
+    "chat with friends": [
+      217,
+      272
+    ],
+    "打字": [
+      218
+    ],
+    "语音输入": [
+      218
+    ],
+    "comment": [
+      219
+    ],
+    "discover indie": [
+      220
+    ],
+    "upload music": [
+      220
+    ],
+    "listen to music": [
+      221
+    ],
+    "listen to podcasts": [
+      221
+    ],
+    "discover music": [
+      221
+    ],
+    "create playlists": [
+      221
+    ],
+    "buy bitcoin": [
+      223
+    ],
+    "看热点": [
+      224,
+      244
+    ],
+    "协作文档": [
+      225
+    ],
+    "项目管理": [
+      225
+    ],
+    "meeting": [
+      226
+    ],
+    "刷短视频": [
+      227
+    ],
+    "发布视频": [
+      227
+    ],
+    "购物": [
+      227
+    ],
+    "娱乐消遣": [
+      227
+    ],
+    "encrypt notes": [
+      228
+    ],
+    "order coffee": [
+      229
+    ],
+    "track ride": [
+      230
+    ],
+    "买家电": [
+      231
+    ],
+    "买数码": [
+      231
+    ],
+    "门店自提": [
+      231
+    ],
+    "play multiplayer": [
+      232
+    ],
+    "build base": [
+      233
+    ],
+    "clan war": [
+      233
+    ],
+    "play strategy": [
+      234
+    ],
+    "collect cards": [
+      234
+    ],
+    "navigate offline": [
+      235,
+      311
+    ],
+    "avoid speed traps": [
+      235
+    ],
+    "sync devices p2p": [
+      236
+    ],
+    "卖闲置": [
+      237
+    ],
+    "买二手": [
+      237
+    ],
+    "同城交易": [
+      237
+    ],
+    "买东西": [
+      238
+    ],
+    "逛淘宝": [
+      238
+    ],
+    "看直播购物": [
+      238
+    ],
+    "找二手": [
+      238
+    ],
+    "shop goods": [
+      239,
+      275
+    ],
+    "pickup order": [
+      239
+    ],
+    "sing karaoke": [
+      240
+    ],
+    "打排位": [
+      241,
+      251
+    ],
+    "5v5对战": [
+      241,
+      251
+    ],
+    "开黑": [
+      241
+    ],
+    "联系朋友": [
+      242
+    ],
+    "发消息": [
+      242
+    ],
+    "看朋友圈": [
+      242
+    ],
+    "语音通话": [
+      242
+    ],
+    "视频通话": [
+      242
+    ],
+    "和朋友聊天": [
+      243
+    ],
+    "群组讨论": [
+      243
+    ],
+    "传输文件": [
+      243
+    ],
+    "玩QQ游戏": [
+      243
+    ],
+    "下载文件": [
+      245
+    ],
+    "看MV": [
+      247
+    ],
+    "玩吃鸡": [
+      250
+    ],
+    "多人对战": [
+      250
+    ],
+    "和朋友开黑": [
+      250,
+      251
+    ],
+    "申请微粒贷": [
+      252
+    ],
+    "存款": [
+      252
+    ],
+    "日程管理": [
+      254
+    ],
+    "approve": [
+      255
+    ],
+    "加入跑团": [
+      256
+    ],
+    "报名赛事": [
+      256
+    ],
+    "buy luxury secondhand": [
+      257
+    ],
+    "consign": [
+      257
+    ],
+    "track habit": [
+      258
+    ],
+    "品牌购物": [
+      259
+    ],
+    "track productivity": [
+      260
+    ],
+    "organize work": [
+      261
+    ],
+    "record screen": [
+      262
+    ],
+    "take screenshot": [
+      262
+    ],
+    "plan trip": [
+      263
+    ],
+    "book trip": [
+      264
+    ],
+    "watch free movie": [
+      265
+    ],
+    "post blog": [
+      266
+    ],
+    "share creative": [
+      266
+    ],
+    "post thoughts": [
+      268
+    ],
+    "follow news": [
+      268
+    ],
+    "listen spaces": [
+      268
+    ],
+    "book a ride": [
+      269
+    ],
+    "schedule pickup": [
+      269
+    ],
+    "learn skill": [
+      270
+    ],
+    "银行卡转账": [
+      271
+    ],
+    "查优惠": [
+      271
+    ],
+    "browse games": [
+      272
+    ],
+    "manage library": [
+      272
+    ],
+    "buy games": [
+      272
+    ],
+    "split bill": [
+      273
+    ],
+    "manage tabs": [
+      274
+    ],
+    "grocery delivery": [
+      275
+    ],
+    "drink water": [
+      276
+    ],
+    "log water": [
+      276
+    ],
+    "shop furniture": [
+      277
+    ],
+    "shop home goods": [
+      277
+    ],
+    "host webinar": [
+      278
+    ],
+    "buy medicine": [
+      279
+    ],
+    "search medicine": [
+      280
+    ],
+    "international calls": [
+      281
+    ],
+    "group chat": [
+      281
+    ],
+    "secure connection": [
+      282
+    ],
+    "vpn": [
+      282
+    ],
+    "view radar": [
+      283
+    ],
+    "sync band": [
+      284
+    ],
+    "set scene": [
+      285
+    ],
+    "listen audiobook": [
+      286,
+      301
+    ],
+    "listen podcast": [
+      286,
+      314
+    ],
+    "看种草笔记": [
+      288
+    ],
+    "分享生活": [
+      288
+    ],
+    "购物决策": [
+      288
+    ],
+    "查找攻略": [
+      288
+    ],
+    "merge pdf": [
+      289
+    ],
+    "看直播课": [
+      290
+    ],
+    "查学习报告": [
+      290
+    ],
+    "拼团购物": [
+      291
+    ],
+    "薅羊毛": [
+      291
+    ],
+    "买低价商品": [
+      291
+    ],
+    "百亿补贴": [
+      291
+    ],
+    "find restaurant": [
+      292
+    ],
+    "join race": [
+      296
+    ],
+    "提问": [
+      297
+    ],
+    "回答": [
+      297
+    ],
+    "看知识内容": [
+      297
+    ],
+    "watch short videos": [
+      298
+    ],
+    "watch live stream": [
+      298
+    ],
+    "post video": [
+      298,
+      299
+    ],
+    "entertainment": [
+      298
+    ],
+    "订火车票": [
+      300
+    ],
+    "post comment": [
+      302
+    ],
+    "chat on matrix": [
+      303
+    ],
+    "group messaging": [
+      303
+    ],
+    "chat privately": [
+      304,
+      324
+    ],
+    "secure messaging": [
+      304
+    ],
+    "read forum": [
+      305
+    ],
+    "write markdown": [
+      306
+    ],
+    "买生鲜": [
+      308
+    ],
+    "跑腿": [
+      308
+    ],
+    "read hackernews": [
+      310
+    ],
+    "hiking map": [
+      311
+    ],
+    "chat anonymously": [
+      312
+    ],
+    "private messaging": [
+      312
+    ],
+    "browse without ads": [
+      313
+    ],
+    "privacy browsing": [
+      313
+    ],
+    "subscribe feed": [
+      314
+    ],
+    "earn certificate": [
+      315
+    ],
+    "learn math": [
+      317
+    ],
+    "practice": [
+      317
+    ],
+    "use firefox sync": [
+      318
+    ],
+    "private browsing": [
+      319
+    ],
+    "view osm map": [
+      320
+    ],
+    "make checklist": [
+      321
+    ],
+    "read ebook offline": [
+      322
+    ],
+    "message contacts": [
+      323
+    ],
+    "use bots": [
+      323
+    ],
+    "group discussion": [
+      323
+    ],
+    "encrypted call": [
+      324
+    ],
+    "browse anonymously": [
+      325
+    ],
+    "access onion sites": [
+      325
+    ],
+    "追番": [
+      326
+    ],
+    "发弹幕": [
+      326
+    ],
+    "看UP主": [
+      326
+    ],
+    "watch free tv": [
+      327
+    ],
+    "在线授课": [
+      328
+    ],
+    "远程面试": [
+      328
+    ],
+    "屏幕共享": [
+      328
+    ]
+  }
+}

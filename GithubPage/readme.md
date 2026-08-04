@@ -3,7 +3,6 @@
 > 一个以“唯一搜索框”为核心的本地应用搜索与启动工具。你不需要先理解设置，也不需要学习复杂手势：输入你记得的内容，然后打开应用。
 
 <div class="doc-story-intro">
-  <span class="doc-story-kicker">先看结论</span>
   <strong>GOTO 把“找应用”缩短为一次输入。</strong>
   <p>名称、拼音、英文、标签、快捷字符和模糊输入，最后都汇入同一个搜索框。进阶能力只负责让这个搜索框更快、更稳、更懂当前情境。</p>
 </div>
@@ -179,5 +178,3 @@ GOTO 的主体不是设置页、卡片或统计图，而是首页搜索框。
 ## 接下来怎么读
 
 如果只想使用，继续看“基本设置、快捷索引、自适应刷新”。如果想理解系统如何学习，继续看“统计功能、模拟智能、GOTO Engine”。如果关心数据边界，直接进入“数据管理”和“声明”。
-
-<div class="doc-end-statement"><span>GOTO</span><b>Focus, And More.</b><small>Lesong</small></div>

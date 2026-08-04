@@ -66,7 +66,7 @@
 
 ```json
 {
-  "defaultCover": "cover.jpg",
+  "defaultCover": "../goto-logo.png",
   "tracks": [
     {
       "id": "song_001",
@@ -79,26 +79,28 @@
     },
     {
       "id": "tomorrow",
-      "name": "明天见明天见",
+      "name": "明天见",
       "type": "folder",
       "folder": "tomorrow",
       "artist": "GOTO Music Demo",
-      "album": "明天见明天见",
+      "album": "明天见",
       "lyrics": "",
       "versions": [
-        { "file": "tomorrow/OST(Alpha-Listen_with_caution).mp3", "label": "OST" },
-        { "file": "tomorrow/Pop.mp3",  "label": "Pop" },
         { "file": "tomorrow/Rock.mp3", "label": "Rock" }
       ]
     },
     {
-      "id": "goto_theme",
-      "name": "GOTO 宣传曲",
-      "type": "single",
-      "slot": "easter_egg_2",
-      "file": "",
-      "poster": "",
-      "lyrics": ""
+      "id": "summer_escape",
+      "name": "盛夏逃亡",
+      "type": "folder",
+      "folder": "盛夏逃亡（Demo）",
+      "artist": "GOTO Music Demo",
+      "album": "盛夏逃亡（Demo）",
+      "lyrics": "",
+      "versions": [
+        { "file": "盛夏逃亡（Demo）/Chamber_Pop.mp3", "label": "Chamber Pop" },
+        { "file": "盛夏逃亡（Demo）/Dream_Pop.mp3", "label": "Dream Pop" }
+      ]
     }
   ]
 }
@@ -110,7 +112,7 @@
 | 内联 versions | 没有指定 `type`，但提供了 `versions` 数组 | 兼容旧版的多版本结构 |
 | `folder` | `type === "folder"` | 文件夹多版本结构，支持子目录路径与共用歌词字段 |
 
-`folder` 类型支持把同一首歌的不同风格版本（Pop / Rock / Jazz / 另类摇滚 等）放在同一文件夹下，通过 `versions[].file` 的相对路径定位。版本切换器以 chip 形式出现在列表头部，点击即切换并自动播放。
+当前内置演示仅保留三首本地曲目：明天见的 Rock、盛夏逃亡的 Chamber Pop 与 Dream Pop。`folder` 类型仍支持把同一首歌的多个风格版本放在同一文件夹下，通过 `versions[].file` 的相对路径定位；版本切换器以 chip 形式出现在列表头部，点击即切换并自动播放。
 
 当当前播放的歌曲属于多版本组时，列表头部出现 VERSIONS 切换模块（chip 按钮）。
 

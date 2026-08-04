@@ -1,80 +1,91 @@
 # GOTO
 
-> A local application search and launch tool built around one search field. You do not need to learn gestures or understand settings first: enter what you remember, then launch the app.
->
-> Search and intent capabilities are powered by **GOTO Engine**.
+> One input, direct access. GOTO is a local-first app search and launcher: type the name, spelling, abbreviation, or keyword you remember, then get to the app with less friction.
 
 <div class="doc-story-intro">
-  <span class="doc-story-kicker">THE SHORT VERSION</span>
-  <strong>GOTO turns finding an app into one input.</strong>
-  <p>Names, pinyin, English terms, tags, shortcut characters, and fuzzy input all converge on the same search field. Advanced features exist only to make that field faster, steadier, and more context-aware.</p>
+  <strong>Make finding an app a short, calm, predictable action.</strong>
+  <p>GOTO keeps the experience focused: the search field is always close, results are easy to confirm, and recent and common entries evolve with real use.</p>
 </div>
 
-## Understand it in 30 seconds
+## Understand GOTO in 30 seconds
 
-<div class="doc-story-flow">
-  <button data-preview-action="home-ready" data-preview-target="searchCard"><b>01</b><span><strong>Open search</strong><small>Show the greeting state after the first tap</small></span></button>
-  <button data-preview-action="home-search" data-preview-target="searchCard" data-preview-query="wps"><b>02</b><span><strong>Enter a clue</strong><small>Use wps to demonstrate ranking</small></span></button>
-  <button data-preview-action="settings" data-preview-target="quickOpsCard"><b>03</b><span><strong>Create an index</strong><small>Bind a familiar character to an app</small></span></button>
-  <button data-preview-action="stats" data-preview-target="statsThanksCard"><b>04</b><span><strong>Inspect feedback</strong><small>Only launches made inside GOTO count</small></span></button>
-</div>
+The home screen centers on one action: open the search field, type what you want, and choose a result. You do not need to remember where an app sits on the launcher or navigate through a large menu.
 
-The complete logic is: **enter a clue → produce candidates → launch an app → improve the next local ranking**.
+<button class="doc-inline-demo" data-preview-action="home-ready">View the home screen preview</button>
 
-## The one product surface
+1. **Open search**: the field expands downward with a stable area for results.
+2. **Type what you remember**: names, English, Chinese, pinyin, abbreviations, tags, and common fuzzy input are supported.
+3. **Confirm the result**: result cards prefer the real app name and system icon. If an icon cannot be read, GOTO uses a consistent neutral-gray placeholder instead of inventing one.
+4. **Launch**: on Android, GOTO uses system capabilities to launch the real app; the web preview shows the corresponding interaction state.
 
-GOTO is not its settings, cards, or charts. Its primary surface is the home search field.
+## What GOTO does for you
 
-1. The default state displays only the search field.
-2. The first tap moves it upward and expands it into a greeting and prediction state.
-3. Typing hides the greeting and expands the result area according to result count.
-4. Clearing restores the greeting; tapping empty space again returns to the default state.
-5. Launching a result produces a small global confirmation.
+### Find apps faster
 
-<button class="doc-inline-demo" data-preview-action="home-ready" data-preview-target="searchCard">Verify this state flow on the left</button>
+Type a full name, a Chinese name, a pinyin fragment, or only the part you remember. GOTO organizes candidates into readable cards and keeps the most likely target easy to confirm.
 
-## Four search paths
+When nothing matches, the empty state keeps a fixed size and position so the page does not jump as the message changes. Edit the query or return to the home screen to use recent and common entries.
 
-### 1. Direct matching
+<button class="doc-inline-demo" data-preview-action="home-search" data-preview-query="chrome">Try search in the preview</button>
 
-Exact, prefix, and containment matches over names, pinyin, English labels, and abbreviations are ranked by certainty.
+### Recent and common entries evolve with you
 
-### 2. Fuzzy matching
+Home cards are not fixed demo data. Recent entries prioritize the most-used apps in the current time period and use nearby-period data when needed; common entries reflect the highest usage across periods.
 
-Character overlap, adjacent transposition, and keyboard distance handle mistakes. Adjacent transposition participates only after overlap exists and remains the lowest-priority signal.
+When there is no history, GOTO explains that there is nothing to display instead of filling the screen with fake apps. With real use, the cards become your personal launch surface.
 
-### 3. Meta-tag indexing
+### Adjust the experience without learning a system
 
-Local tags map an intent such as “payment” or “documents” to apps. Direct name matches still win; tags only add candidates.
+Basic settings, personalization, accessibility, and light-sense mode are deliberately small adjustments. Language, clock display, seconds, theme, motion, and card treatment can be changed in settings. Reset returns to clear defaults, including English, a 12-hour clock, and seconds disabled.
 
-### 4. Shortcut indexing
+<button class="doc-inline-demo" data-preview-action="settings">View settings in the preview</button>
 
-The editor is declarative: **I want to open XX app by entering XX.** A single rule is case-compatible; case only becomes distinguishing when similar rules conflict.
+Light-sense mode changes atmosphere, not search behavior. It adds a restrained glazed, misted material response based on the device environment. Without location permission it falls back to a conservative timezone estimate. System permission prompts explain the request, and basic search remains available if permission is declined.
 
-<div class="doc-logic-callout"><b>Ranking rule</b><span>Certainty comes before intelligence. Explicit user choices come before inference. Behavioral signals may reorder existing candidates but must not invent results.</span></div>
+### Put reminders in the right context
 
-## Why advanced features exist
+GOTO Where is the proactive reminder layer. With notification permission, it uses time, the foreground app, and recent behavior to decide when a reminder is appropriate and can send a real system notification. It does not rewrite your query or invent apps.
 
-- **Adaptive refresh** learns from five valid input samples, starts at 200 ms, and rejects a single deviation above 50%.
-- **Smart intuition** uses time, launch frequency, and action chains for lightweight suggestions.
-- **Statistics** records only after explicit activation and only for launches initiated inside GOTO.
-- **Light Sense** uses location, time zone, and time of day to drive luminance, ceramic/jade highlight direction, color temperature, and restrained ambient glow.
-- **Super Voice** is a planned "Extensions" preview feature. The goal is not to replace the keyboard but to pull voice interaction out of the traditional "tap → record → close" closed loop into a **conversational, non-intrusive** quick-action layer. Currently a placeholder only; no microphone permission is requested. See the dedicated "Features / Super Voice" page.
+### Keep advanced power out of the way
 
-<button class="doc-inline-demo" data-preview-action="settings" data-preview-target="pioneerCard">Open advanced settings</button>
+SuperGOTO groups advanced capabilities behind one switch. When enabled, you can progressively use adaptive refresh, GOTO Prethink, fuzzy matching, metadata indexing, simulated intelligence, and super voice. When disabled, the home screen stays simple.
 
-## The local feedback loop
+GOTO Prethink proposes a small set of possible query readings before search without changing the original input. The final result is still confirmed by the search flow. Component boundaries and implementation details belong in Architecture, not in this user-facing introduction.
 
-A search is not a launch. A launch is recorded only after the user selects a candidate and GOTO initiates the app opening. Before statistics activation every value remains zero; after activation, unavailable metrics remain `null` until real samples exist.
+<button class="doc-inline-demo" data-preview-action="supergoto">View advanced settings in the preview</button>
 
-<button class="doc-inline-demo" data-preview-action="stats" data-preview-target="statsIntelligenceCard">Inspect smart-intelligence signals</button>
+## A steadier everyday experience
 
-## Why the interface is restrained
+### Real apps, real entry points
 
-Standard mode uses Bauhaus order: grayscale hierarchy, one accent color, explicit borders, and a stable grid. Light Sense carries the material expression through translucent glass, time-aware color, and restrained glow. Layout and interaction stay identical across both.
+The Android app reads installed apps, names, icons, and launchable activities from the device. It does not ship a device-independent fake app list. If an icon cannot be obtained, a consistent gray placeholder is shown while the real name and launch state are preserved.
 
-## Where to continue
+### Built for different screens
 
-For use, read Basic Settings, Shortcut Index, and Adaptive Refresh. For the learning loop, read Statistics, Smart Intuition, and GOTO Engine. For data boundaries, read Data Management and Notices.
+GOTO is designed for phones, tablets, foldables, and Flip devices. It adapts to the actual window and safe areas instead of nesting a fixed web page inside the phone. Search, cards, status bars, and bottom areas keep independent spacing rules through orientation changes.
 
-<div class="doc-end-statement"><span>GOTO</span><b>Focus, And More.</b><small>Lesong</small></div>
+### Clear state feedback
+
+Launching an app produces a short confirmation. No results, missing permissions, empty statistics, and unavailable icons each have their own explanation. Motion has a gentle buffer and damping without blocking input or delaying launches.
+
+### Local-first and permission-aware
+
+App data, usage statistics, settings, and search history stay on the device by default. When notification, location, or app information is needed, GOTO uses the system permission flow and keeps basic features usable without it. Permissions can be revoked in system settings.
+
+<button class="doc-inline-demo" data-preview-action="stats">View statistics in the preview</button>
+
+## The document and phone preview work together
+
+The right-hand document is more than a text page. Selected sections provide a “view in phone preview” action that moves the left preview to the related page or state, connecting the explanation to the experience. The Android app follows the same experience contract while connecting to real system capabilities.
+
+Document sources live in `Document/` and are rendered into the right-hand content area. Product explanations can therefore evolve without hard-coding every sentence into page scripts.
+
+## Continue reading
+
+- **Architecture**: responsibilities and boundaries for Page, Prethink, Engine, Where, Base, and the Android host.
+- **PRD**: user goals, feature inventory, acceptance criteria, and release scope.
+- **Feature documents**: focused behavior for settings, statistics, light-sense mode, accessibility, and data management.
+- **UI and interaction specification**: search, cards, feedback, and responsive rules.
+- **Open-source notices**: dependencies and corresponding notices.
+
+GOTO is designed to make the next launch feel closer to: think of it, go to it.

@@ -3611,7 +3611,7 @@ body.light-sense-dark .music-pro-btn.primary{ background:var(--accent,#C1715C); 
                 <div class="music-cover-goto-sub">Music</div>
                 <div class="music-cover-goto-accent"></div>
               </div>
-<img class="music-cover-img" id="musicCoverImg" src="../goto-logo.png" alt="GOTO cover" style="display:none;" onerror="this.style.display='none';document.getElementById('musicCoverGoto').style.display='flex';">
+<img class="music-cover-img" id="musicCoverImg" src="goto-logo.png" alt="GOTO cover" style="display:none;" onerror="this.style.display='none';document.getElementById('musicCoverGoto').style.display='flex';">
               <div class="music-cover-placeholder" id="musicCoverPlaceholder" style="display:none;"></div>
               <div class="music-led" id="musicLed"></div>
             </div>
@@ -3788,7 +3788,7 @@ body.light-sense-dark .music-pro-btn.primary{ background:var(--accent,#C1715C); 
     playing: false,
     audio: null,
     duration: 0,
-    defaultCover: '../goto-logo.png',
+    defaultCover: 'goto-logo.png',
     loopMode: 'list',     // 'list' 列表循环 | 'single' 单曲循环
     volume: 0.8,          // 音量 0~1
     audioCtx: null,       // Web Audio Context（用于音效 + 频谱）
@@ -3959,7 +3959,9 @@ body.light-sense-dark .music-pro-btn.primary{ background:var(--accent,#C1715C); 
       var res = await fetch(MUSIC_BASE_URL + 'playlist.json');
       if(!res.ok) throw new Error('playlist.json 加载失败');
       var data = await res.json();
-      state.defaultCover = data.defaultCover || '../goto-logo.png';
+      // This document is rendered inside GOTO Page; assets resolve from the
+      // Page root rather than from the virtual Document/ folder.
+      state.defaultCover = 'goto-logo.png';
       if(data && Array.isArray(data.tracks)){
         data.tracks.forEach(function(t){
           // 类型 A：文件夹多版本结构

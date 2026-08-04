@@ -106,7 +106,7 @@ class GOTOAndroidBridge(private val context: Context) {
     @JavascriptInterface
     fun onSearchTriggered(query: String?) {
         Log.d(TAG, "搜索触发: $query")
-        // 后续接入 Engine.recordSearch(query)
+        query?.takeIf { it.isNotBlank() }?.let { com.appindex.GotoEngineRuntime.facade()?.recordSearch(it) }
     }
 
     /**
@@ -116,7 +116,10 @@ class GOTOAndroidBridge(private val context: Context) {
     @JavascriptInterface
     fun onAppLaunched(packageName: String?, appName: String?, query: String?) {
         Log.d(TAG, "启动应用: pkg=$packageName name=$appName query=$query")
-        // 后续接入 Engine.recordSelection(query, appName) + 启动 Intent
+        val name = appName?.takeIf { it.isNotBlank() } ?: packageName.orEmpty()
+        if (name.isNotBlank()) {
+            com.appindex.GotoEngineRuntime.facade()?.recordSelection(query.orEmpty(), name)
+        }
     }
 
     /**

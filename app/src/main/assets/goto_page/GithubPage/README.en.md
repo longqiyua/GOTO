@@ -3,7 +3,6 @@
 > A local application search and launch tool built around one search field. You do not need to learn gestures or understand settings first: enter what you remember, then launch the app.
 
 <div class="doc-story-intro">
-  <span class="doc-story-kicker">THE SHORT VERSION</span>
   <strong>GOTO turns finding an app into one input.</strong>
   <p>Names, pinyin, English terms, tags, shortcut characters, and fuzzy input all converge on the same search field. Advanced features exist only to make that field faster, steadier, and more context-aware.</p>
 </div>
@@ -74,5 +73,3 @@ Standard mode uses Bauhaus order: grayscale hierarchy, one accent color, explici
 ## Where to continue
 
 For use, read Basic Settings, Shortcut Index, and Adaptive Refresh. For the learning loop, read Statistics, Smart Intuition, and GOTO Engine. For data boundaries, read Data Management and Notices.
-
-<div class="doc-end-statement"><span>GOTO</span><b>Focus, And More.</b><small>Lesong</small></div>

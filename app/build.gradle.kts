@@ -15,8 +15,8 @@ android {
         applicationId = "com.appindex"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "V1.0 official"
+        versionCode = 2
+        versionName = "V1.0 update2"
     }
 
     buildTypes {

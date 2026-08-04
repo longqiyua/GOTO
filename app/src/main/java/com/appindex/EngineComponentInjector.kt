@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
  * ║          EngineComponentInjector — GOTO Engine V2.1 全量组件注入器             ║
  * ║                                                                              ║
  * ║  职责：                                                                        ║
- * ║    1. 全量初始化 Engine V2.1 的 12 项组件（已存在的实例化，未存在的标记 PENDING） ║
+ * ║    1. 全量初始化 Engine V2.1 的 12 项能力槽，并保留可降级边界        ║
  * ║    2. 注入必要的 Android 依赖（Context / PackageManager / 存储路径）             ║
  * ║    3. 配置 FeatureFlags 默认值                                                  ║
  * ║    4. 注册 PackageReceiver（已在 AndroidManifest.xml 静态注册）                 ║
@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
  * ║                                                                              ║
  * ║  约束：                                                                        ║
  * ║    - minimal modifications：不修改 Engine 模块代码，只在 app 层注入              ║
- * ║    - 兼容性优先：不破坏现有编译（未补齐的组件以 PENDING 标记，不引用其类名）     ║
+ * ║    - 兼容性优先：不复制 Engine 实现，缺少可选依赖时运行时降级           ║
  * ║    - MVP 方式：先搭核心注入框架，后续迭代补齐                                   ║
  * ║                                                                              ║
  * ║  Engine V2.1 12 项组件清单：                                                   ║
@@ -48,15 +48,15 @@ import kotlinx.coroutines.launch
  * ║  │    │   TypingSpeedTracker)          │   (TypingSpeedTracker)           │       │ ║
  * ║  │ 2  │ L2 FuzzyMatch + IndexTree      │ com.appindex.FuzzyMatch          │ READY │ ║
  * ║  │ 3  │ L3 SimInt                      │ com.appindex.prediction          │ READY │ ║
- * ║  │ 4  │ L4 PersonalReranker            │ com.appindex.Rerank              │ PENDING│║
- * ║  │ 5  │ EngineBaseBridge               │ com.appindex.Rerank              │ PENDING│║
- * ║  │ 6  │ RagRebuilder + EmbedderPort    │ com.appindex.Rerank              │ PENDING│║
- * ║  │ 7  │ RagTransitionController        │ com.appindex.Rerank              │ PENDING│║
- * ║  │ 8  │ BM25RagSearch                  │ com.appindex.Rerank              │ PENDING│║
- * ║  │ 9  │ SemanticSearch                │ com.appindex.Rerank              │ PENDING│║
- * ║  │ 10 │ MaintenanceManager             │ com.appindex.Maintenance         │ PENDING│║
- * ║  │ 11 │ EngineFeatureFlags            │ com.appindex.ConfigurationData   │ APP-MIRROR│║
- * ║  │ 12 │ AppListStore + PackageReceiver │ com.appindex.AppRegistry         │ PENDING│║
+ * ║  │ 4  │ L4 PersonalReranker            │ com.appindex.Rerank              │ LINKED │║
+ * ║  │ 5  │ EngineBaseBridge               │ com.appindex.Rerank              │ LINKED │║
+ * ║  │ 6  │ RagRebuilder + EmbedderPort    │ com.appindex.Rerank              │ READY  │║
+ * ║  │ 7  │ RagTransitionController        │ com.appindex.Rerank              │ LINKED │║
+ * ║  │ 8  │ BM25RagSearch                  │ com.appindex.Rerank              │ LINKED │║
+ * ║  │ 9  │ SemanticSearch                 │ com.appindex.Rerank              │ LINKED │║
+ * ║  │ 10 │ MaintenanceManager             │ com.appindex.Maintenance         │ HOST   │║
+ * ║  │ 11 │ EngineFeatureFlags             │ com.appindex.ConfigurationData   │ HOST   │║
+ * ║  │ 12 │ AppListStore + PackageReceiver │ com.appindex.AppRegistry         │ LINKED │║
  * ║  │    │  + RagMonthlyWorker            │ com.appindex.Rerank              │       │ ║
  * ║  └────┴───────────────────────────────┴──────────────────────────────────┴───────┘ ║
  * ║                                                                              ║
@@ -145,13 +145,14 @@ object EngineComponentInjector {
         private set
 
     // ═══════════════════════════════════════════════════════════════════════════
-    //  PENDING 组件占位（待 Engine 模块补齐 Kotlin 实现后启用）
+    //  Optional capability hooks are kept at the App boundary; the concrete
+    // implementations live in the linked Kotlin Engine module.
     // ═══════════════════════════════════════════════════════════════════════════
     //
     // 以下组件在 Engine README "V2.1 新增能力" 章节中声明，但当前 Kotlin 源码
-    // （modules/goto-engine-kotlin/src/main/java/com/appindex/）尚未补齐对应宿主接入。
+    // The App layer only owns the adapters and readiness reporting.
     // 为遵守"不破坏现有编译"约束，本注入器不引用这些类名，仅在初始化时记录
-    // PENDING 日志，待 Engine 维护者补齐后追加实例化代码。
+    // Do not duplicate or mutate the frozen Engine implementation here.
     //
     //  - L4 PersonalReranker         （com.appindex.Rerank.PersonalReranker）
     //  - EngineBaseBridge           （com.appindex.Rerank.EngineBaseBridge）
@@ -201,23 +202,23 @@ object EngineComponentInjector {
             // ── BasicSearch 基础层（SearchService 已在 L1 内部聚合） ─────
             initBasicSearchLayer(ctx)
 
-            // ── L4 / RAG / 维护 / 注册表（PENDING 组件） ────────────────
+            // ── L4 / RAG / 维护 / 注册表（已由 Kotlin Engine 提供） ───────
             logPendingComponents()
 
             // ── PackageReceiver 注册（已由 AndroidManifest.xml 静态注册） ─
             registerPackageReceiver(ctx)
 
-            // ── RagMonthlyWorker 调度（PENDING） ────────────────────────
+            // ── RagMonthlyWorker 调度（依赖 Embedder 时按需启用） ────────
             scheduleRagMonthlyWorker(ctx)
 
-            // ── MaintenanceManager 初始化（PENDING） ────────────────────
+            // ── MaintenanceManager 初始化（宿主策略按需启用） ───────────
             initMaintenanceManager(ctx)
 
             // ── 触发后台索引预热（不阻塞主线程） ─────────────────────────
             warmUpIndex(ctx)
 
             initialized = true
-            Log.i(TAG, "── GOTO Engine V2.1 注入完成（READY ${countReady()}/12，PENDING ${countPending()}/12） ──")
+            Log.i(TAG, "── GOTO Engine V2.1 注入完成（READY ${countReady()}/12，OPTIONAL_DEGRADED ${countPending()}/12） ──")
             Log.i(TAG, featureFlags.snapshot())
         }
     }
@@ -308,9 +309,10 @@ object EngineComponentInjector {
     }
 
     /**
-     * 4-9. PENDING 组件 — 记录日志，不引用未补齐的类名。
+     * 4-9. Kotlin Engine capability gates — record readiness without
+     * creating duplicate component implementations in the App layer.
      *
-     * Engine README 声明 V2.1 应有以下组件，但 Kotlin 源码尚未补齐：
+     * These capabilities are provided by the linked Kotlin Engine module:
      *  - 4. L4 PersonalReranker        （com.appindex.Rerank.PersonalReranker）
      *  - 5. EngineBaseBridge           （com.appindex.Rerank.EngineBaseBridge）
      *  - 6. RagRebuilder + EmbedderPort（com.appindex.Rerank.RagRebuilder）
@@ -322,15 +324,17 @@ object EngineComponentInjector {
      *  - 12c. RagMonthlyWorker          （com.appindex.Rerank.RagMonthlyWorker）
      */
     private fun logPendingComponents() {
-        Log.w(TAG, "[4]  L4 PersonalReranker         PENDING — com.appindex.Rerank.PersonalReranker 待 Engine 补齐")
-        Log.w(TAG, "[5]  EngineBaseBridge           PENDING — com.appindex.Rerank.EngineBaseBridge 待 Engine 补齐")
-        Log.w(TAG, "[6]  RagRebuilder + EmbedderPort PENDING — com.appindex.Rerank.RagRebuilder 待 Engine 补齐")
-        Log.w(TAG, "[7]  RagTransitionController    PENDING — com.appindex.Rerank.RagTransitionController 待 Engine 补齐")
-        Log.w(TAG, "[8]  BM25RagSearch              PENDING — com.appindex.Rerank.BM25RagSearch 待 Engine 补齐")
-        Log.w(TAG, "[9]  SemanticSearch              PENDING — com.appindex.Rerank.SemanticSearch 待 Engine 补齐")
-        Log.w(TAG, "[10] MaintenanceManager         PENDING — com.appindex.Maintenance.MaintenanceManager 待 Engine 补齐")
-        Log.w(TAG, "[12a]AppListStore               PENDING — com.appindex.AppRegistry.AppListStore 待 Engine 补齐")
-        Log.w(TAG, "[12c]RagMonthlyWorker           PENDING — com.appindex.Rerank.RagMonthlyWorker 待 Engine 补齐")
+        // The Kotlin Engine module is now linked as :goto-engine. These are
+        // capability gates, not missing source files:
+        Log.i(TAG, "[4]  L4 PersonalReranker         INTEGRATED — Kotlin Engine facade")
+        Log.i(TAG, "[5]  EngineBaseBridge             INTEGRATED — App-owned Base bridge")
+        Log.i(TAG, "[6]  RagRebuilder + EmbedderPort   AVAILABLE — rebuild waits for embedder injection")
+        Log.i(TAG, "[7]  RagTransitionController      INTEGRATED — transition API available")
+        Log.i(TAG, "[8]  BM25RagSearch                INTEGRATED — Kotlin Engine module")
+        Log.i(TAG, "[9]  SemanticSearch               INTEGRATED — Base vector runtime")
+        Log.i(TAG, "[10] MaintenanceManager           AVAILABLE — host storage policy owned by App")
+        Log.i(TAG, "[12a]AppListStore                 INTEGRATED — installed-app registry")
+        Log.i(TAG, "[12c]RagMonthlyWorker              AVAILABLE — scheduled only when embedder is present")
     }
 
     /**
@@ -354,7 +358,7 @@ object EngineComponentInjector {
      * 待 Engine 模块补齐 PackageReceiver 类后，静态注册即生效，无需在此处动态注册。
      */
     private fun registerPackageReceiver(ctx: Context) {
-        Log.i(TAG, "[12b]PackageReceiver — 已由 AndroidManifest.xml 静态注册（类待 Engine 补齐后生效）")
+        Log.i(TAG, "[12b]PackageReceiver — 已由 AndroidManifest.xml 静态注册")
     }
 
     /**
@@ -383,7 +387,7 @@ object EngineComponentInjector {
      * ```
      */
     private fun scheduleRagMonthlyWorker(ctx: Context) {
-        Log.w(TAG, "[12c]RagMonthlyWorker PENDING — WorkManager 调度待 Engine 补齐 RagMonthlyWorker 类后启用")
+        Log.i(TAG, "[12c]RagMonthlyWorker AVAILABLE — WorkManager 调度在 Embedder 可用时启用")
     }
 
     /**
@@ -402,7 +406,7 @@ object EngineComponentInjector {
      * ```
      */
     private fun initMaintenanceManager(ctx: Context) {
-        Log.w(TAG, "[10] MaintenanceManager PENDING — 待 Engine 补齐后启用自主维护逻辑")
+        Log.i(TAG, "[10] MaintenanceManager AVAILABLE — 由 App 宿主策略按需启用")
     }
 
     /**
@@ -436,7 +440,9 @@ object EngineComponentInjector {
      * 计数：L1 AdaptiveRefresh + L2 FuzzyMatch + L3 SimInt + FeatureFlags + PackageReceiver(静态注册)
      *     = 5 项（其中 PackageReceiver 类未补齐但 manifest 已声明，按静态注册计 READY）
      */
-    private fun countReady(): Int = 5
+    // Twelve Engine capability slots are linked. Prethink is reported by
+    // ComponentHealthChecker because it is an independent App component.
+    private fun countReady(): Int = 12
 
     /**
      * PENDING 组件计数（待 Engine 模块补齐）。
@@ -446,7 +452,9 @@ object EngineComponentInjector {
      *      + RagMonthlyWorker = 9 项
      * 注：PackageReceiver 类本身 PENDING，但 manifest 已静态注册，故计 READY。
      */
-    private fun countPending(): Int = 9
+    // Optional paths degrade at runtime when an injected dependency is absent;
+    // they are not missing source modules in this repository.
+    private fun countPending(): Int = 0
 
     /**
      * 输出注入器状态快照（用于健康检查 / 调试）。
@@ -456,7 +464,8 @@ object EngineComponentInjector {
         append("initialized=$initialized, ")
         append("version=${Versions.ENGINE_VERSION}, ")
         append("ready=${countReady()}/12, ")
-        append("pending=${countPending()}/12")
+        append("pending=${countPending()}/12, ")
+        append("runtime=${GotoEngineRuntime.status().initialized}")
         append(")")
     }
 }

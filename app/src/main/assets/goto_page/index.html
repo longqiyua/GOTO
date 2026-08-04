@@ -953,7 +953,7 @@ body.dark .status-bar{box-shadow:0 1px 0 rgba(255,255,255,0.04);}
 .main-view{flex:1 1 auto;display:flex;flex-direction:column;position:relative;min-height:0;overflow:hidden;gap:6px;padding-bottom:6px;transition:background 0.3s var(--ease-smooth);z-index:85;}
 .home-cluster{
   flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
-  margin:0 6px 6px;border:1px solid transparent;border-radius:20px;
+  margin:0 4px 6px;border:1px solid transparent;border-radius:20px;
   padding:0;
   transition:background .42s var(--ease-ios-soft),border-color .42s var(--ease-ios-soft),box-shadow .42s var(--ease-ios-soft),margin .42s var(--ease-ios-soft);
 }
@@ -971,7 +971,7 @@ body.dark:not(.slot-collapsed) .home-cluster{
   margin:0;padding:0;background:transparent;border-color:transparent;box-shadow:none;border-radius:0;
 }
 body:not(.slot-collapsed) .home-cluster .search-container{padding-left:8px;padding-right:8px;box-sizing:border-box;}
-body:not(.slot-collapsed) .home-cluster .shortcut-zone{padding:0 8px 10px;max-height:none;overflow-y:auto;}
+body:not(.slot-collapsed) .home-cluster .shortcut-zone{padding:0 8px 8px;max-height:none;overflow-y:auto;}
 body:not(.slot-collapsed) .home-cluster .slot-panel{margin:0 8px;background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;}
 body.dark .main-view{background:transparent;}
 /* 单页手机应用：main-view 永不滚动,搜索结果由 .deform-extension 从搜索框延展 */
@@ -1112,12 +1112,15 @@ body:not(.slot-collapsed) .search-container{
 }
 /* 首页卡片开启时：slot-panel 从下方滑入（自然弹性） */
 body:not(.slot-collapsed) .shortcut-zone{
-  animation:slotSlideIn 0.6s var(--ease-ios-spring) both;
+  animation:none;
   padding-top:0;
 }
+body:not(.slot-collapsed) .shortcut-zone.home-cards-opening{
+  animation:slotSlideIn 0.72s var(--ease-ios-spring) both;
+}
 @keyframes slotSlideIn{
-  from{opacity:0;transform:translateY(-12px);max-height:0;}
-  to{opacity:1;transform:translateY(0);max-height:60%;}
+  from{opacity:0;transform:translateY(-8px);}
+  to{opacity:1;transform:translateY(0);}
 }
 /* 搜索激活：搜索框延展到顶部（iOS 弹性曲线 + 微妙"呼吸绽放"） */
 .search-container.is-active,
@@ -1354,7 +1357,7 @@ body.dark .rs-time{
   display:flex;gap:6px;flex-wrap:wrap;
 }
 .sr-pred-app{
-  display:inline-flex;align-items:center;gap:4px;
+  display:inline-flex;align-items:center;gap:8px;
   padding:4px 10px;
   border-radius:999px;
   background:color-mix(in srgb, var(--accent) 10%, transparent);
@@ -1457,9 +1460,9 @@ body.neumorphic-mode .search-card,
 body.neumorphic-mode.slot-collapsed .search-card,
 body.neumorphic-mode.lv-reduceMotion .search-card{
   position:relative;
-  /* 与首页卡片（slot-panel 4px 边距）左右对齐 */
-  width:calc(100% - 8px);max-width:none;height:62px;
-  margin:0 4px;
+  /* 与首页卡片（slot-panel 8px 边距）左右对齐；圆角继续保持独立 */
+  width:calc(100% - 16px);max-width:none;height:62px;
+  margin:0 8px;
   box-sizing:border-box;
   /* 包豪斯精简:硬朗几何 + 圆角 12px(更克制,呼应整体) */
   border-radius:12px !important;
@@ -8922,9 +8925,11 @@ body.dark .app-suggest-item.active{background:rgba(39,174,96,0.12);}
 html:not(.embedded) body{
   display:flex !important;flex-direction:row !important;
   justify-content:flex-start !important;align-items:stretch !important;
-  padding:0 !important;min-height:100vh !important;overflow:hidden;
+  padding:0 !important;min-height:100vh !important;height:100vh !important;overflow:hidden !important;
   background:var(--bg) !important;
 }
+/* Standalone Page owns the viewport; only the document column may scroll. */
+html:not(.embedded){height:100% !important;overflow:hidden !important;}
 html:not(.embedded) body.dark{
   /* 灰透毛玻璃背景 — 避开纯黑/纯实色 */
   background:
@@ -9078,44 +9083,51 @@ body.dark .doc-pending-sub{color:var(--muted);}
 /* ═══ GOTO Music 卡片（目录底部托底，点击播放/暂停，无详细页面） ═══ */
 .doc-music-card{
   position:relative;
+  z-index:3;
   display:flex;align-items:center;justify-content:center;gap:7px;
-  margin:0 auto;
-  padding:6px 12px;
-  border:0.5px solid var(--line-strong);
-  border-radius:9px;
-  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  margin:0 10px 10px;
+  padding:10px 14px;
+  border:1px solid color-mix(in srgb,var(--ink) 14%,transparent);
+  border-radius:14px;
+  background:var(--surface);
   backdrop-filter:blur(12px) saturate(1.1);
   -webkit-backdrop-filter:blur(12px) saturate(1.1);
-  box-shadow:0 2px 8px rgba(12,14,20,0.06),0 1px 0 rgba(255,255,255,0.5) inset;
+  box-shadow:0 10px 24px rgba(12,14,20,0.14),0 1px 0 rgba(255,255,255,0.78) inset;
   font-family:'Poppins','Helvetica Neue',Arial,sans-serif;
   cursor:default;
   transition:all 0.28s var(--ease-smooth);
   user-select:none;
-  width:auto;max-width:168px;
+  width:calc(100% - 20px);max-width:none;
   box-sizing:border-box;
 }
 .doc-music-card:hover{
-  border-color:var(--ink-soft);
-  box-shadow:0 3px 12px rgba(12,14,20,0.10),0 1px 0 rgba(255,255,255,0.6) inset;
+  border-color:color-mix(in srgb,var(--accent) 38%,var(--ink) 14%);
+  box-shadow:0 12px 28px rgba(12,14,20,0.17),0 1px 0 rgba(255,255,255,0.82) inset;
 }
 .doc-music-card .dmc-label{
-  font-size:11px;font-weight:600;color:var(--ink-soft);
-  letter-spacing:-0.1px;white-space:nowrap;
+  font-size:12px;font-weight:600;color:var(--ink-soft);
+  letter-spacing:0.15px;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:7px;
 }
 /* GOTO Music 标识中 "GOTO" 复用全局品牌徽标（Poppins 700 + 强调色），按标签尺寸缩放 */
 .doc-music-card .dmc-label .bp-brand.dmc-brand{
   font-family:'Poppins','Helvetica Neue',Arial,sans-serif;
-  font-size:11px;font-weight:700;
-  letter-spacing:-0.3px;
+  font-size:13px;font-weight:700;
+  letter-spacing:0.35px;
   line-height:1;
   color:var(--accent);
   -webkit-text-fill-color:var(--accent);
   background:none;
   text-shadow:none;
-  padding:0;margin:0 2px 0 0;
+  padding:0;margin:0;
   align-self:auto;
   flex-shrink:0;
   font-variation-settings:"wght" 700;
+}
+.doc-music-card .dmc-music-text{
+  font-family:'Outfit','Helvetica Neue',Arial,sans-serif;
+  font-size:12px;font-weight:500;letter-spacing:0.35px;line-height:1;
+  color:var(--ink-soft);white-space:nowrap;
 }
 .doc-music-card .dmc-play-btn{
   width:26px;height:26px;flex-shrink:0;
@@ -9128,6 +9140,12 @@ body.dark .doc-pending-sub{color:var(--muted);}
   transition:all 0.22s var(--ease-smooth);
   box-shadow:0 2px 6px color-mix(in srgb,var(--accent) 36%,transparent);
   padding:0;
+  opacity:0;visibility:hidden;pointer-events:none;transform:scale(.84);
+  transition:opacity .22s var(--ease-smooth),visibility .22s var(--ease-smooth),transform .22s var(--ease-smooth),background .22s var(--ease-smooth);
+}
+.doc-music-card:hover .dmc-play-btn,
+.doc-music-card:focus-within .dmc-play-btn{
+  opacity:1;visibility:visible;pointer-events:auto;transform:scale(1);
 }
 .doc-music-card .dmc-play-btn:hover{
   filter:brightness(1.1);
@@ -9155,9 +9173,9 @@ body.dark .doc-pending-sub{color:var(--muted);}
 }
 /* 深色模式 */
 body.dark .doc-music-card{
-  background:color-mix(in srgb,#fff 5%,transparent);
+  background:color-mix(in srgb,var(--surface) 94%,#fff 6%);
   border-color:color-mix(in srgb,#fff 22%,transparent);
-  box-shadow:0 2px 8px rgba(0,0,0,0.3),0 1px 0 rgba(255,255,255,0.04) inset;
+  box-shadow:0 10px 24px rgba(0,0,0,0.32),0 1px 0 rgba(255,255,255,0.07) inset;
 }
 body.dark .doc-music-card .dmc-label{color:var(--ink-soft);}
 /* 光感模式：陶瓷质感 */
@@ -10626,10 +10644,8 @@ body.dark #sandboxLeft.entered::before{
    注意：覆盖 home-cluster 默认的 6px 横向 margin、border、background 等。 */
 .home-cluster,
 body:not(.slot-collapsed) .home-cluster,
-body.dark:not(.slot-collapsed) .home-cluster,
-body.slot-collapsed .home-cluster,
-body.dark.slot-collapsed .home-cluster{
-  margin:0 8px 6px!important;
+body.dark:not(.slot-collapsed) .home-cluster{
+  margin:0 4px 6px!important;
   background:transparent!important;
   border-color:transparent!important;
   box-shadow:none!important;
@@ -10637,16 +10653,20 @@ body.dark.slot-collapsed .home-cluster{
   overflow:visible!important;
   padding:0!important;
 }
+body.slot-collapsed .home-cluster,
+body.dark.slot-collapsed .home-cluster{
+  margin:0 8px 6px!important;
+}
 /* 搜索框横向外边距 = 8px（home-cluster 8px + 自身 8px = 16px），
    与下方 slot-card 的 16px 外边距完全对齐。 */
 body:not(.slot-collapsed) .home-cluster .search-container{
-  padding:14px 8px 12px!important;
+  padding:14px 8px 8px!important;
   box-sizing:border-box;
   transform:translateY(0)!important;
 }
 /* 卡片横向归零：让 slot-card 自身 8px padding 决定与 home-cluster 的视觉间距。 */
 body:not(.slot-collapsed) .home-cluster .shortcut-zone{
-  padding:0 0 6px!important;
+  padding:0 8px 8px!important;
   max-height:none;overflow:visible;
 }
 .slot-panel,
@@ -10658,6 +10678,25 @@ body.dark .slot-panel{
 }
 .slot-panel::before{content:none!important;}
 .search-card,.slot-card{width:100%;box-sizing:border-box;}
+body:not(.slot-collapsed) .home-cluster .search-card{margin:0!important;}
+/* 首页搜索框激活后与下方首页卡片保持同宽、同间距；回落依靠弹性曲线自然回缩 */
+body:not(.slot-collapsed) .home-cluster .search-container.is-active,
+body:not(.slot-collapsed) .home-cluster .search-container:has(.search-card.is-focused),
+body:not(.slot-collapsed) .home-cluster .search-container:has(.search-card.has-results){
+  padding-left:8px!important;
+  padding-right:8px!important;
+  transition:
+    padding .62s var(--ease-ios-spring),
+    transform .62s var(--ease-ios-spring),
+    flex .62s var(--ease-ios-spring);
+}
+body:not(.slot-collapsed) .home-cluster .search-card{
+  transition:
+    width .62s var(--ease-ios-spring),
+    margin .62s var(--ease-ios-spring),
+    transform .62s var(--ease-ios-spring),
+    box-shadow .3s var(--ease-smooth);
+}
 /* 卡片横向内边距 8px = 与搜索框共享 8px 边距语言。 */
 .slot-card{padding:12px 8px!important;border-radius:14px!important;}
 .search-container{width:100%;box-sizing:border-box;}
@@ -11336,7 +11375,7 @@ html.embedded #searchCard{
 </style>
 <!-- 最终维护层：新视觉与功能收口只写入独立文件，避免继续扩大单文件级联。 -->
 <link rel="stylesheet" href="preview-authority.css">
-<link rel="stylesheet" href="preview-final.css?rev=layout-fit-1">
+<link rel="stylesheet" href="preview-final.css?rev=search-corners-20">
 <link rel="stylesheet" href="dynamic-cursor/dynamic-cursor.css">
 <!-- 离线 MD→HTML 渲染器：加载 GithubPage/ 目录下的 MD 文档 -->
 <script src="libs/md-renderer.js"></script>
@@ -11475,6 +11514,60 @@ body.neumorphic-mode .gh-page-list-wrap{background:rgba(255,255,255,0.45)!import
 body.dark.neumorphic-mode #ghPagePanel,
 body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!important;backdrop-filter:blur(24px) saturate(1.4)!important;-webkit-backdrop-filter:blur(24px) saturate(1.4)!important;}
 </style>
+<style id="search-state-continuity-final">
+/* Keep the resting state animated too: focus and return must never jump. */
+html:not(.embedded) #searchView .home-cluster,
+html:not(.embedded) #searchView .home-cluster #searchZone.search-container,
+html:not(.embedded) #searchView .home-cluster #searchZone .search-card {
+  transition-property: margin, padding, width, height, min-height, max-height,
+    flex, flex-basis, transform, border-radius, box-shadow, background-color !important;
+  transition: margin .86s cubic-bezier(.18, 1.42, .32, 1),
+    padding .86s cubic-bezier(.18, 1.42, .32, 1),
+    width .86s cubic-bezier(.18, 1.42, .32, 1),
+    height .86s cubic-bezier(.18, 1.42, .32, 1),
+    min-height .86s cubic-bezier(.18, 1.42, .32, 1),
+    max-height .86s cubic-bezier(.18, 1.42, .32, 1),
+    flex .86s cubic-bezier(.18, 1.42, .32, 1),
+    flex-basis .86s cubic-bezier(.18, 1.42, .32, 1),
+    transform .86s cubic-bezier(.18, 1.42, .32, 1),
+    border-radius .86s cubic-bezier(.18, 1.42, .32, 1),
+    box-shadow .86s cubic-bezier(.18, 1.42, .32, 1) !important;
+  transition-duration: .86s !important;
+  transition-timing-function: cubic-bezier(.18, 1.42, .32, 1) !important;
+  will-change: margin, padding, width, height, transform;
+}
+html:not(.embedded) #searchView .home-cluster #searchZone .search-card {
+  transition-duration: .82s !important;
+}
+html:not(.embedded) #searchView .home-cluster #searchZone .search-card.is-focused,
+html:not(.embedded) #searchView .home-cluster #searchZone .search-card.has-results {
+  transition-duration: .9s !important;
+}
+/* Match the legacy three-ID rules that previously won the cascade. */
+html:not(.embedded) body #searchView .home-cluster #searchZone.search-container,
+html:not(.embedded) body #searchView .home-cluster #searchZone.search-container.is-active,
+html:not(.embedded) body #searchView .home-cluster #searchZone:has(.search-card.is-focused),
+html:not(.embedded) body #searchView .home-cluster #searchZone:has(.search-card.has-results) {
+  transition: margin .86s cubic-bezier(.18, 1.42, .32, 1),
+    padding .86s cubic-bezier(.18, 1.42, .32, 1),
+    flex .86s cubic-bezier(.18, 1.42, .32, 1),
+    flex-basis .86s cubic-bezier(.18, 1.42, .32, 1),
+    transform .86s cubic-bezier(.18, 1.42, .32, 1) !important;
+}
+html:not(.embedded) body #searchView .home-cluster #searchZone #searchCard,
+html:not(.embedded) body #searchView .home-cluster #searchZone .search-card.is-focused,
+html:not(.embedded) body #searchView .home-cluster #searchZone .search-card.has-results {
+  transition: margin .86s cubic-bezier(.18, 1.42, .32, 1),
+    padding .86s cubic-bezier(.18, 1.42, .32, 1),
+    width .86s cubic-bezier(.18, 1.42, .32, 1),
+    height .86s cubic-bezier(.18, 1.42, .32, 1),
+    min-height .86s cubic-bezier(.18, 1.42, .32, 1),
+    max-height .86s cubic-bezier(.18, 1.42, .32, 1),
+    transform .86s cubic-bezier(.18, 1.42, .32, 1),
+    border-radius .86s cubic-bezier(.18, 1.42, .32, 1),
+    box-shadow .86s cubic-bezier(.18, 1.42, .32, 1) !important;
+}
+</style>
 </head>
 <body style="opacity:1">
 <svg style="position:absolute;width:0;height:0;">
@@ -11577,7 +11670,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
   </svg>
 </div>
 <div class="bg-sphere" aria-hidden="true"></div>
-<div class="phone-version-mark" id="phoneVersionMark">V1.0</div>
+<div class="phone-version-mark" id="phoneVersionMark">V1.0 update</div>
 <div class="phone" id="phoneBody" oncontextmenu="return false">
   <!-- 欢迎界面覆盖层（手机内部）— 默认隐藏，仅首次访问/重置后显示 -->
   <div class="welcome-screen hidden" id="welcomeScreen">
@@ -12120,19 +12213,19 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
 
             <!-- 三：时钟详情 + 小时制（两栏宽松布局） -->
             <div class="sub-card" style="display:flex;gap:0;padding:0;">
-              <div class="setting-row" style="flex:1;border:none;padding:14px 16px;gap:10px;min-width:0;">
+              <div class="setting-row clock-setting-row" style="flex:1;border:none;padding:14px 16px;gap:10px;min-width:0;">
                 <div class="sr-left">
                   <span class="sr-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
                   <div class="sr-label" style="white-space:nowrap;font-size:11px;" data-i18n="clockDetailLabel">时钟秒数</div>
                 </div>
                 <div class="toggle-switch" id="showSecondsToggle" onclick="setShowSeconds(!this.classList.contains('on'))" style="flex-shrink:0;"></div>
               </div>
-              <div class="setting-row" style="flex:1;border:none;padding:14px 16px;gap:10px;min-width:0;">
+              <div class="setting-row clock-setting-row" style="flex:1;border:none;padding:14px 16px;gap:10px;min-width:0;">
                 <div class="sr-left">
                   <span class="sr-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
-                  <div class="sr-label" style="white-space:nowrap;font-size:11px;" data-i18n="hourFormatLabel">24 小时</div>
+                  <div class="sr-label" style="white-space:nowrap;font-size:11px;" data-i18n="hourFormatLabel">12 小时</div>
                 </div>
-                <div class="toggle-switch" id="hourFormatToggle" onclick="setHourFormat(this.classList.contains('on')?'24':'12')" style="flex-shrink:0;"></div>
+                <div class="toggle-switch on" id="hourFormatToggle" onclick="setHourFormat(this.classList.contains('on')?'24':'12')" style="flex-shrink:0;"></div>
               </div>
             </div>
 
@@ -13091,7 +13184,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       // — 外观
       secPersonalize:'个性化',styleModeLabel:'界面风格',styleFlat:'标准',styleNeumorphic:'质态',styleLightSense:'光感模式',
       darkLabel:'主题模式',lightMode:'浅色',darkMode:'深色',
-      inkModeLabel:'墨水屏',clockDetailLabel:'时钟秒数',hourFormatLabel:'24 小时',
+      inkModeLabel:'墨水屏',clockDetailLabel:'时钟秒数',hourFormatLabel:'12 小时',
       fontModuleTitle:'字体',fontSizeLabel:'大小',fontWeightLabel:'字重',fontStyleLabel:'字体样式',fontImportBtn:'导入',
       fsXS:'极小',fsS:'小',fsM:'中',fsL:'大',fsXL:'极大',
       fwThin:'极细',fwLight:'细',fwRegular:'标准',fwBold:'粗',fwBlack:'加粗',
@@ -13236,7 +13329,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       giscusNote:'评论区加载中…（需登录 GitHub）',
       // ══ 右侧文档区 / 全局覆盖层 / 弹窗按钮 ══
       docProductPlaque:'文档',
-      docVersionTag:'V1.0 official',
+      docVersionTag:'V1.0 update',
       docWorkbenchState:'预览已联动',
       docLoading:'加载中…',
       docLoadFailed:'加载失败：',
@@ -13289,7 +13382,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       slotRecent:'Recent',slotFrequent:'Frequent',slotCustom:'Custom',
       secPersonalize:'Personalization',styleModeLabel:'Style',styleFlat:'Standard',styleNeumorphic:'Material',styleLightSense:'Light Sense',
       darkLabel:'Theme',lightMode:'Light',darkMode:'Dark',
-      inkModeLabel:'Ink Mode',clockDetailLabel:'Clock Seconds',hourFormatLabel:'24h',
+      inkModeLabel:'Ink Mode',clockDetailLabel:'Clock Seconds',hourFormatLabel:'12h',
       fontModuleTitle:'Font',fontSizeLabel:'Size',fontWeightLabel:'Weight',fontStyleLabel:'Style',fontImportBtn:'Import',
       fsXS:'XS',fsS:'S',fsM:'M',fsL:'L',fsXL:'XL',
       fwThin:'Thin',fwLight:'Light',fwRegular:'Regular',fwBold:'Bold',fwBlack:'Black',
@@ -13427,7 +13520,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       giscusNote:'Loading comments\u2026 (GitHub sign-in required)',
       // ══ Right-side doc area / global overlays / popup buttons ══
       docProductPlaque:'Document',
-      docVersionTag:'V1.0 official',
+      docVersionTag:'V1.0 update',
       docWorkbenchState:'PREVIEW LINKED',
       docLoading:'Loading…',
       docLoadFailed:'Load failed: ',
@@ -18599,7 +18692,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
     if(title) title.textContent = item.title;
     if(meta) meta.textContent = item.path || (file && file.path) || '';
     if(cover){
-      cover.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a2a2a,#1a1a1a);color:rgba(255,255,255,0.5);font-size:18px;border-radius:inherit;">♪</div>';
+      cover.innerHTML = '<img src="goto-logo.png" alt="GOTO Music" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;" onerror="this.replaceWith(Object.assign(document.createElement(\'div\'),{textContent:\'♪\',style:\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a2a2a,#1a1a1a);color:rgba(255,255,255,0.5);font-size:18px;border-radius:inherit;\'}))">';
     }
     _updateAudioListInfo();
     // 悬浮小窗：仅显示播放器，不再锁定 body 滚动
@@ -19874,25 +19967,15 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       }
       // ═══ 填充右侧推荐应用（固定 2 个，左图标右名字，自定义卡片样式） ═══
       try{
-        var predBox = document.getElementById('scReadyPred');
-        if(predBox){
-          var topN = (typeof _smartReminderPredictTopN === 'function') ? _smartReminderPredictTopN(2) : [];
+      var predBox = document.getElementById('scReadyPred');
+      if(predBox){
+          // 推荐应用属于统计能力：未激活统计时默认完全隐藏，不能用全量应用兜底。
+          var statsEnabled = localStorage.getItem('goto_activated') === '1';
           predBox.innerHTML = '';
-          // 固定补足到 2 个：不足时从全量应用里按使用频次补
-          if(topN.length < 2){
-            try{
-              var allApps = (typeof _getAllApps === 'function') ? _getAllApps() : [];
-              var used = {};
-              topN.forEach(function(it){ if(it&&it.target) used[it.target]=1; });
-              for(var ai=0; ai<allApps.length && topN.length<2; ai++){
-                var a=allApps[ai];
-                if(a && a.name && !used[a.name]){
-                  topN.push({target:a.name, appId:a.id});
-                  used[a.name]=1;
-                }
-              }
-            }catch(_){}
-          }
+          predBox.style.display = statsEnabled ? 'flex' : 'none';
+          if(statsEnabled){
+          var topN = (typeof _smartReminderPredictTopN === 'function') ? _smartReminderPredictTopN(2) : [];
+          // 只展示统计中真实产生过的候选；不足两个时保持实际数量，不制造演示推荐。
           topN = topN.slice(0,2);
           if(topN.length){
             topN.forEach(function(item){
@@ -19908,9 +19991,8 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
               }catch(_){}
               var color = _appCardColor(appObj,'hsl(215 8% 76%)');
               var iconUri = appObj && typeof _appIconURI === 'function' ? _appIconURI(appObj) : '';
-              var iconMarkup = iconUri
-                ? '<img class="app-picker-icon" src="' + iconUri + '" alt="" loading="lazy" onerror="window._renderNullIcon&&window._renderNullIcon(this.parentElement)">'
-                : '<span class="app-icon-null"><span class="app-icon-placeholder" aria-label="icon unavailable"></span></span>';
+              // 推荐卡片优先使用系统真实图标；取不到时回退到统一 GOTO 默认图标。
+              var iconMarkup = '<img class="app-picker-icon" src="' + (iconUri || 'goto-logo.png') + '" alt="" loading="lazy" onerror="this.onerror=null;this.src=\'goto-logo.png\'">';
               var btn = document.createElement('button');
               btn.className = 'sc-ready-pred-item';
               btn.type = 'button';
@@ -19923,6 +20005,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
             predBox.style.display = 'flex';
           }else{
             predBox.style.display = 'none';
+          }
           }
         }
       }catch(_){}
@@ -19964,7 +20047,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
         const m = String(d.getMinutes()).padStart(2,'0');
         const s = String(d.getSeconds()).padStart(2,'0');
         const showSeconds = window._showSeconds === true || localStorage.getItem('goto_show_seconds') === '1';
-        const hourFormat = localStorage.getItem('goto_hour_format') || '24';
+        const hourFormat = localStorage.getItem('goto_hour_format') || '12';
         if (hourFormat === '12') {
           const period = hh >= 12 ? ' PM' : ' AM';
           hh = hh % 12 || 12;
@@ -20060,7 +20143,9 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       // 更新标签文字
       if(tg){
         const lbl = tg.closest('.setting-row')?.querySelector('.sr-label');
-        if(lbl) lbl.textContent = format === '12' ? '12 小时' : '24 小时';
+        if(lbl) lbl.textContent = format === '12'
+          ? (window._lang === 'en' ? '12h' : '12 小时')
+          : (window._lang === 'en' ? '24h' : '24 小时');
       }
       if(typeof _showToggleLabel==='function')_showToggleLabel(tg,isOn);
       updateClock();
@@ -20078,7 +20163,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       const showSeconds=window._showSeconds===true||localStorage.getItem('goto_show_seconds')==='1';
 
       // 检查 12/24 小时制设置
-      const hourFormat = localStorage.getItem('goto_hour_format') || '24';
+      const hourFormat = localStorage.getItem('goto_hour_format') || '12';
       if (hourFormat === '12') {
         const period = hh >= 12 ? 'PM' : 'AM';
         hh = hh % 12 || 12;
@@ -20793,6 +20878,26 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
             // 智能提醒屏蔽标记
           ];
           extraKeys.forEach(function(k){try{localStorage.removeItem(k);}catch(_){}});
+          // 设置键可能随版本增加；统一清掉所有 goto_ 配置，保留真实应用目录数据。
+          try{
+            for(var resetIndex=localStorage.length-1;resetIndex>=0;resetIndex--){
+              var resetKey=localStorage.key(resetIndex);
+              if(resetKey && resetKey.indexOf('goto_')===0 && resetKey!=='goto_apps' && resetKey!=='goto_installed_apps'){
+                localStorage.removeItem(resetKey);
+              }
+            }
+          }catch(_){ }
+          // 首次进入默认值：英文、浅色、12 小时制、关闭秒钟。
+          try{
+            localStorage.setItem('goto_lang','en');
+            localStorage.setItem('goto_theme','light');
+            localStorage.setItem('goto_dark_mode','0');
+            localStorage.setItem('goto_hour_format','12');
+            localStorage.removeItem('goto_show_seconds');
+            _welcomeLang='en';
+            _welcomeTheme='light';
+            window._showSeconds=false;
+          }catch(_){ }
           // 恢复默认强调色 #FF7E00，并清空自定义调色板
           try{if(typeof pickColor==='function')pickColor('#FF7E00');}catch(_){}
           // 重置设置时同步清除统计数据 + 激活态，确保重新激活从干净基线开始
@@ -20825,6 +20930,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
           try{
             document.body.classList.remove('dark','neumorphic-mode','ink-mode','super-match','light-sense','light-sense-dark','light-sense-light','welcome-active','welcome-leaving','slot-user-hidden','cd-no-font','cd-no-card','lv-highContrast','lv-largeText','lv-boldText','lv-grayscale','lv-invert','lv-reduceMotion','embedded','lang-en','slot-collapsed');
             document.body.classList.add('simple-mode');
+            if(typeof _applyLang==='function')_applyLang('en');
           }catch(_){}
           // 重置 sandboxLeft / sandboxRight 全部状态类，回到首次进入
           try{
@@ -20838,6 +20944,13 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
               _sbR.classList.remove('glow-bottom-right');
               _sbR.style.display='none';
             }
+            // 清掉上一次停留的文档/设置页状态，重新进入时从首页 README 开始。
+            var _docBodyReset=document.getElementById('docBody');
+            if(_docBodyReset)_docBodyReset.removeAttribute('data-activated');
+            _currentDocId=null;_currentDocFile=null;
+            document.body.classList.remove('has-bloom','bloom-opening','bloom-closing','bloom-transitioning');
+            var _bloomReset=document.getElementById('bloomPage');
+            if(_bloomReset){_bloomReset.classList.remove('open','closing');_bloomReset.style.display='none';}
           }catch(_){}
           try{
             if(window._lightSenseInterval){ clearInterval(window._lightSenseInterval); window._lightSenseInterval=null; }
@@ -20881,6 +20994,18 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
           try{
             // 关闭所有"开关"类控件
             document.querySelectorAll('.toggle-switch.on, .pioneer-toggle.on, .ap-toggle-track.on').forEach(function(el){ el.classList.remove('on'); });
+            var resetSecondsToggle=document.getElementById('showSecondsToggle');
+            if(resetSecondsToggle){
+              resetSecondsToggle.classList.remove('on');
+              if(typeof _showToggleLabel==='function')_showToggleLabel(resetSecondsToggle,false);
+            }
+            var resetHourToggle=document.getElementById('hourFormatToggle');
+            if(resetHourToggle){
+              resetHourToggle.classList.add('on');
+              var resetHourLabel=resetHourToggle.closest('.setting-row')?.querySelector('.sr-label');
+              if(resetHourLabel)resetHourLabel.textContent=(window._lang==='en'?'12h':'12 小时');
+              if(typeof _showToggleLabel==='function')_showToggleLabel(resetHourToggle,true);
+            }
             // 移除所有"已选"高亮
             document.querySelectorAll('.lc-opt.active, .cd-card.active, .ext-card.active, .bp-icon-btn.active').forEach(function(el){ el.classList.remove('active'); });
           }catch(_){}
@@ -22516,6 +22641,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
   // 复用 _smartReminderPredict 的候选池逻辑，但保留 top N 而非仅 top 1
   function _smartReminderPredictTopN(n){
     try{
+      if(localStorage.getItem('goto_activated')!=='1') return [];
       n = n || 2;
       // 简化实现：直接基于 _getStats 全局热度 + 24h 频次融合，取 top N
       var stats = _getStats();
@@ -26950,6 +27076,14 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
         body.classList.remove('slot-collapsed');
         body.classList.remove('slot-user-hidden');
         try{localStorage.setItem('goto_slot_expanded','1');}catch(_){}
+        // 同页展开：重置动画时间线，避免首次打开被已有布局状态吞掉。
+        const openingZone=document.getElementById('shortcutZone');
+        if(openingZone){
+          openingZone.classList.remove('home-cards-opening');
+          void openingZone.offsetWidth;
+          openingZone.classList.add('home-cards-opening');
+          setTimeout(function(){openingZone.classList.remove('home-cards-opening');},760);
+        }
       }else{
         // 全部子开关关闭 → 收起首页模块
         body.classList.add('slot-collapsed');
@@ -28283,7 +28417,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
         styleMode:'flat',
         inkMode:document.body.classList.contains('ink-mode'),
         showSeconds:!!window._showSeconds,
-        hourFormat:localStorage.getItem('goto_hour_format')||'24',
+        hourFormat:localStorage.getItem('goto_hour_format')||'12',
         fontSizeIdx:window._fontSizeIdx,
         fontWeightIdx:window._fontWeightIdx,
         fontStyle:window._fontStyle,
@@ -28405,7 +28539,10 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       });
     }
     const bundled=window.GOTO_DOCUMENT_BUNDLE&&window.GOTO_DOCUMENT_BUNDLE[file];
-    if(location.protocol==='file:'&&typeof bundled==='string'){
+    // Prefer the generated bundle on every protocol. This makes document
+    // navigation synchronous after the initial page load instead of issuing
+    // one network request for every directory click.
+    if(typeof bundled==='string'){
       _docCache[file]=bundled;
       return bundled;
     }
@@ -28424,6 +28561,18 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       if(typeof bundled==='string'){_docCache[file]=bundled;return bundled;}
       return '# 加载失败\n\n'+e.message;
     }
+  }
+
+  function _preloadDocs(){
+    const files=[];
+    DOC_TREE.forEach(function(group){
+      group.items.forEach(function(item){
+        [item.file,item.fileEn].forEach(function(file){
+          if(file&&files.indexOf(file)<0)files.push(file);
+        });
+      });
+    });
+    return Promise.all(files.map(function(file){return _loadDoc(file).catch(function(){return null;});}));
   }
 
   function _renderDocTree(treeEl){
@@ -28464,7 +28613,8 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       treeEl.appendChild(bottomEl);
     }
     bottomEl.innerHTML='<div class="doc-music-card" id="docMusicCard" title="GOTO Music">'+
-            '<span class="dmc-label"><span class="bp-brand dmc-brand">GOTO</span> Music</span>'+
+            '<span class="dmc-goto"><span class="bp-brand dmc-brand">GOTO</span></span>'+
+            '<span class="dmc-music">Music</span>'+
             '<button class="dmc-play-btn" id="dmcPlayBtn" type="button" onclick="toggleDocMusic(event)" title="播放/暂停">'+
               '<svg class="dmc-icon" id="dmcIconPlay" viewBox="0 0 12 12" fill="currentColor"><path d="M3 1.5L9.5 6L3 10.5V1.5Z"/></svg>'+
               '<svg class="dmc-icon" id="dmcIconPause" viewBox="0 0 12 12" fill="currentColor" style="display:none;"><rect x="2.5" y="2" width="2.5" height="8" rx="0.5"/><rect x="7" y="2" width="2.5" height="8" rx="0.5"/></svg>'+
@@ -28619,8 +28769,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
     var isEn=window._lang==='en'||document.body.classList.contains('lang-en');
     var panel=document.createElement('div');
     panel.className='doc-preview-actions';
-    panel.innerHTML='<span class="doc-preview-actions-label">'+(isEn?'LIVE PREVIEW':'联动预览')+'</span>'+
-      '<div class="doc-preview-actions-list">'+actions.map(function(item){
+    panel.innerHTML='<div class="doc-preview-actions-list">'+actions.map(function(item){
         return '<button type="button" onclick="runDocPreviewAction(\''+item[0]+'\',\''+item[1]+'\',\''+(item[4]||'')+'\')"><span></span>'+(isEn?item[3]:item[2])+'</button>';
       }).join('')+'</div>';
     contentEl.insertBefore(panel,contentEl.firstChild);
@@ -28757,7 +28906,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
     if(!target||!target.contentEl||!window.NoteToShow)return null;
     return window.NoteToShow.mount(target.contentEl,{
       sourceRoot:'Document/',
-      style:'archive',
+      style:'gotostyle',
       watchInterval:2200,
       renderSource:function(source,note){return _renderNoteSource(source,note.file);},
       onRendered:function(note,contentEl){
@@ -28836,15 +28985,6 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
           }catch(_){}
         }, 200);
       }
-      // 控制底部预览联动状态条显示/隐藏
-      var wbs = target.contentEl.parentElement && target.contentEl.parentElement.querySelector('.doc-workbench-state');
-      if(wbs){ wbs.style.display = isSpecialPage ? 'none' : ''; }
-      // 兜底：全局隐藏所有 doc-workbench-state（防止多面/嵌套场景遗漏）
-      if(isSpecialPage){
-        document.querySelectorAll('.doc-workbench-state').forEach(function(el){
-          el.style.display='none';
-        });
-      }
       _markDocVisited(docId);
       // 文档片段加载后应用当前语言翻译（覆盖 community_page.html 等带 data-i18n 的片段）
       try{ if(typeof applyI18n==='function')applyI18n(window._lang||'zh-cn'); }catch(_){}
@@ -28874,6 +29014,9 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
   function initDocPanel(){
     const face=_activeDocFace();
     if(face&&face.treeEl)_renderDocTree(face.treeEl);
+    // Warm the complete document bundle before the first directory action.
+    // The first page can still paint immediately; later clicks read memory.
+    _preloadDocs();
     // 提前加载隐藏播放器，让目录底部的播放按钮在首次点击时已有完整播放器状态机。
     try{ _loadDocMusic(); }catch(_){ }
     if(DOC_TREE.length>0&&DOC_TREE[0].items.length>0){
@@ -29297,6 +29440,8 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
       const container=document.getElementById('extendSmartPredApps');
       if(!container)return;
       container.innerHTML='';
+      // 统计未激活时，扩展推荐保持空白，不从最近列表伪造推荐。
+      if(localStorage.getItem('goto_activated')!=='1') return;
       // 从最近使用列表取前2个作为预测
       var recent=[];
       try{ recent=JSON.parse(localStorage.getItem('goto_recent_apps')||'[]'); }catch(_){}
@@ -29312,14 +29457,10 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
         var iconUri=appData&&typeof _appIconURI==='function'?_appIconURI(appData):'';
         var icon=document.createElement('span');
         icon.className='sr-pred-app-icon';
-        if(iconUri){
-          var image=document.createElement('img');
-          image.className='app-picker-icon';image.src=iconUri;image.alt='';image.loading='lazy';
-          image.onerror=function(){if(typeof _renderNullIcon==='function')_renderNullIcon(this.parentElement);};
-          icon.appendChild(image);
-        }else if(typeof _renderNullIcon==='function'){
-          _renderNullIcon(icon);
-        }
+        var image=document.createElement('img');
+        image.className='app-picker-icon';image.src=iconUri||'goto-logo.png';image.alt='';image.loading='lazy';
+        image.onerror=function(){this.onerror=null;this.src='goto-logo.png';};
+        icon.appendChild(image);
         var label=document.createElement('span');
         label.textContent=name;
         var app=document.createElement('div');
@@ -29359,7 +29500,7 @@ body.dark.neumorphic-mode .gh-page-list-wrap{background:rgba(24,24,27,0.40)!impo
 <link rel="stylesheet" href="note-to-show/note-to-show.css?rev=2">
 <script src="note-to-show/note-to-show.js?rev=2"></script>
 <script src="prethink/goto-prethink.js?rev=1"></script>
-<script src="Document/document-bundle.js?rev=32" onerror="(function(){try{var s=document.createElement('script');s.src='Document/document-bundle.js';s.dataset.gotoBundleRetry='1';document.head.appendChild(s);}catch(_){}})()"></script>
+<script src="Document/document-bundle.js?rev=34" onerror="(function(){try{var s=document.createElement('script');s.src='Document/document-bundle.js?rev=34';s.dataset.gotoBundleRetry='1';document.head.appendChild(s);}catch(_){}})()"></script>
 <!-- 需求 7：markdown-it 仅用于预览界面文档区渲染，软件内部不使用；async 不阻塞后续解析，调用方已做 typeof 检查 + onerror 兜底 -->
 <script async src="libs/markdown-it.min.js" onerror="window.__markdownItLoadFailed=true"></script>
 <!-- mermaid：仅用于文档区流程图/时序图渲染，async 不阻塞；加载后挂 __mermaidReady 标记 -->
@@ -29583,7 +29724,6 @@ window.GOTOEngineFacade=window.GOTOEngineComponent.create({
       <div class="doc-content-wrap" onscroll="updateDocScrollProgress(this)">
         <div class="doc-scroll-progress"><div class="doc-scroll-progress-fill" id="docScrollProgress"></div></div>
         <div class="doc-content" id="docContentFront"></div>
-        <div class="doc-workbench-state"><span></span><b data-i18n="docWorkbenchState">PREVIEW LINKED</b><em id="docVisitedProgress">0 / 0</em></div>
       </div>
     </div>
     <!-- GitHub Page 离线 MD 文档面板：覆盖于 #docBody 之上，独立加载 GithubPage/ 目录 -->
@@ -30063,144 +30203,48 @@ function toggleDocMusic(ev){
   if(ev){
     try{ ev.stopPropagation(); ev.preventDefault(); }catch(_){}
   }
-  var card = document.getElementById('docMusicCard');
-  var iconPlay = document.getElementById('dmcIconPlay');
-  var iconPause = document.getElementById('dmcIconPause');
-  var btn = document.getElementById('dmcPlayBtn');
+  var card=document.getElementById('docMusicCard');
+  var iconPlay=document.getElementById('dmcIconPlay');
+  var iconPause=document.getElementById('dmcIconPause');
+  var btn=document.getElementById('dmcPlayBtn');
 
   function setPlayingUI(isPlaying){
-    if(card) card.classList.toggle('is-playing', isPlaying);
-    if(iconPlay) iconPlay.style.display = isPlaying ? 'none' : 'block';
-    if(iconPause) iconPause.style.display = isPlaying ? 'block' : 'none';
+    if(card)card.classList.toggle('is-playing',!!isPlaying);
+    if(iconPlay)iconPlay.style.display=isPlaying?'none':'block';
+    if(iconPause)iconPause.style.display=isPlaying?'block':'none';
+    if(btn)btn.setAttribute('aria-label',isPlaying?'暂停 GOTO Music':'播放 GOTO Music');
   }
 
-  // 目录入口使用页面级 Audio 作为可靠首击路径。完整 Music 页面会
-  // 复用 window.__gotoMusicAudio，因此离开文档页不会丢失播放会话。
-  function toggleDocDirectAudio(){
-    try{
-      var audio=window.__gotoMusicAudio;
-      if(!audio || !document.contains(audio)){
-        audio=document.createElement('audio');
-        audio.src='music/tomorrow/Rock.mp3';
-        audio.preload='auto';
-        audio.setAttribute('aria-hidden','true');
-        audio.style.cssText='position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';
-        document.body.appendChild(audio);
-        window.__gotoMusicAudio=audio;
-      }
-      if(!audio.__gotoDocMusicBound){
-        audio.__gotoDocMusicBound=true;
-        audio.addEventListener('play',function(){setPlayingUI(true);});
-        audio.addEventListener('pause',function(){setPlayingUI(false);});
-        audio.addEventListener('ended',function(){setPlayingUI(false);});
-        audio.addEventListener('error',function(){setPlayingUI(false);console.warn('GOTO Music asset failed to load');});
-      }
-      if(audio.paused){
-        var promise=audio.play();
-        if(promise&&typeof promise.catch==='function')promise.catch(function(){setPlayingUI(false);});
-        setPlayingUI(true);
-      }else{
-        audio.pause();
-        setPlayingUI(false);
-      }
-      return true;
-    }catch(error){
-      console.warn('GOTO Music direct audio failed:',error);
-      return false;
-    }
-  }
-
-  if(toggleDocDirectAudio())return;
-
-  function tryPlayTarget(){
-    var state = window.__gotoMusic;
-    if(!state || !state.tracks || !state.tracks.length){
-      return false;
-    }
-    // 查找 groupId=tomorrow 且 version 包含 rock 的曲目
-    var targetIdx = -1;
-    for(var i=0;i<state.tracks.length;i++){
-      var trk = state.tracks[i];
-      if(trk.groupId === 'tomorrow' && trk.version && /rock/i.test(String(trk.version))){
-        targetIdx = i; break;
-      }
-    }
-    // 回退：取 tomorrow 组任一版本
-    if(targetIdx < 0){
-      for(var j=0;j<state.tracks.length;j++){
-        if(state.tracks[j].groupId === 'tomorrow'){ targetIdx = j; break; }
-      }
-    }
-    // 再回退：第一首可播放曲目
-    if(targetIdx < 0){
-      for(var k=0;k<state.tracks.length;k++){
-        if(state.tracks[k].file || state.tracks[k].url){ targetIdx = k; break; }
-      }
-    }
-    if(targetIdx < 0) return false;
-
-    state.index = targetIdx;
-    if(typeof state.prepareAudio === 'function') state.prepareAudio();
-
-    // 统一走播放器公开的状态机，确保频谱、LED、会话与播放器页面同步。
-    try{ if(typeof state.play==='function')state.play(); else if(state.audio)state.audio.play(); }catch(playErr){ console.error('doc music play failed:', playErr); }
-    setPlayingUI(true);
-    return true;
-  }
-
-  if(!_docMusicLoaded){
-    // 首次点击：加载音乐页面，等待曲目就绪后播放
-    if(btn) btn.classList.add('is-loading');
-    _loadDocMusic(function(){
-      // 等待 playlist 初始化完成（异步加载 JSON）
-      var attempts = 0;
-      var maxAttempts = 50;
-      var timer = setInterval(function(){
-        attempts++;
-        var state = window.__gotoMusic;
-        if(state && state.tracks && state.tracks.length){
-          clearInterval(timer);
-          if(btn) btn.classList.remove('is-loading');
-          if(!tryPlayTarget()){
-            // iframe 作为最后一层兼容回退：直接触发完整 Music 页的播放控件。
-            try{
-              var fallbackFrame=window.__gotoMusicFrame;
-              var fallbackButton=fallbackFrame&&fallbackFrame.contentDocument&&fallbackFrame.contentDocument.querySelector('.music-seg-play');
-              if(fallbackButton){fallbackButton.click();setPlayingUI(true);}
-            }catch(fallbackError){console.warn('doc music fallback play failed:',fallbackError);}
-          }
-          return;
-        }
-        if(attempts >= maxAttempts){
-          clearInterval(timer);
-          if(btn) btn.classList.remove('is-loading');
-          console.warn('doc music: tracks not ready after load');
-        }
-      }, 120);
-    });
-    return;
-  }
-
-  // 已加载：切换播放/暂停
   try{
-    var state = window.__gotoMusic;
-    if(!state || !state.audio){
-      try{
-        var frame=window.__gotoMusicFrame;
-        var fallbackButton=frame&&frame.contentDocument&&frame.contentDocument.querySelector('.music-seg-play');
-        if(fallbackButton){fallbackButton.click();setPlayingUI(!(card&&card.classList.contains('is-playing')));}
-      }catch(fallbackError){console.warn('doc music fallback toggle failed:',fallbackError);}
-      return;
+    var audio=window.__gotoMusicAudio;
+    if(!audio){
+      audio=new Audio(new URL('music/tomorrow/Rock.mp3',document.baseURI).href);
+      audio.preload='auto';
+      audio.setAttribute('aria-label','GOTO Music');
+      window.__gotoMusicAudio=audio;
     }
-    if(state.audio.paused){
-      if(typeof state.play==='function')state.play(); else state.audio.play();
+    if(!audio.__gotoMusicUiBound){
+      audio.__gotoMusicUiBound=true;
+      audio.addEventListener('play',function(){setPlayingUI(true);});
+      audio.addEventListener('pause',function(){setPlayingUI(false);});
+      audio.addEventListener('ended',function(){setPlayingUI(false);});
+      audio.addEventListener('error',function(){setPlayingUI(false);console.warn('GOTO Music asset failed to load');});
+    }
+    if(audio.paused){
+      var playPromise=audio.play();
       setPlayingUI(true);
+      if(playPromise&&typeof playPromise.catch==='function')playPromise.catch(function(){setPlayingUI(false);});
     }else{
-      if(typeof state.pause==='function')state.pause(); else state.audio.pause();
+      audio.pause();
       setPlayingUI(false);
     }
-  }catch(e){console.error('toggleDocMusic:',e);}
+  }catch(error){
+    setPlayingUI(false);
+    console.warn('GOTO Music toggle failed:',error);
+  }
 }
+// 确保目录按钮的 inline onclick、Android WebView 与独立 file:// 预览都能访问同一入口。
+window.toggleDocMusic=toggleDocMusic;
 
 // ── 打字机效果（两段式，根据当前语言选择不同文案） ──
 function _startTypewriter(lang){
@@ -30316,9 +30360,14 @@ function onWelcomeEnter(){
     if(sandboxLeft){
       // 确保 transition 已恢复（避免欢迎阶段临时禁用的残留）
       sandboxLeft.style.transition = '';
-      // 需求 4: 先添加 entered 再移除 welcome-mode，避免深色模式下背景闪烁出黑方块
+      // 先让进入态接管过渡，再在下一帧释放欢迎态宽度，避免同一帧重排造成跳变。
       sandboxLeft.classList.add('entered');
-      sandboxLeft.classList.remove('welcome-mode');
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          // 留出一小段欢迎层淡出时间，再释放全宽状态，保证从中间向左的位移可见。
+          setTimeout(function(){ sandboxLeft.classList.remove('welcome-mode'); }, 80);
+        });
+      });
     }
     // body 移除 welcome-active（恢复 padding）
     document.body.classList.remove('welcome-active');
@@ -30384,10 +30433,8 @@ function _showWelcomeOverlay(){
     console.log('[welcome] step1 hidden removed');
     var sandboxLeft = document.getElementById('sandboxLeft');
     if(sandboxLeft){
-      sandboxLeft.style.transition = 'none';
+      sandboxLeft.style.transition = '';
       sandboxLeft.classList.add('welcome-mode');
-      void sandboxLeft.offsetWidth;
-      setTimeout(function(){ sandboxLeft.style.transition = ''; }, 50);
       sandboxLeft.classList.remove('entered','glow-swept','glow-bottom-left','glow-sweeping');
       console.log('[welcome] step2 sandboxLeft welcome-mode on');
     } else {
@@ -30519,6 +30566,13 @@ function _clearStatsStorageOnly(){
       }
       keysToRemove.forEach(function(k){ try{ localStorage.removeItem(k); }catch(_){} });
     }catch(_){}
+    // 统计清空后立即隐藏两处推荐，避免残留在首次搜索延展面板中。
+    try{
+      var readyPred=document.getElementById('scReadyPred');
+      if(readyPred){readyPred.innerHTML='';readyPred.style.display='none';}
+      var extendPred=document.getElementById('extendSmartPredApps');
+      if(extendPred)extendPred.innerHTML='';
+    }catch(_){ }
   }catch(e){console.error('_clearStatsStorageOnly:',e);}
 }
 
@@ -30897,6 +30951,6 @@ try{
 })();
 </script>
 
-<link rel="stylesheet" href="ceramic-finish.css?rev=phone-layout-44-1">
+<link rel="stylesheet" href="ceramic-finish.css?rev=search-state-spring-1">
 </body>
 </html>

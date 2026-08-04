@@ -63,6 +63,32 @@
         "文件向量库构建器待精细化（FileVectorIndexBuilder 已就位，端到端闭环待补）"
       ]
     },
+    "prethink": {
+      "name": "GOTO Prethink",
+      "status": "available",
+      "version": "1.0.0",
+      "summary": "预处理层：保留原始输入，为 Engine 提供带置信度的平行查询候选",
+      "tests": {
+        "passed": 12,
+        "failed": 0,
+        "note": "候选上限、最低置信度、原始查询保留与多路径去膨胀测试"
+      },
+      "capabilities": [
+        "repeated-noise-proposal",
+        "keyboard-correction",
+        "edit-distance-candidate",
+        "installed-app-aware-candidate",
+        "confidence-and-explanation",
+        "parallel-query-expansion",
+        "original-query-preserved"
+      ],
+      "implemented": true,
+      "tested": true,
+      "deviceValidated": false,
+      "knownLimitations": [
+        "模型接入点预留，默认使用可解释的轻量规则候选"
+      ]
+    },
     "where": {
       "name": "GOTO Where",
       "displayName": "GOTO Where 智能提醒",

@@ -1,9 +1,10 @@
 # GOTO 架构设计
 
+> README 负责说明用户能用 GOTO 做什么；本页集中说明实现边界、组件职责和调用关系。
+
 > 这页是阅读 GOTO 项目的入口。请先记住一条边界：**GOTO Page 是页面源，GOTO Engine、GOTO Base、GOTO Where 是冻结组件**。页面可以展示、编排和调用它们，但不在页面里重写它们的实现。
 
 <div class="doc-story-intro">
-  <span class="doc-story-kicker">四层协作</span>
   <strong>输入从 Page 进入，经 Prethink 预处理，由 Engine 匹配，再由 Where 结合情境，最后由 Base 保存事实。</strong>
   <p>Android 端提供系统应用和事件；Page 负责交互、文档与预览；Prethink 只提出候选，不改变输入；三个核心组件保持独立、可测试、不可被页面重写。</p>
 </div>

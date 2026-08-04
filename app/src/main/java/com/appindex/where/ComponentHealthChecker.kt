@@ -106,7 +106,7 @@ class ComponentHealthChecker(private val context: Context) {
      * 注意：deviceValidation.status=not-run 时不返回 true（不得声称全部验证完成）。
      */
     fun isAllCoreComponentsOk(): Boolean {
-        val components = listOf("engine", "base", "where", "whereAndroid")
+        val components = listOf("engine", "base", "prethink", "where", "whereAndroid")
         val allAvailable = components.all { getComponentStatus(it) == STATUS_AVAILABLE }
         if (!allAvailable) return false
 
@@ -131,7 +131,7 @@ class ComponentHealthChecker(private val context: Context) {
      * 获取总状态文案。
      */
     fun getOverallSummary(): String {
-        val components = listOf("engine", "base", "where", "whereAndroid")
+        val components = listOf("engine", "base", "prethink", "where", "whereAndroid")
         val statuses = components.map { getComponentStatus(it) }
         val allAvailable = statuses.all { it == STATUS_AVAILABLE }
         val anyUnavailable = statuses.any { it == STATUS_UNAVAILABLE || it == STATUS_INCOMPATIBLE || it == STATUS_DISABLED }
@@ -151,7 +151,7 @@ class ComponentHealthChecker(private val context: Context) {
      * 输出所有组件的最终状态摘要（用于 UI 渲染）。
      */
     fun combinedSummary(): ComponentSummary {
-        val components = listOf("engine", "base", "where", "whereAndroid").map { id ->
+        val components = listOf("engine", "base", "prethink", "where", "whereAndroid").map { id ->
             ComponentInfo(
                 id = id,
                 displayName = getComponentDisplayName(id),

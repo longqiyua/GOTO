@@ -3,7 +3,6 @@
 > Start here. **GOTO Page is the page source; GOTO Engine, GOTO Base and GOTO Where are frozen components.** The page may present, compose and call them, but it must not reimplement them.
 
 <div class="doc-story-intro">
-  <span class="doc-story-kicker">Four layers</span>
   <strong>Input enters Page, Engine computes candidates, Where adds context, and Base stores facts.</strong>
   <p>The Android host provides installed apps and events. Page owns readable interaction and preview. Core components remain isolated and testable.</p>
 </div>

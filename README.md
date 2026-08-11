@@ -14,7 +14,7 @@
       </p>
       <hr>
       <p>
-        <a href="https://longqiyua.github.io/goto/">
+        <a href="https://longqiyua.github.io/GOTO/">
           <img src="https://img.shields.io/badge/Go%20To%20GOTO-111111?style=for-the-badge&logo=github&logoColor=white">
         </a>
       </p>

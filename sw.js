@@ -9,7 +9,7 @@
  * -----------------------------------------------------------------------------
  * 更新缓存时：递增 CACHE_VERSION，下次 activate 会清理旧版本。
  */
-var CACHE_VERSION = 'goto-page-v63-20260802';
+var CACHE_VERSION = 'goto-page-v69-20260817';
 var APP_SHELL = [
   './',
   './index.html',
@@ -39,6 +39,7 @@ var APP_SHELL = [
   './GOTO-Engine/algorithms/rag/bm25-rag-search.js',
   './GOTO-Engine/semantic/semantic-loader.js',
   './GOTO-Base/goto-base-bundle.js',
+  './where-runtime-bundle.js',
   './Document/document-bundle.js',
   './Document/music_page.html'
 ];

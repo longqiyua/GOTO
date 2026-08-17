@@ -22446,6 +22446,7 @@ html:not(.embedded) body #searchView .home-cluster #searchZone .search-card.has-
       localStorage.setItem('goto_smart_reminder', isOn?'1':'0');
       _smartReminderState.enabled = isOn;
       _smartReminderState.hasNotifyPerm = !!hasNotifyPerm;
+      if(isOn){ _ensureWhereLoaded(); }
       if(typeof _showToggleLabel==='function')_showToggleLabel(toggle,isOn);
       if(typeof toast==='function'){
         var msg=isOn ? (window._lang==='en'?'GOTO Where enabled':'GOTO Where 智能提醒已开启') : (window._lang==='en'?'GOTO Where disabled':'GOTO Where 智能提醒已关闭');
@@ -22697,6 +22698,256 @@ html:not(.embedded) body #searchView .home-cluster #searchZone .search-card.has-
     }catch(_){ return false; }
   }
 
+  // ═══ GOTO Where 组件接入（本地优先 + 独立仓库 CDN 后备） ═══
+  // 页面内置同接口的本地产物 where-runtime-bundle.js（暴露 window.GOTOWhere），
+  // 优先加载本地，保证站点自包含、离线/无外网也可用；本地缺失或加载失败时，
+  // 回退到同一作者(longqiyua)名下的独立仓库 goto-where 的 jsDelivr 产物。
+  // 组件源码保持冻结、不改动；页面仅实现 Port 适配层（BaseReader/BaseWriter/Clock）。
+  // 加载失败或 Where 无决策时，自动回退到页面内模拟预测（保留兜底）。
+  var GOTO_WHERE_LOCAL_URL = 'where-runtime-bundle.js';
+  var GOTO_WHERE_REMOTE_URL = 'https://cdn.jsdelivr.net/gh/longqiyua/goto-where@main/browser/where-runtime-bundle.js';
+  var _whereState = {
+    api: null,          // window.GOTOWhere（Where 组件）
+    runtime: null,      // WhereRuntime 实例
+    ready: false,
+    loading: false,
+    failed: false
+  };
+
+  // 本地加载成功回调：本地产物暴露了接口则就绪，否则回退远程
+  function _whereLocalLoaded(){
+    _whereState.loading = false;
+    if(window.GOTOWhere){
+      _whereState.api = window.GOTOWhere;
+      _whereState.ready = true;
+      if(typeof console!=='undefined') console.log('[GOTO Where] local bundle loaded');
+    }else{
+      _whereLoadRemote();
+    }
+  }
+  // 远程加载成功回调
+  function _whereRemoteLoaded(){
+    _whereState.loading = false;
+    if(window.GOTOWhere){
+      _whereState.api = window.GOTOWhere;
+      _whereState.ready = true;
+      if(typeof console!=='undefined') console.log('[GOTO Where] remote component loaded from goto-where repo');
+    }else{
+      _whereState.failed = true;
+    }
+  }
+  function _whereRemoteFailed(){
+    _whereState.loading = false;
+    _whereState.failed = true;
+  }
+  // 从独立仓库 CDN 回退加载
+  function _whereLoadRemote(){
+    if(_whereState.failed) return;
+    var s = document.createElement('script');
+    s.src = GOTO_WHERE_REMOTE_URL;
+    s.async = true;
+    s.onload = _whereRemoteLoaded;
+    s.onerror = _whereRemoteFailed;
+    document.head.appendChild(s);
+  }
+
+  // 加载 Where 组件（幂等：已就绪/加载中/失败均不重复；本地优先，远程后备）
+  function _ensureWhereLoaded(){
+    if(_whereState.ready || _whereState.loading || _whereState.failed) return;
+    if(typeof navigator!=='undefined' && navigator.onLine===false) return; // 离线时直接走兜底
+    _whereState.loading = true;
+    var s = document.createElement('script');
+    s.src = GOTO_WHERE_LOCAL_URL;
+    s.async = true;
+    s.onload = _whereLocalLoaded;
+    s.onerror = _whereLoadRemote;
+    document.head.appendChild(s);
+  }
+
+  // Clock Port：把页面当前时间映射为 Where 期望的 {hour, minute, weekday}
+  var _whereClock = {
+    now: function(){
+      var d = new Date();
+      return { hour: d.getHours(), minute: d.getMinutes(), weekday: d.getDay() };
+    }
+  };
+
+  // 由页面统计数据生成 TimingPattern（Where 时间使用模式）
+  function _whereBuildTimingPattern(appId){
+    try{
+      var stats = _getStats();
+      var rec = stats && stats[appId];
+      if(!rec) return null;
+      var uses = Number(rec.uses) || 0;
+      if(uses <= 0) return null;
+      var hourly = (rec.hourly && typeof rec.hourly==='object') ? rec.hourly : {};
+      var peakHour = -1, peakCount = 0;
+      var weekdayFlags = [false,false,false,false,false,false,false];
+      var keys = Object.keys(hourly);
+      for(var i=0;i<keys.length;i++){
+        var cnt = Number(hourly[keys[i]]) || 0;
+        if(cnt <= 0) continue;
+        var parts = String(keys[i]).split('-');
+        if(parts.length >= 4){
+          var h = parseInt(parts[3],10);
+          var day = new Date(parseInt(parts[0],10), parseInt(parts[1],10), parseInt(parts[2],10)).getDay();
+          weekdayFlags[day] = true;
+          if(cnt > peakCount){ peakCount = cnt; peakHour = h; }
+        }
+      }
+      var totalUses = 0;
+      Object.keys(stats).forEach(function(k){ totalUses += Number((stats[k]||{}).uses) || 0; });
+      var conf = totalUses>0 ? Math.max(0.1, Math.min(1, uses/totalUses)) : 0.5;
+      if(peakHour < 0) peakHour = new Date().getHours();
+      return {
+        packageName: appId,
+        typicalHour: peakHour,
+        typicalMinute: 0,
+        confidence: conf,
+        sampleCount: uses,
+        weekdayPattern: weekdayFlags,
+        title: '打开 ' + appId,
+        subtitle: '页面统计 · 峰值时段'
+      };
+    }catch(e){ return null; }
+  }
+
+  // 由动作链数据生成 TransitionPattern[]（Where 应用转移模式）
+  function _whereBuildTransitions(fromAppId){
+    var out = [];
+    try{
+      var raw = localStorage.getItem('goto_engine_action_chains');
+      var store = raw ? JSON.parse(raw) : { edges: {} };
+      var edges = store.edges && typeof store.edges==='object' ? store.edges : {};
+      var next = fromAppId ? edges[fromAppId] : null;
+      if(next && typeof next==='object'){
+        var list = Object.keys(next).map(function(to){ return { to: to, count: Number(next[to])||0 }; }).filter(function(x){ return x.count>0; });
+        var total = list.reduce(function(s,x){ return s+x.count; },0);
+        if(total>0){
+          list.slice(0,3).forEach(function(x){
+            out.push({
+              fromPackageName: fromAppId,
+              toPackageName: x.to,
+              confidence: x.count/total,
+              title: '打开 ' + x.to,
+              subtitle: '动作链 · ' + fromAppId + ' → ' + x.to
+            });
+          });
+        }
+      }
+    }catch(_){}
+    return out;
+  }
+
+  // 由全局热度生成 smartRankingHints（Where 个人层智能排名候选 E 分支）
+  function _whereSmartRankingHints(n){
+    try{
+      var stats = _getStats();
+      var total = 0;
+      Object.keys(stats).forEach(function(k){ total += Number((stats[k]||{}).uses) || 0; });
+      if(total <= 0) return [];
+      return Object.keys(stats).map(function(k){
+        return { packageName: k, score: Math.max(0, Math.min(1, (Number((stats[k]||{}).uses)||0)/total)) };
+      }).sort(function(a,b){ return b.score - a.score; }).slice(0, n || 8);
+    }catch(e){ return []; }
+  }
+
+  // BaseReader Port：把页面 localStorage 统计映射为 Where 可读的模式数据
+  function _whereBaseReader(){
+    return {
+      degraded: false,
+      getAppRecord: async function(){ return null; },
+      getUsagePattern: async function(packageName){ return _whereBuildTimingPattern(packageName); },
+      getAppTransitionPattern: async function(fromPackageName){ return _whereBuildTransitions(fromPackageName); },
+      getReminderPreference: async function(ruleId){
+        return { ruleId: ruleId, enabled: true, priority: 'normal', consecutiveIgnoreCount: 0 };
+      },
+      getRecentReminderFeedback: async function(){ return []; },
+      getPersonalAppProfile: async function(){ return null; },
+      getSmartRankingHints: async function(n){ return _whereSmartRankingHints(n); },
+      getFeedbackChainHitRate: async function(){ return null; }
+    };
+  }
+
+  // BaseWriter Port：反馈记录到 localStorage（页面内闭环）
+  function _whereBaseWriter(){
+    return {
+      degraded: false,
+      recordReminderFeedback: async function(fb){
+        try{
+          var list = [];
+          var raw = localStorage.getItem('goto_where_feedback');
+          if(raw){ try{ list = JSON.parse(raw)||[]; }catch(_){ list = []; } }
+          list.push({ t: Date.now(), data: fb });
+          if(list.length > 200) list = list.slice(-200);
+          localStorage.setItem('goto_where_feedback', JSON.stringify(list));
+        }catch(_){}
+      }
+    };
+  }
+
+  // 构建 WhereRuntime（delivery 由页面统一投递，Where 只做决策）
+  function _buildWhereRuntime(){
+    var api = _whereState.api;
+    if(!api || !api.WhereRuntime) return null;
+    var runtime = new api.WhereRuntime({
+      baseReader: _whereBaseReader(),
+      baseWriter: _whereBaseWriter(),
+      clock: _whereClock,
+      delivery: null,
+      scheduler: null,
+      now: function(){ return new Date().toISOString(); }
+    });
+    _whereState.runtime = runtime;
+    return runtime;
+  }
+
+  // 调用真实 Where 决策管线，返回 {target, confidence, source} 或 null
+  async function _smartReminderPredictWhere(fromApp){
+    var api = _whereState.api;
+    if(!api) return null;
+    var runtime = _whereState.runtime || _buildWhereRuntime();
+    if(!runtime) return null;
+    var d = new Date();
+    var signal = {
+      hour: d.getHours(),
+      minute: d.getMinutes(),
+      weekday: d.getDay(),
+      foregroundPackageName: fromApp || null
+    };
+    var result;
+    try{ result = await runtime.evaluate(signal); }catch(e){ console.error('_smartReminderPredictWhere evaluate:', e); return null; }
+    if(!result || result.degraded || !result.decisions || !result.scoredCandidates) return null;
+    var decision = null;
+    for(var i=0;i<result.decisions.length;i++){
+      if(result.decisions[i].action === 'deliver'){ decision = result.decisions[i]; break; }
+    }
+    if(!decision) return null;
+    var target = null, conf = 0;
+    for(var j=0;j<result.scoredCandidates.length;j++){
+      var sc = result.scoredCandidates[j];
+      if(sc.candidateId === decision.candidateId){ target = sc.packageName; conf = (typeof sc.confidence==='number')? sc.confidence : 0.5; break; }
+    }
+    if(!target || _isSmartReminderBlocked(target)) return null;
+    return {
+      target: target,
+      confidence: Math.max(0, Math.min(1, conf)),
+      source: 'where:' + ((decision.explanation||'').split(' ')[0])
+    };
+  }
+
+  // Where 路径：命中则投递，否则回退页面内模拟
+  function _smartReminderTryExpandWithWhere(){
+    _smartReminderPredictWhere(_smartReminderState.lastAppLaunched).then(function(prediction){
+      if(prediction){ _smartReminderDeliver(prediction); return; }
+      var sim = _smartReminderPredict(_smartReminderState.lastAppLaunched);
+      if(sim) _smartReminderDeliver(sim);
+    }).catch(function(){
+      var sim = _smartReminderPredict(_smartReminderState.lastAppLaunched);
+      if(sim) _smartReminderDeliver(sim);
+    });
+  }
+
   // ═══ 同步悬浮窗显隐状态 ═══
   function _syncSmartReminderFloat(){
     _smartReminderReadFlags();
@@ -22741,12 +22992,23 @@ html:not(.embedded) body #searchView .home-cluster #searchZone .search-card.has-
     _smartReminderReadFlags();
     var canShow = _smartReminderState.simIntOn && _smartReminderState.enhancedOn && _smartReminderState.enabled;
     if(!canShow) return;
-
+    // Where 远程组件就绪时走真实决策；否则回退页面内模拟
+    if(_whereState.ready){
+      _smartReminderTryExpandWithWhere();
+      return;
+    }
     var prediction = _smartReminderPredict(_smartReminderState.lastAppLaunched);
     if(!prediction){
       // 无预测或被屏蔽 → 不触发通知
       return;
     }
+    _smartReminderDeliver(prediction);
+  }
+
+  // ═══ 统一投递：阈值 + 去重 + 系统通知 + 模拟通知 + 自动收起 ═══
+  // 模拟预测与 Where 真实决策共用同一投递链路
+  function _smartReminderDeliver(prediction){
+    if(!prediction) return;
     // 阈值降低：让推荐更容易出现（高 0.6 / 中 0.35）
     var lowThreshold = 0.35;
     if(prediction.confidence < lowThreshold){
@@ -28770,9 +29032,16 @@ html:not(.embedded) body #searchView .home-cluster #searchZone .search-card.has-
     var panel=document.createElement('div');
     panel.className='doc-preview-actions';
     panel.innerHTML='<div class="doc-preview-actions-list">'+actions.map(function(item){
-        return '<button type="button" onclick="runDocPreviewAction(\''+item[0]+'\',\''+item[1]+'\',\''+(item[4]||'')+'\')"><span></span>'+(isEn?item[3]:item[2])+'</button>';
+        return '<button type="button" class="doc-preview-action-btn" onclick="runDocPreviewAction(\''+item[0]+'\',\''+item[1]+'\',\''+(item[4]||'')+'\')"><span></span>'+(isEn?item[3]:item[2])+'</button>';
       }).join('')+'</div>';
-    contentEl.insertBefore(panel,contentEl.firstChild);
+    // 联动入口有机嵌入正文：紧跟首个标题之后、随正文流动，而非作为独立元素置于标题上方
+    var heading=contentEl.querySelector('h1, h2, h3');
+    if(heading&&heading.parentNode){
+      if(heading.nextSibling){ heading.parentNode.insertBefore(panel,heading.nextSibling); }
+      else{ heading.parentNode.appendChild(panel); }
+    }else{
+      contentEl.insertBefore(panel,contentEl.firstChild);
+    }
   }
 
   function _decorateDocArchiveMeta(docId,contentEl){
@@ -29385,6 +29654,8 @@ html:not(.embedded) body #searchView .home-cluster #searchZone .search-card.has-
         _smartReminderState.enabled = true;
       }
     }catch(e){console.error('init-smart-reminder:',e);}
+    // 智能提醒已开启时，预加载远程 Where 组件（失败自动走页面内模拟兜底）
+    try{ if(localStorage.getItem('goto_smart_reminder')==='1'){ _ensureWhereLoaded(); } }catch(_){} 
     // 页面初始化完成，解除预加载隐藏（防止 FOUC 闪烁）
     try{ document.body.style.opacity='1'; }catch(_){}
   });
@@ -29715,6 +29986,15 @@ window.GOTOEngineFacade=window.GOTOEngineComponent.create({
   <!-- 右侧文档区：左右布局，左侧目录+品牌，右侧内容 -->
   <div id="docContainer">
     <div id="docBody" class="doc-body">
+      <!-- GOTO Page 顶部栏：产品标识 + 版本标注 v1.1（右侧预览界面顶部） -->
+      <div class="doc-tree-header">
+        <div class="doc-tree-brand">
+          <span class="bp-brand">GOTO</span>
+          <span class="doc-product-plaque">Page</span>
+        </div>
+        <div class="doc-version-tag" title="GOTO Page V1.1">V1.1</div>
+      </div>
+      <div class="doc-body-main">
     <div class="doc-tree" id="docTreeFront">
       <div class="doc-tree-rail" aria-hidden="true">
         <div class="doc-tree-rail-track"></div>
@@ -29724,6 +30004,7 @@ window.GOTOEngineFacade=window.GOTOEngineComponent.create({
       <div class="doc-content-wrap" onscroll="updateDocScrollProgress(this)">
         <div class="doc-scroll-progress"><div class="doc-scroll-progress-fill" id="docScrollProgress"></div></div>
         <div class="doc-content" id="docContentFront"></div>
+      </div>
       </div>
     </div>
     <!-- GitHub Page 离线 MD 文档面板：覆盖于 #docBody 之上，独立加载 GithubPage/ 目录 -->
@@ -30951,6 +31232,6 @@ try{
 })();
 </script>
 
-<link rel="stylesheet" href="ceramic-finish.css?rev=search-state-spring-1">
+<link rel="stylesheet" href="ceramic-finish.css?rev=v1.1-design-7">
 </body>
 </html>
